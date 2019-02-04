@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>post-view</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + pic.filename" />
+    <ion-card-content>
+      <ion-card-title>
+        {{ pic.title }}
+      </ion-card-title>
+      <p>
+        {{ pic.description }}
+      </p>
+      <p>
+        {{ pic.file_id }}
+      </p>
+      <p>
+        {{ pic.filename }}
+      </p>
+      <p>
+        {{ pic.filesize }}
+      </p>
+      <p>
+        {{ pic.media_type }}
+      </p>
+      <p>
+        {{ pic.mime_type }}
+      </p>
+      <p>
+        {{ pic.time_added }}
+      </p>
+      <p>
+        {{ pic.user_id }}
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

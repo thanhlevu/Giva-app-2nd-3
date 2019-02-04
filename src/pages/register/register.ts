@@ -35,6 +35,6 @@ export class RegisterPage {
         "password2: " +
         this.password2
     );
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.pop();
   }
 }

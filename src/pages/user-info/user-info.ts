@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-
+import {LoginPage} from "../login/login"
 @Component({
   selector: "page-user-info",
   templateUrl: "user-info.html"
@@ -20,6 +20,6 @@ export class UserInfoPage {
   }
 
   update() {
-    this.navCtrl.push(UserInfoPage);
+    this.navCtrl.pop();
   }
 }

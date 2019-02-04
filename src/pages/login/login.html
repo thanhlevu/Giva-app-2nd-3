@@ -6,22 +6,36 @@
       src="../../assets/icon/home.svg"
     />GIVA</ion-title
   >
-  <ion-item>
-    <ion-label> <ion-icon item-left name="mail"></ion-icon></ion-label>
-    <ion-input placeholder="Email" type="email" [(ngModel)]="username">
-    </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label
-      ><ion-icon item-start size="large" name="lock"></ion-icon
-    ></ion-label>
-    <ion-input placeholder="Password" type="password" [(ngModel)]="password">
-    </ion-input>
-  </ion-item>
-  <i>Forgot Password</i>
-  <button ion-button full (click)="login()">
-    <ion-icon name="log-in"></ion-icon> Log In
-  </button>
+  <form #formPosting="ngForm">
+    <ion-item>
+      <ion-label> <ion-icon item-left name="person"></ion-icon></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="user.username"
+        name="username"
+        ngModel
+        required
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label
+        ><ion-icon item-start size="large" name="lock"></ion-icon
+      ></ion-label>
+      <ion-input
+        type="Password"
+        ngModel
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      >
+      </ion-input>
+    </ion-item>
+    <i>Forgot Password</i>
+    <button ion-button full (click)="loginClicked(formSignIn)">
+      <ion-icon name="log-in"></ion-icon> Log In
+    </button>
 
-  <i (click)="goRegisterPage()"> Sign Up</i>
+    <i (click)="goRegisterPage()"> Sign Up</i>
+  </form>
 </ion-content>

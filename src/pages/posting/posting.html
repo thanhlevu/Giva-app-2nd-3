@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-title>Postting...</ion-title>
+</ion-header>
+
+<ion-content padding center text-center>
+  <!-- <button ion-button full (click)="openCamera()">Open Camera</button>
+  <button ion-button full (click)="openGallery()">Open Gallery</button>
+  <button ion-button full (click)="cropImage()">Crop Picture</button>
+  <p align="center"><img src="{{ myPhoto }}" /></p> -->
+
+  <form #formPosting="ngForm">
+    <ion-card id="image">
+      <img src="{{ myPhoto }}" />
+      <!-- <div class="card-title">
+        San Francisco
+      </div>
+      <div class="card-subtitle">72 Listings</div> -->
+      <ion-fab right bottom>
+        <button ion-fab color="light" (click)="openGallery()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-fab>
+      <ion-fab right top>
+        <button ion-fab color="light" (click)="openCamera()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-card>
+
+    <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input
+        type="text"
+        name="title"
+        ngModel
+        [(ngModel)]="postingForm.title"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-input
+        type="text"
+        name="description"
+        ngModel
+        required
+        [(ngModel)]="postingForm.description"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categories</ion-label>
+      <ion-select [(ngModel)]="postingForm.category" name="category">
+        <ion-option value="Electronics">Electronics</ion-option>
+        <ion-option value="Furnitures">Furnitures</ion-option>
+        <ion-option value="Clothes_Accessories"
+          >Clothes & Accessories</ion-option
+        >
+        <ion-option value="Vehicles">Vehicles</ion-option>
+        <ion-option value="Others">Others</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Locations</ion-label>
+      <ion-select [(ngModel)]="postingForm.location" name="location">
+        <ion-option value="Helsinki">Helsinki</ion-option>
+        <ion-option value="Vantaa">Vantaa</ion-option>
+        <ion-option value="Espoo">Espoo</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime
+        name="endTime"
+        [(ngModel)]="postingForm.endTime"
+        displayFormat="D MMM YYYY H:mm"
+        value="2005-06-17T11:06Z"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contact Time from:</ion-label>
+      <ion-datetime
+        [(ngModel)]="postingForm.contactTimeFrom"
+        name="contactTimeF"
+        displayFormat="h:mm A"
+        minuteValues="0,15,30,45"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contact Time to:</ion-label>
+      <ion-datetime
+        [(ngModel)]="postingForm.contactTimeTo"
+        name="contactTimeTo"
+        displayFormat="h:mm A"
+        minuteValues="0,15,30,45"
+      ></ion-datetime>
+    </ion-item>
+
+    <button ion-button block type="submit" (click)="uploadImage()">
+      Post
+    </button>
+  </form>
+</ion-content>

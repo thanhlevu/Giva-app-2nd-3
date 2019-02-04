@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the PostPage page.
+ * Generated class for the PostEditPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,16 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-post',
-  templateUrl: 'post.html',
+  selector: 'page-post-edit',
+  templateUrl: 'post-edit.html',
 })
-export class PostPage {
+export class PostEditPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PostPage');
+    console.log('ionViewDidLoad PostEditPage');
   }
 
 }
