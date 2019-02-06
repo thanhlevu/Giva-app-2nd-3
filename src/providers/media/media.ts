@@ -94,4 +94,13 @@ export class MediaProvider {
       httpOptions
     );
   }
+
+  updateUserInfo(userInfo: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
+  }
 }

@@ -10,6 +10,8 @@ export interface PostingForm {
   filename?: string;
   file?: File;
   contact?: string;
+  info_item?: string;
+  reserved: boolean;
 }
 
 export interface Picture {
@@ -34,7 +36,7 @@ export interface Thumbnail {
 
 export interface User {
   user_id?: number;
-  username: string;
+  username?: string;
   password?: string;
   password2?: string;
   email?: string;
@@ -44,7 +46,7 @@ export interface User {
 export interface LoginResponse {
   message: string;
   token?: string;
-  user: User;
+  user?: User;
 }
 
 export interface UsernameResponse {

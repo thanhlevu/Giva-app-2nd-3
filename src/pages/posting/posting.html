@@ -55,7 +55,7 @@
         name="description"
         ngModel
         required
-        [(ngModel)]="postingForm.description"
+        [(ngModel)]="postingForm.info_item"
       ></ion-input>
     </ion-item>
 
@@ -92,12 +92,13 @@
     </ion-item>
     <ion-item>
       <ion-label>Contact to Me</ion-label>
-      <ion-datetime
+      <ion-input
+        type="text"
         name="contact"
-        [(ngModel)]="postingForm.contact"
         ngModel
+        [(ngModel)]="postingForm.contact"
         required
-      ></ion-datetime>
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Contact Time from:</ion-label>

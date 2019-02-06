@@ -8,11 +8,15 @@
   >
   <ion-item>
     <ion-label> <ion-icon item-left name="person"></ion-icon></ion-label>
-    <ion-input placeholder="Username" type="text" [(ngModel)]="username">
+    <ion-input
+      placeholder="Username"
+      type="text"
+      [(ngModel)]="userInfo.username"
+    >
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item>
     <ion-label> <ion-icon item-left name="call"></ion-icon></ion-label>
     <ion-input placeholder="Phone Number" type="tel" [(ngModel)]="phone">
     </ion-input>
@@ -23,16 +27,20 @@
     <ion-input placeholder="Address" type="text" [(ngModel)]="address">
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
-  </ion-item>
+  </ion-item> -->
   <ion-item>
     <ion-label> <ion-icon item-left name="mail"></ion-icon></ion-label>
-    <ion-input placeholder="Email" type="email" [(ngModel)]="email">
+    <ion-input placeholder="Email" type="email" [(ngModel)]="userInfo.email">
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
   <ion-item>
     <ion-label> <ion-icon item-end name="lock"></ion-icon></ion-label>
-    <ion-input placeholder="Password" type="password" [(ngModel)]="password">
+    <ion-input
+      placeholder="Password"
+      type="password"
+      [(ngModel)]="userInfo.password"
+    >
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
@@ -43,12 +51,12 @@
     <ion-input
       placeholder="Confirm Password"
       type="password"
-      [(ngModel)]="password2"
+      [(ngModel)]="userInfo.password2"
     >
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
-  <button ion-button full (click)="update()">
+  <button ion-button full (click)="onUpdateUserInfo()">
     <ion-icon name="log-in"></ion-icon> Update
   </button>
 </ion-content>

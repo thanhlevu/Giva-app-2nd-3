@@ -11,7 +11,7 @@ import { User, LoginResponse, UsernameResponse } from "../../intefaces/posting";
   templateUrl: "login.html"
 })
 export class LoginPage {
-  user: User = { username: null };
+  user: User = {};
   username: string;
   password: string;
   constructor(
@@ -33,8 +33,10 @@ export class LoginPage {
         console.log("response");
         console.log(response);
         localStorage.setItem("token", response.token);
+        localStorage.setItem("userID", response.user.user_id + "");
+
         this.navCtrl.push(HomePage);
-        //       this.mediaprovider.token = response.token;
+        this.mediaprovider.token = response.token;
         this.mediaprovider.loggedIn = true;
         this.mediaprovider.user_id = response.user.user_id;
         console.log("user.id: " + this.mediaprovider.user_id);

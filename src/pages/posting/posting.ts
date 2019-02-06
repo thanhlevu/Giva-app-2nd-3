@@ -23,7 +23,7 @@ import { MediaProvider } from "../../providers/media/media";
   templateUrl: "posting.html"
 })
 export class PostingPage {
-  postingForm: PostingForm = {};
+  postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
   fileData: string;
@@ -107,7 +107,7 @@ export class PostingPage {
 
   uploadImage() {
     this.postingForm.description =
-      this.postingForm.description +
+      this.postingForm.info_item +
       " category: " +
       this.postingForm.category +
       " location: " +
@@ -119,7 +119,9 @@ export class PostingPage {
       " contactTimeFrom: " +
       this.postingForm.contactTimeFrom +
       " contactTimeTo: " +
-      this.postingForm.contactTimeTo;
+      this.postingForm.contactTimeTo +
+      " reserved: " +
+      this.postingForm.reserved;
     console.log("test: ", this.postingForm.description);
 
     const fd = new FormData();

@@ -1,25 +1,39 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import {LoginPage} from "../login/login"
+import { LoginPage } from "../login/login";
+import { MediaProvider } from "../../providers/media/media";
+import { User, LoginResponse } from "../../intefaces/posting";
+
 @Component({
   selector: "page-user-info",
   templateUrl: "user-info.html"
 })
 export class UserInfoPage {
-  username: string;
-  phone: string;
-  address: string;
-  email: string;
-  password: string;
-  password2: string;
+  userInfo: User = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public mediaProvider: MediaProvider
+  ) {}
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad UserInfoPage");
   }
 
-  update() {
-    this.navCtrl.pop();
+  onUpdateUserInfo() {
+    if (this.userInfo.password2 == this.userInfo.password) {
+      delete this.userInfo.password2;
+      console.log("userInfo ", this.userInfo);
+      this.mediaProvider.updateUserInfo(this.userInfo).subscribe(
+        (response: LoginResponse) => {
+          console.log(response);
+          this.navCtrl.pop().catch();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else console.log("passwords dont match.");
   }
 }

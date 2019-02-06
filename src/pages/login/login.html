@@ -8,8 +8,9 @@
   >
   <form #formPosting="ngForm">
     <ion-item>
-      <ion-label> <ion-icon item-left name="person"></ion-icon></ion-label>
+      <ion-label> <ion-icon item-left name="contact"></ion-icon></ion-label>
       <ion-input
+        placeholder="Username"
         type="text"
         [(ngModel)]="user.username"
         name="username"
@@ -23,6 +24,7 @@
         ><ion-icon item-start size="large" name="lock"></ion-icon
       ></ion-label>
       <ion-input
+        placeholder="Password"
         type="Password"
         ngModel
         [(ngModel)]="user.password"
@@ -31,7 +33,7 @@
       >
       </ion-input>
     </ion-item>
-    <i>Forgot Password</i>
+    <!-- <i>Forgot Password</i> -->
     <button ion-button full (click)="loginClicked(formSignIn)">
       <ion-icon name="log-in"></ion-icon> Log In
     </button>

@@ -34,4 +34,8 @@ export class RegisterPage {
       }
     );
   }
+
+  goLoginPage() {
+    this.navCtrl.pop().catch();
+  }
 }
