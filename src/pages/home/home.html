@@ -1,10 +1,12 @@
 <ion-header>
-  <ion-navbar> <ion-title> Ionic Blank </ion-title> </ion-navbar>
-  <ion-fab right>
-    <button ion-fab color="yellow" (click)="openGallery()">
-      <ion-icon name="add-circle"></ion-icon>
-    </button>
-  </ion-fab>
+  <ion-navbar>
+    <ion-title> Ionic Blank </ion-title>
+    <ion-buttons end>
+      <button ion-fab (click)="goToPost()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>

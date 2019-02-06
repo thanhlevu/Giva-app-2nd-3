@@ -57,6 +57,7 @@ export class MediaProvider {
         "Content-type": "application/json"
       })
     };
+    delete user.password2;
     return this.http.post<LoginResponse>(
       this.configUrl + "/users",
       user,
@@ -79,5 +80,18 @@ export class MediaProvider {
         httpOptions
       );
     }
+  }
+
+  upload(data: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": localStorage.getItem("token")
+      })
+    };
+    return this.http.post<LoginResponse>(
+      this.configUrl + "/media",
+      data,
+      httpOptions
+    );
   }
 }

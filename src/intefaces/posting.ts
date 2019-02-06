@@ -8,6 +8,8 @@ export interface PostingForm {
   contactTimeTo?: string;
   mime_type?: string;
   filename?: string;
+  file?: File;
+  contact?: string;
 }
 
 export interface Picture {
@@ -41,7 +43,7 @@ export interface User {
 }
 export interface LoginResponse {
   message: string;
-  token: string;
+  token?: string;
   user: User;
 }
 

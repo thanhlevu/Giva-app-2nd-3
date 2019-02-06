@@ -13,7 +13,6 @@ import { PinsPage } from "../pages/pins/pins";
 import { MyItemsPage } from "../pages/my-items/my-items";
 import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
-import { RepostPage } from "../pages/repost/repost";
 import { EditInfoPage } from "../pages/edit-info/edit-info";
 import { Camera } from "@ionic-native/camera";
 import { PhotoLibrary } from "@ionic-native/photo-library";
@@ -32,7 +31,6 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     MyItemsPage,
     UserInfoPage,
     PostingPage,
-    RepostPage,
     EditInfoPage,
     PostViewPage
   ],
@@ -53,7 +51,6 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     MyItemsPage,
     UserInfoPage,
     PostingPage,
-    RepostPage,
     EditInfoPage
   ],
   providers: [

@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController
+} from "ionic-angular";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import {
   ActionSheet,
@@ -10,6 +15,7 @@ import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { MediaProvider } from "../../providers/media/media";
 
 @IonicPage()
 @Component({
@@ -19,11 +25,15 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class PostingPage {
   postingForm: PostingForm = {};
   myPhoto: any;
+  file: File;
+  fileData: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private camera: Camera,
-    public http: HttpClient
+    public http: HttpClient,
+    private mediaProvider: MediaProvider,
+    private loadingCtrl: LoadingController
   ) {}
 
   ionViewDidLoad() {
@@ -96,14 +106,68 @@ export class PostingPage {
   }
 
   uploadImage() {
-    let postData = new FormData();
-    postData.append("file", this.myPhoto);
-    let data: Observable<any> = this.http.post(
-      "https://media.mw.metropolia.fi/wbma/media",
-      postData
-    );
-    data.subscribe(res => {
+    this.postingForm.description =
+      this.postingForm.description +
+      " category: " +
+      this.postingForm.category +
+      " location: " +
+      this.postingForm.location +
+      " endTime: " +
+      this.postingForm.endTime +
+      " contact: " +
+      this.postingForm.contact +
+      " contactTimeFrom: " +
+      this.postingForm.contactTimeFrom +
+      " contactTimeTo: " +
+      this.postingForm.contactTimeTo;
+    console.log("test: ", this.postingForm.description);
+
+    const fd = new FormData();
+    fd.append("file", this.postingForm.file);
+    fd.append("title", this.postingForm.title);
+
+    fd.append("description", this.postingForm.description);
+    console.log(this.postingForm.description);
+
+    console.log(fd);
+    this.mediaProvider.upload(fd).subscribe(res => {
+      //set time out in 2s
       console.log(res);
+      // hide spinner
+      this.loading();
     });
+  }
+
+  showPreview() {
+    var reader = new FileReader();
+    reader.onloadend = evt => {
+      //using arrow fuction to change the reference, if not ==> error of this.
+      //console.log(reader.result)
+      this.fileData = reader.result;
+    };
+    if (this.postingForm.file.type.includes("video")) {
+      this.fileData = "http://via.placeholder.com/500x200/000?text=Video";
+    } else if (this.postingForm.file.type.includes("audio")) {
+      this.fileData = "http://via.placeholder.com/500x200/000?text=Audio";
+    } else {
+      reader.readAsDataURL(this.postingForm.file);
+    }
+  }
+
+  handleChange($event) {
+    console.log($event.target.files[0]);
+    this.postingForm.file = $event.target.files[0];
+
+    this.showPreview();
+  }
+
+  loading() {
+    let loading = this.loadingCtrl.create({});
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+      this.navCtrl.pop().catch();
+    }, 2000);
   }
 }

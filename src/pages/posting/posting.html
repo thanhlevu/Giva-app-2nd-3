@@ -10,22 +10,32 @@
 
   <form #formPosting="ngForm">
     <ion-card id="image">
-      <img src="{{ myPhoto }}" />
-      <!-- <div class="card-title">
-        San Francisco
-      </div>
-      <div class="card-subtitle">72 Listings</div> -->
+      <img [src]="fileData" />
+      <ion-fab center middle>
+        <button ion-fab color="light" (click)="openGallery()">
+          <ion-icon name="arrow-round-up"></ion-icon>
+        </button>
+      </ion-fab>
       <ion-fab right bottom>
         <button ion-fab color="light" (click)="openGallery()">
           <ion-icon name="image"></ion-icon>
         </button>
       </ion-fab>
-      <ion-fab right top>
+      <ion-fab left bottom>
         <button ion-fab color="light" (click)="openCamera()">
           <ion-icon name="camera"></ion-icon>
         </button>
       </ion-fab>
     </ion-card>
+
+    <ion-item>
+      <ion-label>File</ion-label>
+      <ion-input
+        type="file"
+        accept="image"
+        (change)="handleChange($event)"
+      ></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label>Title</ion-label>
@@ -80,7 +90,15 @@
         value="2005-06-17T11:06Z"
       ></ion-datetime>
     </ion-item>
-
+    <ion-item>
+      <ion-label>Contact to Me</ion-label>
+      <ion-datetime
+        name="contact"
+        [(ngModel)]="postingForm.contact"
+        ngModel
+        required
+      ></ion-datetime>
+    </ion-item>
     <ion-item>
       <ion-label>Contact Time from:</ion-label>
       <ion-datetime

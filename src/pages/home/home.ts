@@ -6,6 +6,7 @@ import { Picture } from "../../intefaces/posting";
 import { HttpClient } from "@angular/common/http";
 import { RegisterPage } from "../register/register";
 import { PostViewPage } from "../post-view/post-view";
+import { PostingPage } from "../posting/posting";
 
 @Component({
   selector: "page-home",
@@ -51,5 +52,9 @@ export class HomePage implements OnInit {
   viewPost(Pic: Picture) {
     this.navCtrl.push(PostViewPage, Pic);
     // console.log(Pic);
+  }
+
+  goToPost() {
+    this.navCtrl.push(PostingPage);
   }
 }
