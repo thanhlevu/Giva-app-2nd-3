@@ -1,0 +1,103 @@
+page-posting {
+  background: url("../../assets/imgs/Background@3x.png") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  .toolbar-title {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  .scroll-content {
+    padding: 32px !important;
+    margin-top: 0px !important;
+  }
+  ion-header {
+    background-color: transparent !important;
+    ion-title {
+      background-color: transparent !important;
+    }
+  }
+  ion-content {
+    background-color: transparent !important;
+
+    ion-card {
+      position: relative;
+      text-align: center;
+      background-color: #fff !important;
+      width: 100%;
+      height: 160px;
+    }
+
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 1em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+
+    form {
+      margin-top: 8px;
+      padding: 8px;
+      background-color: #fff !important;
+      ion-card {
+        margin: opx !important;
+      }
+      ion-item {
+        background-color: transparent !important;
+        padding: 0 !important;
+        ion-icon {
+          color: black;
+          font-size: 40px;
+        }
+        ion-label {
+          margin: 0 !important;
+          color: black !important;
+        }
+        ion-input {
+          color: black !important;
+          //   input {
+          //     margin-top: 0px !important;
+          //     margin-left: 0 !important;
+          //   }
+        }
+
+        ion-select,
+        ion-datetime {
+          color: black;
+        }
+        ion-textarea {
+          color: black;
+        }
+      }
+
+      button {
+        //       margin-top: 50px !important;
+        //  background-color: rgba(255, 255, 255, 0.4) !important;
+        border-radius: 15px !important;
+
+        // span {
+        //   color: white !important;
+        //   font-weight: bold;
+        //   align-self: auto;
+        //   ion-icon {
+        //     color: white;
+        //     font-size: 30px;
+        //     margin: 8px;
+        //   }
+        // }
+      }
+    }
+  }
+}

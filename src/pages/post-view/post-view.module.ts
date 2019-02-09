@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { RepostPage } from './repost';
+import { PostViewPage } from './post-view';
 
 @NgModule({
   declarations: [
-    RepostPage,
+    PostViewPage,
   ],
   imports: [
-    IonicPageModule.forChild(RepostPage),
+    IonicPageModule.forChild(PostViewPage),
   ],
 })
-export class RepostPageModule {}
+export class PostViewPageModule {}

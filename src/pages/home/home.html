@@ -1,14 +1,30 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title> Ionic Blank </ion-title>
+    <ion-buttons end>
+      <button ion-fab (click)="goToPost()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-item *ngFor="let pic of picArray" (click)="viewPost(pic)">
+      <ion-thumbnail item-start>
+        <img [src]="src + pic.filename" />
+      </ion-thumbnail>
+      <h2>{{ pic.title }}</h2>
+      <p>{{ pic.description }}</p>
+      <button ion-button clear item-end (click)="viewImage(pic.filename)">
+        View
+      </button>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="blue" (click)="goToMyPosts()">
+      <ion-icon name="folder-open"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

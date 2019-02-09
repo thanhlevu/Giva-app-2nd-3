@@ -1,0 +1,119 @@
+<ion-content padding center text-center>
+  <form #formPosting="ngForm">
+    <ion-card id="image">
+      <img [src]="fileData" />
+    </ion-card>
+    <ion-item>
+      <ion-label>Reverved</ion-label>
+      <ion-toggle
+        name="reserved"
+        [(ngModel)]="postingForm.reserved"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>File</ion-label>
+      <ion-input
+        type="file"
+        accept="image"
+        (change)="handleChange($event)"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input
+        type="text"
+        name="title"
+        ngModel
+        [(ngModel)]="postingForm.title"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-input
+        type="text"
+        name="description"
+        ngModel
+        required
+        [(ngModel)]="postingForm.info_item"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categories</ion-label>
+      <ion-select [(ngModel)]="postingForm.category" name="category">
+        <ion-option value="Electronics">Electronics</ion-option>
+        <ion-option value="Furnitures">Furnitures</ion-option>
+        <ion-option value="Clothes_Accessories"
+          >Clothes & Accessories</ion-option
+        >
+        <ion-option value="Vehicles">Vehicles</ion-option>
+        <ion-option value="Others">Others</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Locations</ion-label>
+      <ion-select [(ngModel)]="postingForm.location" name="location">
+        <ion-option value="Helsinki">Helsinki</ion-option>
+        <ion-option value="Vantaa">Vantaa</ion-option>
+        <ion-option value="Espoo">Espoo</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime
+        name="endTime"
+        [(ngModel)]="postingForm.endTime"
+        displayFormat="D MMM YYYY H:mm"
+        value="2005-06-17T11:06Z"
+      ></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contact to Me</ion-label>
+      <ion-input
+        type="text"
+        name="contact"
+        ngModel
+        [(ngModel)]="postingForm.contact"
+        required
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contact Time from:</ion-label>
+      <ion-datetime
+        [(ngModel)]="postingForm.contactTimeFrom"
+        name="contactTimeF"
+        displayFormat="h:mm A"
+        minuteValues="0,15,30,45"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contact Time to:</ion-label>
+      <ion-datetime
+        [(ngModel)]="postingForm.contactTimeTo"
+        name="contactTimeTo"
+        displayFormat="h:mm A"
+        minuteValues="0,15,30,45"
+      ></ion-datetime>
+    </ion-item>
+
+    <button
+      ion-button
+      block
+      type="submit"
+      (click)="updateFile(navParams.data.file_id)"
+    >
+      Update
+    </button>
+  </form>
+  <ion-fab right top>
+    <button ion-fab color="danger" (click)="deletePost(navParams.data.file_id)">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

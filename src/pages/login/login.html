@@ -1,18 +1,43 @@
-<!--
-  Generated template for the LoginPage page.
+<ion-content padding center text-center>
+  <ion-title
+    ><img
+      alt="logo"
+      height="100"
+      src="../../assets/icon/home.svg"
+    />GIVA</ion-title
+  >
+  <form #formPosting="ngForm">
+    <ion-item>
+      <ion-label> <ion-icon item-left name="contact"></ion-icon></ion-label>
+      <ion-input
+        placeholder="Username"
+        type="text"
+        [(ngModel)]="user.username"
+        name="username"
+        ngModel
+        required
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label
+        ><ion-icon item-start size="large" name="lock"></ion-icon
+      ></ion-label>
+      <ion-input
+        placeholder="Password"
+        type="Password"
+        ngModel
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      >
+      </ion-input>
+    </ion-item>
+    <!-- <i>Forgot Password</i> -->
+    <button ion-button full (click)="loginClicked(formSignIn)">
+      <ion-icon name="log-in"></ion-icon> Log In
+    </button>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
+    <i (click)="goRegisterPage()"> Sign Up</i>
+  </form>
 </ion-content>
