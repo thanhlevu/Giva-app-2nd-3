@@ -31,6 +31,12 @@ export class MediaProvider {
     );
   }
 
+  getMyItems() {
+    return this.http.get<Picture[]>(
+      this.configUrl + "/media/user/" + this.user_id
+    );
+  }
+
   onRegister(formValues) {
     const url = this.configUrl + "/users";
 
@@ -88,7 +94,7 @@ export class MediaProvider {
         "x-access-token": localStorage.getItem("token")
       })
     };
-    return this.http.post<LoginResponse>(
+    return this.http.post<TagsResponse>(
       this.configUrl + "/media",
       data,
       httpOptions
@@ -102,5 +108,20 @@ export class MediaProvider {
       })
     };
     return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
+  }
+  addTag_Giva(file_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.post(
+      this.configUrl + "/tags",
+      {
+        file_id: file_id,
+        tag: "GIVA"
+      },
+      httpOptions
+    );
   }
 }

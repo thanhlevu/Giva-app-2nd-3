@@ -55,14 +55,14 @@ export interface UsernameResponse {
 }
 
 export interface TagsResponse {
-  file_id: number;
-  tag: string;
-  filename: string;
-  user_id: number;
-  description: string;
-  filesize: number;
-  mime_type: string;
-  tag_id: number;
-  time_added: string;
-  title: string;
+  file_id?: number;
+  tag?: string;
+  filename?: string;
+  user_id?: number;
+  description?: string;
+  filesize?: number;
+  mime_type?: string;
+  tag_id?: number;
+  time_added?: string;
+  title?: string;
 }

@@ -10,7 +10,7 @@ import {
   ActionSheet,
   ActionSheetOptions
 } from "@ionic-native/action-sheet/ngx";
-import { PostingForm } from "../../intefaces/posting";
+import { PostingForm, TagsResponse } from "../../intefaces/posting";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 
@@ -52,7 +52,7 @@ export class PostingPage {
       imageData => {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
-        this.myPhoto = "data:image/jpeg;base64," + imageData;
+        this.fileData = "data:image/jpeg;base64," + imageData;
       },
       err => {
         console.log(err);
@@ -74,7 +74,7 @@ export class PostingPage {
       imageData => {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
-        this.myPhoto = "data:image/jpeg;base64," + imageData;
+        this.fileData = "data:image/jpeg;base64," + imageData;
       },
       err => {
         console.log(err);
@@ -132,9 +132,15 @@ export class PostingPage {
     console.log(this.postingForm.description);
 
     console.log(fd);
-    this.mediaProvider.upload(fd).subscribe(res => {
+    this.mediaProvider.upload(fd).subscribe((UploadResponse: TagsResponse) => {
       //set time out in 2s
-      console.log(res);
+      console.log(UploadResponse);
+      this,
+        this.mediaProvider
+          .addTag_Giva(UploadResponse.file_id)
+          .subscribe((TagResponse: TagsResponse) => {
+            console.log(TagResponse);
+          });
       // hide spinner
       this.loading();
     });

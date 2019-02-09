@@ -18,6 +18,7 @@ import { Camera } from "@ionic-native/camera";
 import { PhotoLibrary } from "@ionic-native/photo-library";
 import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
+import { PostEditPage } from "../pages/post-edit/post-edit";
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
@@ -32,7 +33,8 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     UserInfoPage,
     PostingPage,
     EditInfoPage,
-    PostViewPage
+    PostViewPage,
+    PostEditPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     MyItemsPage,
     UserInfoPage,
     PostingPage,
-    EditInfoPage
+    EditInfoPage,
+    PostEditPage
   ],
   providers: [
     StatusBar,
