@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -10,7 +10,7 @@ import {
   ActionSheet,
   ActionSheetOptions
 } from "@ionic-native/action-sheet/ngx";
-import { PostingForm } from "../../intefaces/posting";
+import { PostingForm, PostEdit } from "../../intefaces/posting";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 
@@ -29,7 +29,7 @@ import { MediaProvider } from "../../providers/media/media";
   selector: "page-post-edit",
   templateUrl: "post-edit.html"
 })
-export class PostEditPage {
+export class PostEditPage implements OnInit {
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
@@ -43,6 +43,53 @@ export class PostEditPage {
     private loadingCtrl: LoadingController
   ) {}
 
+  ngOnInit() {
+    this.fileData =
+      "https://media.mw.metropolia.fi/wbma/uploads/" +
+      this.navParams.data.filename;
+    this.postingForm.title = this.navParams.data.title;
+    this.postingForm.info_item = this.navParams.data.description
+      .split("$")[0]
+      .split(":")[1];
+    console.log(
+      "de:" + this.navParams.data.description.split("$")[0].split(":")[1]
+    );
+    this.postingForm.category = this.navParams.data.description
+      .split("$")[1]
+      .split(":")[1];
+    this.postingForm.location = this.navParams.data.description
+      .split("$")[2]
+      .split(":")[1];
+    this.postingForm.endTime =
+      this.navParams.data.description.split("$")[3].split(":")[1] +
+      ":" +
+      this.navParams.data.description.split("$")[3].split(":")[2] +
+      ":" +
+      this.navParams.data.description.split("$")[3].split(":")[3];
+    console.log(
+      "here: $$$ ",
+      this.navParams.data.description.split("$")[3].split(":")[1] +
+        ":" +
+        this.navParams.data.description.split("$")[3].split(":")[2] +
+        ":" +
+        this.navParams.data.description.split("$")[3].split(":")[3]
+    );
+    this.postingForm.contact = this.navParams.data.description
+      .split("$")[4]
+      .split(":")[1];
+    this.postingForm.contactTimeFrom =
+      this.navParams.data.description.split("$")[5].split(":")[1] +
+      ":" +
+      this.navParams.data.description.split("$")[6].split(":")[2];
+    this.postingForm.contactTimeTo =
+      this.navParams.data.description.split("$")[6].split(":")[1] +
+      ":" +
+      this.navParams.data.description.split("$")[6].split(":")[2];
+
+    this.postingForm.reserved = this.navParams.data.description
+      .split("$")[7]
+      .split(":")[1];
+  }
   ionViewDidLoad() {
     console.log("ionViewDidLoad PostPage");
   }
@@ -112,39 +159,42 @@ export class PostEditPage {
     );
   }
 
-  uploadImage() {
+  updateFile(file_id) {
     this.postingForm.description =
+      "description:" +
       this.postingForm.info_item +
-      " category: " +
+      "$category:" +
       this.postingForm.category +
-      " location: " +
+      "$location:" +
       this.postingForm.location +
-      " endTime: " +
+      "$endTime:" +
       this.postingForm.endTime +
-      " contact: " +
+      "$contact:" +
       this.postingForm.contact +
-      " contactTimeFrom: " +
+      "$contactTimeFrom:" +
       this.postingForm.contactTimeFrom +
-      " contactTimeTo: " +
+      "$contactTimeTo:" +
       this.postingForm.contactTimeTo +
-      " reserved: " +
+      "$reserved:" +
       this.postingForm.reserved;
-    console.log("test: ", this.postingForm.description);
 
-    const fd = new FormData();
-    fd.append("file", this.postingForm.file);
-    fd.append("title", this.postingForm.title);
-
-    fd.append("description", this.postingForm.description);
-    console.log(this.postingForm.description);
-
-    console.log(fd);
-    this.mediaProvider.upload(fd).subscribe(res => {
+    let newFormData: PostEdit = {};
+    newFormData.title = this.postingForm.title;
+    newFormData.description = this.postingForm.description;
+    console.log("test: ", newFormData);
+    this.mediaProvider.updateFileInfo(file_id, newFormData).subscribe(res => {
       //set time out in 2s
       console.log(res);
       // hide spinner
       this.loading();
     });
+  }
+
+  deletePost(file_id) {
+    this.mediaProvider.deleteFile(file_id).subscribe(res => {
+      console.log(res);
+    });
+    this.navCtrl.pop().catch();
   }
 
   showPreview() {
@@ -166,14 +216,12 @@ export class PostEditPage {
   handleChange($event) {
     console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
-
     this.showPreview();
   }
 
   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();
-
     setTimeout(() => {
       loading.dismiss();
       this.navCtrl.pop().catch();

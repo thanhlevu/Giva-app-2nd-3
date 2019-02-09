@@ -107,20 +107,21 @@ export class PostingPage {
 
   uploadImage() {
     this.postingForm.description =
+      "description:" +
       this.postingForm.info_item +
-      " category: " +
+      "$category:" +
       this.postingForm.category +
-      " location: " +
+      "$location:" +
       this.postingForm.location +
-      " endTime: " +
+      "$endTime:" +
       this.postingForm.endTime +
-      " contact: " +
+      "$contact:" +
       this.postingForm.contact +
-      " contactTimeFrom: " +
+      "$contactTimeFrom:" +
       this.postingForm.contactTimeFrom +
-      " contactTimeTo: " +
+      "$contactTimeTo:" +
       this.postingForm.contactTimeTo +
-      " reserved: " +
+      "$reserved:" +
       this.postingForm.reserved;
     console.log("test: ", this.postingForm.description);
 

@@ -34,6 +34,7 @@ export class LoginPage {
         console.log(response);
         localStorage.setItem("token", response.token);
         localStorage.setItem("userID", response.user.user_id + "");
+        localStorage.setItem("userEmail", response.user.email);
 
         this.navCtrl.push(HomePage);
         this.mediaprovider.token = response.token;

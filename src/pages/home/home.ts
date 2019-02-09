@@ -25,10 +25,10 @@ export class HomePage implements OnInit {
     public http: HttpClient
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewDidEnter() {
     this.loadItems_GivaTag();
   }
-
   loadItems() {
     return this.http
       .get<Picture[]>("../../assets/test.json")
@@ -63,12 +63,13 @@ export class HomePage implements OnInit {
   }
 
   viewPost(Pic: Picture) {
+    console.log(Pic);
+
     if (Pic.user_id == localStorage.userID) {
       this.navCtrl.push(PostEditPage, Pic);
     } else {
       this.navCtrl.push(PostViewPage, Pic);
     }
-    // console.log(Pic);
   }
 
   goToPost() {

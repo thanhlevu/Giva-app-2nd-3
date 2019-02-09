@@ -3,7 +3,13 @@
     <ion-card id="image">
       <img [src]="fileData" />
     </ion-card>
-
+    <ion-item>
+      <ion-label>Reverved</ion-label>
+      <ion-toggle
+        name="reserved"
+        [(ngModel)]="postingForm.reserved"
+      ></ion-toggle>
+    </ion-item>
     <ion-item>
       <ion-label>File</ion-label>
       <ion-input
@@ -96,8 +102,18 @@
       ></ion-datetime>
     </ion-item>
 
-    <button ion-button block type="submit" (click)="uploadImage()">
-      Post
+    <button
+      ion-button
+      block
+      type="submit"
+      (click)="updateFile(navParams.data.file_id)"
+    >
+      Update
     </button>
   </form>
+  <ion-fab right top>
+    <button ion-fab color="danger" (click)="deletePost(navParams.data.file_id)">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

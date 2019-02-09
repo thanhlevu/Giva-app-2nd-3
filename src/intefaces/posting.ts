@@ -66,3 +66,8 @@ export interface TagsResponse {
   time_added?: string;
   title?: string;
 }
+
+export interface PostEdit {
+  title?: string;
+  description?: string;
+}

@@ -101,6 +101,19 @@ export class MediaProvider {
     );
   }
 
+  updateFileInfo(file_id, newFormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": localStorage.getItem("token")
+      })
+    };
+    return this.http.put<TagsResponse>(
+      this.configUrl + "/media/" + file_id,
+      newFormData,
+      httpOptions
+    );
+  }
+
   updateUserInfo(userInfo: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -109,6 +122,16 @@ export class MediaProvider {
     };
     return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
   }
+
+  deleteFile(file_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.delete(this.configUrl + "/media/" + file_id, httpOptions);
+  }
+
   addTag_Giva(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
