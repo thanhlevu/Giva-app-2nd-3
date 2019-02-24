@@ -26,4 +26,8 @@ export class PostViewPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad PostViewPage");
   }
+
+  pin(){
+    
+  }
 }

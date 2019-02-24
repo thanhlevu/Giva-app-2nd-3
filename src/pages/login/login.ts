@@ -5,6 +5,7 @@ import { HomePage } from "../home/home";
 import { UserInfoPage } from "../user-info/user-info";
 import { MediaProvider } from "../../providers/media/media";
 import { User, LoginResponse, UsernameResponse } from "../../intefaces/posting";
+import { TabsPage } from "../tabs/tabs";
 
 @Component({
   selector: "page-login",
@@ -36,7 +37,7 @@ export class LoginPage {
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
 
-        this.navCtrl.push(HomePage);
+        this.navCtrl.push(TabsPage);
         this.mediaprovider.token = response.token;
         this.mediaprovider.loggedIn = true;
         this.mediaprovider.user_id = response.user.user_id;

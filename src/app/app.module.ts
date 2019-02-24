@@ -19,9 +19,13 @@ import { PhotoLibrary } from "@ionic-native/photo-library";
 import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
+import { TabsPage } from "../pages/tabs/tabs";
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
+import { take } from "rxjs/operator/take";
+import { ReservedPage } from "../pages/reserved/reserved";
+import { ProfilePage } from "../pages/profile/profile";
 @NgModule({
   declarations: [
     MyApp,
@@ -34,7 +38,10 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     PostingPage,
     EditInfoPage,
     PostViewPage,
-    PostEditPage
+    PostEditPage,
+    TabsPage,
+    ReservedPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +61,11 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     UserInfoPage,
     PostingPage,
     EditInfoPage,
-    PostEditPage
+    PostEditPage,
+    TabsPage,
+    ReservedPage,
+    ProfilePage
+    
   ],
   providers: [
     StatusBar,

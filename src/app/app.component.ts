@@ -10,6 +10,7 @@ import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
 
 import { NavController } from "ionic-angular";
+import { TabsPage } from "../pages/tabs/tabs";
 
 @Component({
   templateUrl: "app.html"
