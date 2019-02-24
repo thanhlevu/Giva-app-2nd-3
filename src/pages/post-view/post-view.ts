@@ -28,6 +28,6 @@ export class PostViewPage {
   }
 
   pin(){
-    
+    console.log("mo");
   }
 }
