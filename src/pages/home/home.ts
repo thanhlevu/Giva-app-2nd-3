@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { Picture } from "../../intefaces/posting";
+import { CategoriesPage } from "../categories/categories";
 
 import { HttpClient } from "@angular/common/http";
 import { RegisterPage } from "../register/register";
@@ -78,5 +79,9 @@ export class HomePage implements OnInit {
 
   goToMyPosts() {
     this.navCtrl.push(MyItemsPage);
+  }
+
+  search(){
+    this.navCtrl.push(CategoriesPage);
   }
 }

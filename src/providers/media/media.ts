@@ -7,6 +7,8 @@ import {
   LoginResponse,
   TagsResponse
 } from "../../intefaces/posting";
+import { favoriteResponse } from '../../intefaces/posting';
+
 @Injectable()
 export class MediaProvider {
   configUrl = "https://media.mw.metropolia.fi/wbma";
@@ -146,5 +148,21 @@ export class MediaProvider {
       },
       httpOptions
     );
+  }
+  makeFavorite(data:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.post<Response>(this.configUrl+ "/favourites", data,httpOptions);
+  }
+  getAllPins(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.get<favoriteResponse>(this.configUrl+ "/favourites",httpOptions);
   }
 }

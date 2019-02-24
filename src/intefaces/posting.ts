@@ -71,3 +71,10 @@ export interface PostEdit {
   title?: string;
   description?: string;
 }
+
+export interface favoriteResponse{
+  favourite_id: number;
+  file_id: number;
+  user_id: number;
+  
+} 

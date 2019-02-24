@@ -20,12 +20,14 @@ import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
+import { ReservedPage } from "../pages/reserved/reserved";
+import { ProfilePage } from "../pages/profile/profile";
+import { CategoriesPage } from "../pages/categories/categories";
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { take } from "rxjs/operator/take";
-import { ReservedPage } from "../pages/reserved/reserved";
-import { ProfilePage } from "../pages/profile/profile";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -41,7 +43,8 @@ import { ProfilePage } from "../pages/profile/profile";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage
+    ProfilePage,
+    CategoriesPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ import { ProfilePage } from "../pages/profile/profile";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage
+    ProfilePage,
+    CategoriesPage
     
   ],
   providers: [
