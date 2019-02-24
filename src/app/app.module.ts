@@ -23,6 +23,7 @@ import { TabsPage } from "../pages/tabs/tabs";
 import { ReservedPage } from "../pages/reserved/reserved";
 import { ProfilePage } from "../pages/profile/profile";
 import { CategoriesPage } from "../pages/categories/categories";
+import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
@@ -44,7 +45,8 @@ import { take } from "rxjs/operator/take";
     TabsPage,
     ReservedPage,
     ProfilePage,
-    CategoriesPage
+    CategoriesPage,
+    SpecificCategoryPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { take } from "rxjs/operator/take";
     TabsPage,
     ReservedPage,
     ProfilePage,
-    CategoriesPage
+    CategoriesPage,
+    SpecificCategoryPage
     
   ],
   providers: [

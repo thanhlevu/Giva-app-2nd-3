@@ -109,6 +109,7 @@ export class PostingPage {
     if (this.postingForm.contact == undefined) {
       this.postingForm.contact = localStorage.userEmail;
     }
+    
     this.postingForm.description =
       "description:" +
       this.postingForm.info_item +

@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { SpecificCategoryPage } from "../specific-category/specific-category";
 
-/**
- * Generated class for the CategoriesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,6 +10,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategoriesPage {
 
+  categories: Array<String> = ["Electronics","Furnitures","Clothes & Accesories", "Vehicles", "Others"]
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -22,4 +19,9 @@ export class CategoriesPage {
     console.log('ionViewDidLoad CategoriesPage');
   }
 
+  onClick(item){
+    this.navCtrl.push(SpecificCategoryPage,{
+      category: item
+    });
+  }
 }
