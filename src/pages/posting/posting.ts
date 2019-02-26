@@ -23,6 +23,8 @@ import { MediaProvider } from "../../providers/media/media";
   templateUrl: "posting.html"
 })
 export class PostingPage {
+
+  data = {};
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
@@ -144,17 +146,27 @@ export class PostingPage {
         this.mediaProvider
           .addTag_Giva(UploadResponse.file_id)
           .subscribe((TagResponse: TagsResponse) => {
-            console.log(TagResponse);
+            this.addCategoryTag(UploadResponse.file_id,this.postingForm.category);
+            console.log("First: ",TagResponse);
           });
-          console.log(this.postingForm.description);
-          this.mediaProvider.addTag_category(UploadResponse.file_id, this.postingForm.description).subscribe(
-            (TagResponse: TagsResponse) => {
-              console.log(TagResponse)
-            }
-          );
       // hide spinner
       this.loading();
     });
+  }
+  addCategoryTag(id, category){
+    
+    this.data = {
+      "file_id": id,
+      "tag": "GIVA_"+category
+    }
+    console.log(this.data);
+   this.mediaProvider
+    .addTag_category(this.data)
+    .subscribe(
+      (TagResponse: TagsResponse) => {
+        console.log("Second: ", TagResponse);
+      }
+    );
   }
 
   showPreview() {

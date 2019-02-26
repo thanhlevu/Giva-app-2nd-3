@@ -149,21 +149,16 @@ export class MediaProvider {
       httpOptions
     );
   }
-  addTag_category(file_id,category) {
+  addTag_category(data) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": this.token
       })
     };
-    return this.http.post(
-      this.configUrl + "/tags",
-      {
-        file_id: file_id,
-        tag: "GIVA_"+ category,
-      },
-      httpOptions
-    );
+    return this.http.post(this.configUrl + "/tags",data,httpOptions);
   }
+
+  
   makeFavorite(data:any){
     const httpOptions = {
       headers: new HttpHeaders({
