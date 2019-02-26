@@ -38,9 +38,10 @@ export class SpecificCategoryPage {
       });
   }
   loadTrue(){
+    console.log(this.picArray);
     this.picArray.forEach(data =>{
-      if(data.description.includes("description:")){
-      console.log(data.description.slice(data.description.indexOf("description"),data.description.indexOf("description:")+ 9))
+      if(data.description.search("description") >= 0){
+
       }
     })
   }

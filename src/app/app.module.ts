@@ -28,6 +28,8 @@ import { SpecificCategoryPage } from "../pages/specific-category/specific-catego
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { take } from "rxjs/operator/take";
+import { SizePipe } from "../pipes/size/size";
+import { PipesModule } from "../pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { take } from "rxjs/operator/take";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +84,8 @@ import { take } from "rxjs/operator/take";
     HttpModule,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    MediaProvider
+    MediaProvider,
+    PipesModule
   ]
 })
 export class AppModule {}

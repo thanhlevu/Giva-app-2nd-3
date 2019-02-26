@@ -13,10 +13,10 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="back">
 <ion-list *ngFor="let item of categories">
-  <ion-item (click)="onClick(item)">
-      <h1>{{item}}</h1>
+  <ion-item (click)="onClick(item)" class="item">
+      <h1 class="name">{{item}}</h1>
   </ion-item>
 </ion-list>
 

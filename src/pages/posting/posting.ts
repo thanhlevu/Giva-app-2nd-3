@@ -146,6 +146,12 @@ export class PostingPage {
           .subscribe((TagResponse: TagsResponse) => {
             console.log(TagResponse);
           });
+          console.log(this.postingForm.description);
+          this.mediaProvider.addTag_category(UploadResponse.file_id, this.postingForm.description).subscribe(
+            (TagResponse: TagsResponse) => {
+              console.log(TagResponse)
+            }
+          );
       // hide spinner
       this.loading();
     });

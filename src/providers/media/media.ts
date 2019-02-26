@@ -149,6 +149,21 @@ export class MediaProvider {
       httpOptions
     );
   }
+  addTag_category(file_id,category) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.post(
+      this.configUrl + "/tags",
+      {
+        file_id: file_id,
+        tag: "GIVA_"+ category,
+      },
+      httpOptions
+    );
+  }
   makeFavorite(data:any){
     const httpOptions = {
       headers: new HttpHeaders({
@@ -163,6 +178,14 @@ export class MediaProvider {
         'X-access-token': this.token,
       })
     };
-    return this.http.get<favoriteResponse>(this.configUrl+ "/favourites",httpOptions);
+    return this.http.get<favoriteResponse[]>(this.configUrl+ "/favourites",httpOptions);
+  }
+  deleteFavourite(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.delete(this.configUrl+ "/favourites/file/"+id,httpOptions);
   }
 }

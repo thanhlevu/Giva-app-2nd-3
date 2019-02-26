@@ -73,8 +73,10 @@ export interface PostEdit {
 }
 
 export interface favoriteResponse{
-  favourite_id: number;
-  file_id: number;
-  user_id: number;
-  
-} 
+  favourite_id?: number;
+  file_id?: number;
+  user_id?: number;
+}
+export interface Message{
+  message: String;
+}
