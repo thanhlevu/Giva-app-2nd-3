@@ -8,6 +8,7 @@ import { RegisterPage } from "../pages/register/register";
 import { LoginPage } from "../pages/login/login";
 import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
+import { GoogleMapPage } from "../pages/google-map/google-map";
 
 import { NavController } from "ionic-angular";
 
@@ -15,7 +16,7 @@ import { NavController } from "ionic-angular";
   templateUrl: "app.html"
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = GoogleMapPage;
 
   constructor(
     platform: Platform,

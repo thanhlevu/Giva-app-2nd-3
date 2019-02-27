@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { HttpClientModule } from "@angular/common/http";
+import { GoogleMapPage } from "../pages/google-map/google-map";
 
 import { MyApp } from "./app.component";
 import { RegisterPage } from "../pages/register/register";
@@ -34,7 +35,8 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     PostingPage,
     EditInfoPage,
     PostViewPage,
-    PostEditPage
+    PostEditPage,
+    GoogleMapPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     UserInfoPage,
     PostingPage,
     EditInfoPage,
-    PostEditPage
+    PostEditPage,
+    GoogleMapPage
   ],
   providers: [
     StatusBar,
