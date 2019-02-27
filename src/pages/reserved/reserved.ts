@@ -5,6 +5,12 @@ import { Picture, Message } from '../../intefaces/posting';
 import { favoriteResponse } from '../../intefaces/posting';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+/***
+ * 
+ * Problem with pictures
+ * 
+ * 
+ */
 
 @IonicPage()
 @Component({

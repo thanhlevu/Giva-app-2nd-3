@@ -3,7 +3,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Picture } from '../../intefaces/posting';
 import { PostViewPage } from '../post-view/post-view';
+import { Observable } from 'rxjs/Observable';
 
+/**
+ * 
+ * Pictures are showing up
+ * 
+ */
 @IonicPage()
 @Component({
   selector: 'page-specific-category',
@@ -11,26 +17,25 @@ import { PostViewPage } from '../post-view/post-view';
 })
 export class SpecificCategoryPage {
 
-  url = "https://media.mw.metropolia.fi/wbma/media/";
+  url = "https://media.mw.metropolia.fi/wbma/uploads/";
   thumbnail: string;
   selectedItem: string;
   picArray: Picture[];
-  TrueArray: Picture[];
+  picArray1: Observable<Picture[]>;
   category;
-  sendPic: Picture;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
     this.selectedItem = navParams.get('category');
-    console.log(this.selectedItem);
   }
 
   ionViewDidLoad() {
-    this.loadItems_GivaTag(this.selectedItem);
+    //this.loadItems_GivaTag(this.selectedItem);
+    this.loadSpecItems(this.selectedItem);
   }
 
   loadItems_GivaTag(category) {
     this.category = "GIVA_"+ category;
-    console.log(this.category);
     return this.http
       .get<Picture[]>("http://media.mw.metropolia.fi/wbma/tags/"+ this.category)
       .subscribe(items => {
@@ -38,9 +43,21 @@ export class SpecificCategoryPage {
         this.picArray = items.sort(
           (a, b) => Number(b.file_id) - Number(a.file_id)
         );
-        console.log("G:", this.picArray);
       });
   }
+  loadSpecItems(category){
+    console.log("loading");
+    this.category = "GIVA_"+ category;
+    return this.http.get<Picture[]>("http://media.mw.metropolia.fi/wbma/tags/"+ this.category)
+    .subscribe(items =>{
+      this.picArray = items.sort(
+      (a, b) => Number(b.file_id) - Number(a.file_id)
+    );
+    }
+    );
+    console.log(this.picArray);
+  }
+
   viewPost(pic){
 this.navCtrl.push(PostViewPage,{
   picture: pic
