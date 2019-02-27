@@ -6,10 +6,10 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { HttpClientModule } from "@angular/common/http";
 
 import { MyApp } from "./app.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterPage } from "../pages/register/register";
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from "../pages/home/home";
-import { PinsPage } from "../pages/pins/pins";
 import { MyItemsPage } from "../pages/my-items/my-items";
 import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
@@ -20,19 +20,21 @@ import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
+import { LandingPage } from '../pages/landing/landing';
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { take } from "rxjs/operator/take";
 import { ReservedPage } from "../pages/reserved/reserved";
 import { ProfilePage } from "../pages/profile/profile";
+import { PipesModule } from '../pipes/pipes.module';
 @NgModule({
   declarations: [
     MyApp,
     RegisterPage,
     LoginPage,
     HomePage,
-    PinsPage,
+    LandingPage,
     MyItemsPage,
     UserInfoPage,
     PostingPage,
@@ -46,8 +48,10 @@ import { ProfilePage } from "../pages/profile/profile";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +59,7 @@ import { ProfilePage } from "../pages/profile/profile";
     RegisterPage,
     LoginPage,
     HomePage,
-    PinsPage,
+    LandingPage,
     PostViewPage,
     MyItemsPage,
     UserInfoPage,
@@ -65,7 +69,7 @@ import { ProfilePage } from "../pages/profile/profile";
     TabsPage,
     ReservedPage,
     ProfilePage
-    
+
   ],
   providers: [
     StatusBar,
@@ -74,7 +78,8 @@ import { ProfilePage } from "../pages/profile/profile";
     HttpModule,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    MediaProvider
+    MediaProvider,
+    PipesModule
   ]
 })
-export class AppModule {}
+export class AppModule { }

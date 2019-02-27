@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
+    "@ionic/lab": "1.0.21",
     "tslint": "^5.12.1",
     "tslint-ionic-rules": "0.0.21",
     "typescript": "~2.6.2"

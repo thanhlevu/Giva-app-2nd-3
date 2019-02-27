@@ -9,50 +9,53 @@ import {
 } from "../../intefaces/posting";
 @Injectable()
 export class MediaProvider {
-  configUrl = "https://media.mw.metropolia.fi/wbma";
-  picArray: Picture[];
+  uploadFilePath = 'api/uploads/';
   loggedIn = false;
   token: string;
   user_id: number;
+  user: User = null;
+
   constructor(public http: HttpClient) {
-    console.log("Hello MediaProvider Provider");
+    // console.log("Hello MediaProvider Provider");
   }
+
   getAllMedia() {
-    return this.http.get<Picture[]>(this.configUrl + "/media");
+    return this.http.get<Picture[]>('api/media');
   }
 
   getSingleMedia(id) {
-    return this.http.get<Picture>(this.configUrl + "/media/" + id);
+    return this.http.get<Picture>('api/media/' + id);
   }
 
   getAvatars() {
-    return this.http.get<TagsResponse[]>(
-      "https://media.mw.metropolia.fi/wbma/tags/profile"
-    );
+    return this.http.get<TagsResponse[]>('api/tags/profile');
   }
 
   getMyItems() {
-    return this.http.get<Picture[]>(
-      this.configUrl + "/media/user/" + this.user_id
-    );
+    return this.http.get<Picture[]>('api/media/user/' + this.user_id);
+  }
+
+  getFilesByTag(tag: string) {
+    // single file
+    return this.http.get<Picture[]>('api/tags/' + tag);
   }
 
   onRegister(formValues) {
-    const url = this.configUrl + "/users";
+    const url = 'api/users';
 
     this.http.post(url, formValues).subscribe(status => {
-      alert(status["message"]);
+      alert(status['message']);
     });
   }
 
   login(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-type": "application/json"
+        'Content-type': 'application/json'
       })
     };
     return this.http.post<LoginResponse>(
-      this.configUrl + "/login",
+      'api/login',
       user,
       httpOptions
     );
@@ -60,29 +63,29 @@ export class MediaProvider {
   register(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-type": "application/json"
+        'Content-type': 'application/json'
       })
     };
     delete user.password2;
     return this.http.post<LoginResponse>(
-      this.configUrl + "/users",
+      'api/users',
       user,
       httpOptions
     );
   }
   checkIfUserExists(user: User) {
-    return this.http.get(this.configUrl + "/users/username/" + user.username);
+    return this.http.get('api/users/username/' + user.username);
   }
 
   getUsersInfo() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        'x-access-token': this.token
       })
     };
     if (this.user_id) {
       return this.http.get(
-        this.configUrl + "/users/" + this.user_id,
+        'api/users/' + this.user_id,
         httpOptions
       );
     }
@@ -91,11 +94,11 @@ export class MediaProvider {
   upload(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": localStorage.getItem("token")
+        'x-access-token': localStorage.getItem('token')
       })
     };
     return this.http.post<TagsResponse>(
-      this.configUrl + "/media",
+      'api/media',
       data,
       httpOptions
     );
@@ -104,11 +107,11 @@ export class MediaProvider {
   updateFileInfo(file_id, newFormData) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": localStorage.getItem("token")
+        'x-access-token': localStorage.getItem('token')
       })
     };
     return this.http.put<TagsResponse>(
-      this.configUrl + "/media/" + file_id,
+      'api/media/' + file_id,
       newFormData,
       httpOptions
     );
@@ -117,32 +120,32 @@ export class MediaProvider {
   updateUserInfo(userInfo: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        'x-access-token': this.token
       })
     };
-    return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
+    return this.http.put('api/users', userInfo, httpOptions);
   }
 
   deleteFile(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        'x-access-token': this.token
       })
     };
-    return this.http.delete(this.configUrl + "/media/" + file_id, httpOptions);
+    return this.http.delete('api/media/' + file_id, httpOptions);
   }
 
   addTag_Giva(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        'x-access-token': this.token
       })
     };
     return this.http.post(
-      this.configUrl + "/tags",
+      'api/tags',
       {
         file_id: file_id,
-        tag: "GIVA"
+        tag: 'GIVA'
       },
       httpOptions
     );

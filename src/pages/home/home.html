@@ -1,19 +1,8 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title> Ionic Blank </ion-title>
-    <ion-buttons end>
-      <button ion-fab (click)="goToPost()">
-        <ion-icon name="add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let pic of picArray" (click)="viewPost(pic)">
       <ion-thumbnail item-start>
-        <img [src]="src + pic.filename" />
+        <img [src]="mediaProvider.uploadFilePath + (pic.file_id | thumbnail: 'small' | async)" [alt]="pic.title" />
       </ion-thumbnail>
       <h2>{{ pic.title }}</h2>
       <p>{{ pic.description }}</p>
@@ -22,9 +11,4 @@
       </button>
     </ion-item>
   </ion-list>
-  <ion-fab right bottom>
-    <button ion-fab color="blue" (click)="goToMyPosts()">
-      <ion-icon name="folder-open"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>

@@ -1,22 +1,15 @@
-import { Component } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from "../pages/home/home";
-import { RegisterPage } from "../pages/register/register";
-import { LoginPage } from "../pages/login/login";
-import { UserInfoPage } from "../pages/user-info/user-info";
-import { PostingPage } from "../pages/posting/posting";
-
-import { NavController } from "ionic-angular";
-import { TabsPage } from "../pages/tabs/tabs";
+import { LandingPage } from './../pages/landing/landing';
 
 @Component({
-  templateUrl: "app.html"
+  templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = LandingPage;
 
   constructor(
     platform: Platform,

@@ -1,5 +1,7 @@
-<ion-tabs>
-    <ion-tab [root]=homePage tabTitle="home" tabIcon="home"></ion-tab>
-  <ion-tab [root]=reservedPage tabTitle="reserved" tabIcon="basket"></ion-tab>
-  <ion-tab [root]=profilePage tabTitle="profile" tabIcon="person"></ion-tab>
+<ion-tabs (ionChange)="tabChanged($event)">
+  <ion-tab [root]="homeRoot" tabTitle="home" tabIcon="home"></ion-tab>
+  <ion-tab [show]="!mediaProvider.loggedIn" [root]="loginRoot" tabIcon="log-in" tabTitle="Login"></ion-tab>
+  <ion-tab [show]="mediaProvider.loggedIn" [root]=reservedRoot tabTitle="reserved" tabIcon="basket"></ion-tab>
+  <ion-tab [show]="mediaProvider.loggedIn" [root]=profileRoot tabTitle="profile" tabIcon="person"></ion-tab>
+  <ion-tab [show]="mediaProvider.loggedIn" [root]="postingRoot" tabIcon="cloud-upload" tabTitle="Upload"></ion-tab>
 </ion-tabs>
