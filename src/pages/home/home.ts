@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Picture } from '../../intefaces/posting';

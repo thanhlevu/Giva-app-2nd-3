@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { MediaProvider } from "../../providers/media/media";
-import { HttpClient } from "@angular/common/http";
-import { Picture } from "../../intefaces/posting";
-import { PostViewPage } from "../post-view/post-view";
-import { PostEditPage } from "../post-edit/post-edit";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MediaProvider } from '../../providers/media/media';
+import { HttpClient } from '@angular/common/http';
+import { Picture } from '../../intefaces/posting';
+import { GetByTagPipe } from './../../pipes/get-by-tag/get-by-tag';
+import { PostViewPage } from '../post-view/post-view';
+import { PostEditPage } from '../post-edit/post-edit';
 
 /**
  * Generated class for the MyItemsPage page.
@@ -15,27 +16,45 @@ import { PostEditPage } from "../post-edit/post-edit";
 
 @IonicPage()
 @Component({
-  selector: "page-my-items",
-  templateUrl: "my-items.html"
+  selector: 'page-my-items',
+  templateUrl: 'my-items.html'
 })
-export class MyItemsPage implements OnInit {
-  picArray: Picture[];
+export class MyItemsPage {
+  picArray: Picture[] = [];
+  tagPipe: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public mediaProvider: MediaProvider,
     public http: HttpClient
-  ) {}
-
-  ngOnInit() {
-    return this.mediaProvider.getMyItems().subscribe(data => {
-      console.log(data);
-      this.picArray = data;
-    });
+  ) {
+    this.tagPipe = new GetByTagPipe(this.mediaProvider);
+  }
+  /*
+    ionViewDidLoad() {
+      console.log('ionViewDidLoad MyItemsPage');
+      return this.mediaProvider.getMyItems().subscribe(data => {
+        this.picArray = data;
+        console.log(this.picArray);
+      });
+    }
+    this.picArray = files.sort(
+            (a, b) => Number(b.file_id) - Number(a.file_id)
+          );
+  */
+  ionViewDidLoad() {
+    this.loadMyItems();
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad MyItemsPage");
+  loadMyItems() {
+    this.tagPipe.transform('GIVA').then((files: Picture[]) => {
+      files.forEach((file: Picture) => {
+        if (file.user_id === this.mediaProvider.user.user_id) {
+          this.picArray.push(file);
+        }
+      });
+      return this.picArray.sort((a, b) => Number(b.file_id) - Number(a.file_id));
+    });
   }
 
   viewPost(Pic: Picture) {
