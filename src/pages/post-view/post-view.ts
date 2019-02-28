@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Picture } from "../../intefaces/posting";
-import { GoogleMapPage } from "../google-map/google-map";
 
 /**
  * Generated class for the PostViewPage page.
@@ -26,9 +25,5 @@ export class PostViewPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad PostViewPage");
-  }
-
-  openGoogleMap() {
-    this.navCtrl.push(GoogleMapPage);
   }
 }

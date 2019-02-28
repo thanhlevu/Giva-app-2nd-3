@@ -26,6 +26,10 @@ export interface Picture {
   time_added: string;
   screenshot?: string;
   thumbnails?: Thumbnail;
+  geolocation?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface Thumbnail {
