@@ -15,7 +15,7 @@ import { NavController } from "ionic-angular";
   templateUrl: "app.html"
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = HomePage;
 
   constructor(
     platform: Platform,

@@ -19,9 +19,23 @@ import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { GoogleMapComponent } from "../components/google-map/google-map";
+import { Geolocation } from "@ionic-native/geolocation";
 
 import { HttpModule } from "@angular/http";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  Environment,
+  Polyline,
+  Spherical
+} from "@ionic-native/google-maps";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -61,6 +75,8 @@ import { PhotoViewer } from "@ionic-native/photo-viewer";
     Camera,
     PhotoViewer,
     HttpModule,
+    Geolocation,
+    Spherical,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MediaProvider
