@@ -166,7 +166,6 @@ export class GoogleMapComponent {
 
     // onWillDismiss function will be executed AFTER dismissing the SettingMap Modal
     settingMapModal.onDidDismiss(directionLineData => {
-      console.log("directionLineData", directionLineData);
       this.origin = directionLineData.origin;
 
       this.selectedMode = directionLineData.travelMode;

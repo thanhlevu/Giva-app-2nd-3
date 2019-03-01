@@ -40,10 +40,6 @@ export class SettingMapPage {
     this.vehicle = localStorage.getItem("vehicle");
 
     // get the starting point saved from GoogleMapPage
-    console.log(
-      "localStorage.getItem(departure_point)",
-      localStorage.getItem("departure_point")
-    );
 
     if (localStorage.getItem("departure_point")) {
       this.originGeo = localStorage.getItem("departure_point");
@@ -68,28 +64,15 @@ export class SettingMapPage {
     //Get The Route's Info AIzaSyAj6v6LHIeWH3B-Il-AZiXuhMWq3hHsQu8    ====     AIzaSyDHY3SLJrzEYN-nWVsI5ix4dU1hrL5TJ3o
     //https://maps.googleapis.com/maps/api/directions/json?origin=60.221501, 24.778792&destination=helsinky&mode=transit&transit_mode=train&departure_time=now&key=AIzaSyDHY3SLJrzEYN-nWVsI5ix4dU1hrL5TJ3o
 
-    console.log("2this.originGeo: ", this.originGeo);
-    console.log(
-      "2localStorage.getItem(departure_point): ",
-      localStorage.getItem("departure_point")
-    );
-    console.log(
-      "2current_location: ",
-      JSON.parse(localStorage.getItem("current_location")).lat
-    );
-
     if (this.originGeo) {
       this.routeUrl = `/api/directions/json?origin=${this.originGeo}
         &destination=${this.routeData.destinationGeo.lat}, ${
         this.routeData.destinationGeo.lng
       }`;
-      console.log("2this.originGeo IF");
 
       // save or resave the starting point if the user input the new starting point
       localStorage.setItem("departure_point", this.originGeo);
     } else {
-      console.log("2this.originGeo ELSE");
-
       this.routeUrl = `/api/directions/json?origin=${
         JSON.parse(localStorage.getItem("current_location")).lat
       }, ${JSON.parse(localStorage.getItem("current_location")).lng}
@@ -148,8 +131,6 @@ export class SettingMapPage {
       .get(this.routeUrl)
       .subscribe((directionData: DirectionMapJson) => {
         this.directionMapJson = directionData;
-
-        console.log("directionData.status:: ", directionData.status);
 
         // if there is some error == not OK, then give an alert
         if (directionData.status !== "OK") {
