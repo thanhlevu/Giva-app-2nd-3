@@ -16,14 +16,19 @@ import { Picture } from "../../intefaces/posting";
 })
 export class PostViewPage {
   public pic: Picture;
+  a: string;
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ngOnInit() {
     console.log(this.navParams.data);
     this.pic = this.navParams.data;
+    console.log("a", this.a);
+    if (this.a !== undefined) {
+      console.log("YES");
+    } else {
+      console.log("NO");
+    }
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad PostViewPage");
-  }
+  ionViewDidLoad() {}
 }

@@ -45,7 +45,6 @@ export class GoogleMapComponent {
   ) {}
 
   ngOnInit() {
-    //this.initMap();
     this.calculateAndDisplayRoute();
   }
 
@@ -69,7 +68,7 @@ export class GoogleMapComponent {
             lng: currentPosition.coords.longitude
           };
           map.setCenter(that.currentLocation); // adjust the camera to the current location
-
+          console.log("currentLocation: ", that.currentLocation);
           // save the current location to Local Storage
           localStorage.setItem(
             "current_location",
@@ -157,6 +156,7 @@ export class GoogleMapComponent {
       },
       myModalOptions
     );
+
     settingMapModal.present(); // present the Modal
 
     // onWillDismiss function will be executed BEFORE dismissing the SettingMap Modal
@@ -166,6 +166,7 @@ export class GoogleMapComponent {
 
     // onWillDismiss function will be executed AFTER dismissing the SettingMap Modal
     settingMapModal.onDidDismiss(directionLineData => {
+      console.log("directionLineData", directionLineData);
       this.origin = directionLineData.origin;
 
       this.selectedMode = directionLineData.travelMode;
