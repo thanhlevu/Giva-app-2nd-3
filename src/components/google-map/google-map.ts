@@ -1,4 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Geolocation } from "@ionic-native/geolocation";
 import { HttpClient } from "@angular/common/http";
 import "rxjs/add/operator/map";
@@ -25,7 +26,10 @@ declare var google;
 export class GoogleMapComponent {
   @ViewChild("map") mapElement;
   map: any;
-  destination = { lat: 60.259639, lng: 24.845552 };
+  destination = {
+    lat: 0,
+    lng: 0
+  };
   currentLocation: any = "";
   departureTime = new Date();
   transportMode: string; //   ==>    "bus" / "train" / "subway" / "tram" / "rail"
@@ -41,10 +45,23 @@ export class GoogleMapComponent {
     private geolocation: Geolocation,
     public http: HttpClient,
     private spherical: Spherical,
-    private modal: ModalController
+    private modal: ModalController,
+    public navParams: NavParams
   ) {}
 
   ngOnInit() {
+    this.destination.lat = Number(
+      this.navParams.data.description
+        .split("$")[2]
+        .split(":")[1]
+        .split(",")[0]
+    );
+    this.destination.lng = Number(
+      this.navParams.data.description
+        .split("$")[2]
+        .split(":")[1]
+        .split(",")[1]
+    );
     this.calculateAndDisplayRoute();
   }
 

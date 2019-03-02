@@ -15,7 +15,7 @@ export interface PostingForm {
 }
 
 export interface Picture {
-  file_id: number;
+  file_id?: number;
   user_id?: number;
   filename?: string;
   filesize?: number;
@@ -27,9 +27,25 @@ export interface Picture {
   screenshot?: string;
   thumbnails?: Thumbnail;
   geolocation?: {
-    lat: number;
-    lng: number;
+    lat?: number;
+    lng?: number;
   };
+}
+
+export interface PostInfo {
+  title?: string;
+  filename?: string;
+  description?: string;
+  category?: string;
+  end_time?: string;
+  contact?: string;
+  contact_time_from?: string;
+  contact_time_to?: string;
+  geolocation?: {
+    lat?: number;
+    lng?: number;
+  };
+  reserved?: boolean;
 }
 
 export interface Thumbnail {
@@ -162,4 +178,9 @@ export interface DirectionLineData {
     modes: [string]; // BUS, RAIL, SUBWAY, TRAIN, TRAM
     routingPreference: string; // "FEWER_TRANSFERS" or "LESS_WALKING"
   };
+}
+
+export interface Geolocation {
+  lat?: number;
+  lng?: number;
 }

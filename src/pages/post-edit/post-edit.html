@@ -1,3 +1,8 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>post-edit</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding center text-center>
   <form #formPosting="ngForm">
     <ion-card id="image">
@@ -51,15 +56,6 @@
         >
         <ion-option value="Vehicles">Vehicles</ion-option>
         <ion-option value="Others">Others</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Locations</ion-label>
-      <ion-select [(ngModel)]="postingForm.location" name="location">
-        <ion-option value="Helsinki">Helsinki</ion-option>
-        <ion-option value="Vantaa">Vantaa</ion-option>
-        <ion-option value="Espoo">Espoo</ion-option>
       </ion-select>
     </ion-item>
 

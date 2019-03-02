@@ -9,7 +9,7 @@ import {
 } from "../../intefaces/posting";
 @Injectable()
 export class MediaProvider {
-  configUrl = "https://media.mw.metropolia.fi/wbma";
+  configUrl = "http://media.mw.metropolia.fi/wbma";
   picArray: Picture[];
   loggedIn = false;
   token: string;
@@ -27,7 +27,7 @@ export class MediaProvider {
 
   getAvatars() {
     return this.http.get<TagsResponse[]>(
-      "https://media.mw.metropolia.fi/wbma/tags/profile"
+      "http://media.mw.metropolia.fi/wbma/tags/profile"
     );
   }
 
