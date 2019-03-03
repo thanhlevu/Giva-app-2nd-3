@@ -115,7 +115,7 @@ export class HomePage implements OnInit {
         {
           text: 'add',
           handler: data =>
-          this.SearchWithWord(data)
+          this.SearchWithWord(data.result)
           }
       ]
     });
@@ -124,6 +124,13 @@ export class HomePage implements OnInit {
   SearchWithWord(data){
     this.picArray = [];
     console.log(data);
-    this.picArray = this.mediaprovider.SearchWithWord();
+    this.options = {
+      "title":data,
+      "description": data
+    }
+    this.mediaprovider.SearchWithWord(this.options).subscribe(
+      (data: Picture[]) => {
+        this.picArray = data;
+      });
   }
 }

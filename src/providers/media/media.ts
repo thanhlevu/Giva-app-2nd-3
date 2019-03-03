@@ -189,7 +189,7 @@ export class MediaProvider {
         'X-access-token': this.token,
       })
     };
-    return this.http.post(this.configUrl+ "/media/search/"+data,httpOptions);
+    return this.http.post<Picture[]>(this.configUrl+ "/media/search",data,httpOptions);
   }
 }
   
