@@ -89,4 +89,5 @@
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
     </plugin>
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.18" />
+    <engine name="android" spec="7.1.4" />
 </widget>

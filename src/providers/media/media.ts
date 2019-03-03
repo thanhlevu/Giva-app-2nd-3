@@ -183,4 +183,13 @@ export class MediaProvider {
     };
     return this.http.delete(this.configUrl+ "/favourites/file/"+id,httpOptions);
   }
+  SearchWithWord(data){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.post(this.configUrl+ "/media/search/"+data,httpOptions);
+  }
 }
+  
