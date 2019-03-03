@@ -55,7 +55,6 @@ export class SpecificCategoryPage {
     );
     }
     );
-    console.log(this.picArray);
   }
 
   viewPost(pic){
