@@ -20,7 +20,6 @@
         <ion-thumbnail item-start (click)="viewPost(pic)">
           <img [src]="url+(pic.file_id | size: 'medium' | async)" class="imageView">
         </ion-thumbnail>
-        <button class="but" ion-button clear (click)="deleteFavoutite(pic.file_id)">Delete</button>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -4,13 +4,7 @@ import { MediaProvider } from '../../providers/media/media';
 import { Picture, Message } from '../../intefaces/posting';
 import { favoriteResponse } from '../../intefaces/posting';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-/***
- * 
- * Problem with pictures
- * 
- * 
- */
+import { PostViewPage } from '../post-view/post-view';
 
 @IonicPage()
 @Component({
@@ -63,7 +57,11 @@ export class ReservedPage {
       }
     );
   }
+  
   viewPost(pic){
-    console.log(pic);
+   this.navCtrl.push(PostViewPage, {
+     item: pic,
+     reserved: true
+   })
   }
 }
