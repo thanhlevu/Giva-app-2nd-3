@@ -194,12 +194,12 @@ export interface DirectionLineData {
   };
 }
 
-export interface favoriteResponse{
-    favourite_id?: number;
-    file_id?: number;
-    user_id?: number;
-  }
-  
+export interface favoriteResponse {
+  favourite_id?: number;
+  file_id?: number;
+  user_id?: number;
+}
+
 export interface Geolocation {
   lat?: number;
   lng?: number;
@@ -208,4 +208,8 @@ export interface Geolocation {
 export interface CommentRequest {
   file_id?: number;
   comment?: string;
+}
+
+export interface Message {
+  message: String;
 }
