@@ -140,11 +140,13 @@ export class PostingPage {
       this.postingForm.contactTimeTo +
       "$reserved:" +
       this.postingForm.reserved +
-      "$chatter:";
-    console.log("test: ", this.postingForm.description);
+      "$chatter:" +
+      "$blockedIDs:";
 
     const fd = new FormData();
-    fd.append("file", this.postingForm.file);
+    //fd.append("file", this.postingForm.file);
+    fd.append("file", this.fileData);
+
     fd.append("title", this.postingForm.title);
     fd.append("description", this.postingForm.description);
 

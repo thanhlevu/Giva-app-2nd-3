@@ -20,11 +20,22 @@ export class PostViewPage {
   ) {}
 
   ngOnInit() {
+    console.log(
+      "???",
+      !this.navParams.data.description
+        .split("$blockedIDs:")[1]
+        .split(",")
+        .includes(localStorage.getItem("userID") + "")
+    );
     if (
-      this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
-      this.navParams.data.user_id == localStorage.getItem("userID") ||
-      this.navParams.data.description.split("$")[8].split(":")[1] ==
-        localStorage.getItem("userID")
+      (this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
+        this.navParams.data.user_id == localStorage.getItem("userID") ||
+        this.navParams.data.description.split("$")[8].split(":")[1] ==
+          localStorage.getItem("userID")) &&
+      !this.navParams.data.description
+        .split("$blockedIDs:")[1]
+        .split(",")
+        .includes(localStorage.getItem("userID") + "")
     ) {
       this.onChatBox = true;
     }

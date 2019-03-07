@@ -8,12 +8,6 @@ import {
   Picture
 } from "../../intefaces/posting";
 import { MediaProvider } from "../../providers/media/media";
-/**
- * Generated class for the ChatBoxPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -28,6 +22,7 @@ export class ChatBoxPage {
   isMyPost = false;
   reserverID: string = "";
   description: string = "";
+  blockedIDs: any[];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -84,9 +79,10 @@ export class ChatBoxPage {
     // for updating the file's info, pass the Object, not JSON
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, {
-        description:
-          this.description.replace(this.description.split("$chatter:")[1], "") +
-          user_id
+        description: this.description.replace(
+          this.description.split("$chatter:")[1],
+          user_id + "$blockedIDs:" + this.description.split("$blockedIDs:")[1]
+        )
       })
       .subscribe((serverResponse: ServerResponse) => {
         //console.log(serverResponse.message);
@@ -98,7 +94,7 @@ export class ChatBoxPage {
       .updateFileInfo(this.navParams.data.file_id, {
         description: this.description.replace(
           this.description.split("$chatter:")[1],
-          ""
+          "$blockedIDs:" + this.description.split("$blockedIDs:")[1]
         )
       })
       .subscribe((serverResponse: ServerResponse) => {
@@ -110,16 +106,42 @@ export class ChatBoxPage {
   getFileInfo(file_id) {
     this.mediaProvider.getFileData(file_id).subscribe((fileData: Picture) => {
       this.description = fileData.description;
-      this.reserverID = fileData.description.split("$chatter:")[1];
-      if (fileData.user_id == Number(localStorage.getItem("userID"))) {
-        console.log(
-          "fileData.user_id == Number(localStorage.getItem:",
-          fileData.user_id == Number(localStorage.getItem("userID"))
-        );
+      console.log("this.description", this.description);
 
+      this.reserverID = fileData.description
+        .split("$chatter:")[1]
+        .split("$blockedIDs:")[0];
+      if (fileData.user_id == Number(localStorage.getItem("userID"))) {
         this.isMyPost = true;
-        console.log("this.isMyPost2", this.isMyPost);
       }
+      this.blockedIDs = this.description.split("$blockedIDs:")[1].split(",");
+      console.log("blockedIDs", this.blockedIDs);
     });
+  }
+
+  blockThisUserID(user_id) {
+    if (!this.description.split("$blockedIDs")[1].includes(user_id)) {
+      this.mediaProvider
+        .updateFileInfo(this.navParams.data.file_id, {
+          description: this.description + user_id + ","
+        })
+        .subscribe((serverResponse: ServerResponse) => {
+          //console.log(serverResponse.message);
+        });
+    }
+    this.getAllComments();
+  }
+
+  unblockThisUserID(user_id) {
+    if (this.description.split("$blockedIDs")[1].includes(user_id)) {
+      this.mediaProvider
+        .updateFileInfo(this.navParams.data.file_id, {
+          description: this.description.replace(user_id + ",", "")
+        })
+        .subscribe((serverResponse: ServerResponse) => {
+          //console.log(serverResponse.message);
+        });
+    }
+    this.getAllComments();
   }
 }
