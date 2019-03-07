@@ -4,12 +4,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { HttpClientModule } from "@angular/common/http";
+import { ChatBoxPage } from "../pages/chat-box/chat-box";
 
 import { MyApp } from "./app.component";
 import { RegisterPage } from "../pages/register/register";
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from "../pages/home/home";
-import { PinsPage } from "../pages/pins/pins";
 import { MyItemsPage } from "../pages/my-items/my-items";
 import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
@@ -21,18 +21,33 @@ import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
 
-import { HttpModule } from "@angular/http";
-import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { take } from "rxjs/operator/take";
 import { ReservedPage } from "../pages/reserved/reserved";
 import { ProfilePage } from "../pages/profile/profile";
+import { GoogleMapComponent } from "../components/google-map/google-map";
+import { Geolocation } from "@ionic-native/geolocation";
+
+import { HttpModule } from "@angular/http";
+import { PhotoViewer } from "@ionic-native/photo-viewer";
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  Environment,
+  Polyline,
+  Spherical
+} from "@ionic-native/google-maps";
+
 @NgModule({
   declarations: [
     MyApp,
     RegisterPage,
     LoginPage,
     HomePage,
-    PinsPage,
     MyItemsPage,
     UserInfoPage,
     PostingPage,
@@ -41,7 +56,9 @@ import { ProfilePage } from "../pages/profile/profile";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage
+    ProfilePage,
+    GoogleMapComponent,
+    ChatBoxPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +72,6 @@ import { ProfilePage } from "../pages/profile/profile";
     RegisterPage,
     LoginPage,
     HomePage,
-    PinsPage,
     PostViewPage,
     MyItemsPage,
     UserInfoPage,
@@ -64,14 +80,17 @@ import { ProfilePage } from "../pages/profile/profile";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage
-    
+    ProfilePage,
+    GoogleMapComponent,
+    ChatBoxPage
   ],
   providers: [
     StatusBar,
     Camera,
     PhotoViewer,
     HttpModule,
+    Geolocation,
+    Spherical,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MediaProvider

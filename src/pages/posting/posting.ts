@@ -10,7 +10,11 @@ import {
   ActionSheet,
   ActionSheetOptions
 } from "@ionic-native/action-sheet/ngx";
-import { PostingForm, TagsResponse } from "../../intefaces/posting";
+import {
+  PostingForm,
+  TagsResponse,
+  Geolocation
+} from "../../intefaces/posting";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 
@@ -27,6 +31,7 @@ export class PostingPage {
   myPhoto: any;
   file: File;
   fileData: string;
+  itemLocation: Geolocation = {};
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,8 +41,15 @@ export class PostingPage {
     private loadingCtrl: LoadingController
   ) {}
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad PostPage");
+  ngOnInit() {
+    let that = this;
+    navigator.geolocation.getCurrentPosition(function(currentPosition) {
+      // get current location
+      that.itemLocation = {
+        lat: currentPosition.coords.latitude,
+        lng: currentPosition.coords.longitude
+      };
+    });
   }
 
   openCamera() {
@@ -114,37 +126,40 @@ export class PostingPage {
       this.postingForm.info_item +
       "$category:" +
       this.postingForm.category +
-      "$location:" +
-      this.postingForm.location +
-      "$endTime:" +
+      "$geolocation:" +
+      this.itemLocation.lat +
+      "," +
+      this.itemLocation.lng +
+      "$endTime=" +
       this.postingForm.endTime +
       "$contact:" +
       this.postingForm.contact +
-      "$contactTimeFrom:" +
+      "$contactTimeFrom=" +
       this.postingForm.contactTimeFrom +
-      "$contactTimeTo:" +
+      "$contactTimeTo=" +
       this.postingForm.contactTimeTo +
       "$reserved:" +
-      this.postingForm.reserved;
-    console.log("test: ", this.postingForm.description);
+      this.postingForm.reserved +
+      "$chatter:" +
+      "$blockedIDs:";
 
     const fd = new FormData();
-    fd.append("file", this.postingForm.file);
+    //fd.append("file", this.postingForm.file);
+    fd.append("file", this.fileData);
+
     fd.append("title", this.postingForm.title);
-
     fd.append("description", this.postingForm.description);
-    console.log(this.postingForm.description);
 
-    console.log(fd);
     this.mediaProvider.upload(fd).subscribe((UploadResponse: TagsResponse) => {
       //set time out in 2s
-      console.log(UploadResponse);
-      this,
-        this.mediaProvider
-          .addTag_Giva(UploadResponse.file_id)
-          .subscribe((TagResponse: TagsResponse) => {
-            console.log(TagResponse);
-          });
+      console.log("UploadResponse", UploadResponse);
+
+      //add GIVA tag to the Image
+      this.mediaProvider
+        .addTag_Giva(UploadResponse.file_id)
+        .subscribe((TagResponse: TagsResponse) => {
+          console.log("TagResponse", TagResponse);
+        });
       // hide spinner
       this.loading();
     });
@@ -169,7 +184,6 @@ export class PostingPage {
   handleChange($event) {
     console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
-
     this.showPreview();
   }
 

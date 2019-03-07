@@ -9,6 +9,7 @@ import { PostViewPage } from "../post-view/post-view";
 import { PostingPage } from "../posting/posting";
 import { MyItemsPage } from "../my-items/my-items";
 import { PostEditPage } from "../post-edit/post-edit";
+import { EditInfoPage } from "../edit-info/edit-info";
 
 @Component({
   selector: "page-home",
@@ -25,7 +26,24 @@ export class HomePage implements OnInit {
     public http: HttpClient
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    /*     if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(currentPosition) {
+        // get current location
+        let currentLocation = {
+          lat: currentPosition.coords.latitude,
+          lng: currentPosition.coords.longitude
+        };
+        console.log("currentLocation: ", currentLocation);
+        // save the current location to Local Storage
+        localStorage.setItem(
+          "current_location",
+          JSON.stringify(currentLocation)
+        );
+      });
+    } */
+  }
+
   ionViewDidEnter() {
     this.loadItems_GivaTag();
   }
@@ -54,7 +72,6 @@ export class HomePage implements OnInit {
         this.picArray = items.sort(
           (a, b) => Number(b.file_id) - Number(a.file_id)
         );
-        console.log("G:", this.picArray);
       });
   }
 
@@ -63,13 +80,12 @@ export class HomePage implements OnInit {
   }
 
   viewPost(Pic: Picture) {
-    console.log(Pic);
-
-    if (Pic.user_id == localStorage.userID) {
-      this.navCtrl.push(PostEditPage, Pic);
-    } else {
-      this.navCtrl.push(PostViewPage, Pic);
-    }
+    // if (Pic.user_id == localStorage.userID) {
+    //   this.navCtrl.push(PostEditPage, Pic);
+    // } else {
+    //   this.navCtrl.push(PostViewPage, Pic);
+    // }
+    this.navCtrl.push(PostViewPage, Pic);
   }
 
   goToPost() {
@@ -78,5 +94,9 @@ export class HomePage implements OnInit {
 
   goToMyPosts() {
     this.navCtrl.push(MyItemsPage);
+  }
+
+  goToMyInfo() {
+    this.navCtrl.push(EditInfoPage);
   }
 }

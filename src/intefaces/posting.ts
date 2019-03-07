@@ -15,7 +15,7 @@ export interface PostingForm {
 }
 
 export interface Picture {
-  file_id: number;
+  file_id?: number;
   user_id?: number;
   filename?: string;
   filesize?: number;
@@ -26,6 +26,26 @@ export interface Picture {
   time_added: string;
   screenshot?: string;
   thumbnails?: Thumbnail;
+  geolocation?: {
+    lat?: number;
+    lng?: number;
+  };
+}
+
+export interface PostInfo {
+  title?: string;
+  filename?: string;
+  description?: string;
+  category?: string;
+  end_time?: string;
+  contact?: string;
+  contact_time_from?: string;
+  contact_time_to?: string;
+  geolocation?: {
+    lat?: number;
+    lng?: number;
+  };
+  reserved?: boolean;
 }
 
 export interface Thumbnail {
@@ -42,11 +62,25 @@ export interface User {
   email?: string;
   full_name?: string;
   data_created?: Date;
+  message?: string;
 }
 export interface LoginResponse {
   message: string;
   token?: string;
   user?: User;
+}
+
+export interface ServerResponse {
+  message?: string;
+}
+
+export interface CommentsResponse {
+  comment_id?: number;
+  comment?: string;
+  time_added?: string;
+  file_id?: number;
+  user_id?: number;
+  username?: string;
 }
 
 export interface UsernameResponse {
@@ -70,4 +104,102 @@ export interface TagsResponse {
 export interface PostEdit {
   title?: string;
   description?: string;
+}
+
+export interface DirectionMapJson {
+  status?: string;
+  routes?: [
+    {
+      legs?: [
+        {
+          arrival_time?: {
+            text: string;
+          };
+          departure_time?: {
+            text: string;
+          };
+          distance?: {
+            text: string;
+          };
+          duration?: {
+            text: string;
+          };
+          start_address?: string;
+          end_address?: string;
+
+          steps?: [
+            {
+              start_location?: {
+                lat: string;
+                lng: string;
+              };
+              start_location_address?: any;
+              distance?: {
+                text: string;
+              };
+              duration?: {
+                text: string;
+              };
+              travel_mode?: string;
+              travel_icon?: string;
+              transit_details?: {
+                departure_time?: {
+                  text: string;
+                };
+                line?: {
+                  short_name?: string;
+                  vehicle?: {
+                    type: string;
+                  };
+                };
+              };
+            }
+          ];
+        }
+      ];
+    }
+  ];
+}
+
+export interface LocalAddressJson {
+  results: [
+    {
+      formatted_address: string;
+    }
+  ];
+}
+
+export interface GeolocationByName {
+  results: [
+    {
+      geometry: {
+        location: {
+          lat: string;
+          lng: string;
+        };
+      };
+    }
+  ];
+}
+
+export interface DirectionLineData {
+  origin: any;
+  destination: any;
+  travelMode: string;
+  transitOptions?: {
+    departureTime: Date;
+    arrivalTime: Date;
+    modes: [string]; // BUS, RAIL, SUBWAY, TRAIN, TRAM
+    routingPreference: string; // "FEWER_TRANSFERS" or "LESS_WALKING"
+  };
+}
+
+export interface Geolocation {
+  lat?: number;
+  lng?: number;
+}
+
+export interface CommentRequest {
+  file_id?: number;
+  comment?: string;
 }
