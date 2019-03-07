@@ -23,7 +23,7 @@ export interface Picture {
   description?: string;
   media_type?: string;
   mime_type?: string;
-  time_added: string;
+  time_added?: string;
   screenshot?: string;
   thumbnails?: Thumbnail;
   geolocation?: {
@@ -194,6 +194,12 @@ export interface DirectionLineData {
   };
 }
 
+export interface favoriteResponse{
+    favourite_id?: number;
+    file_id?: number;
+    user_id?: number;
+  }
+  
 export interface Geolocation {
   lat?: number;
   lng?: number;

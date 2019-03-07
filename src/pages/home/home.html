@@ -9,19 +9,35 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let pic of picArray" (click)="viewPost(pic)">
-      <ion-thumbnail item-start>
-        <img [src]="src + pic.filename" />
-      </ion-thumbnail>
-      <h2>{{ pic.title }}</h2>
-      <p>{{ pic.description }}</p>
-      <button ion-button clear item-end (click)="viewImage(pic.filename)">
-        View
+<ion-content padding class="back">
+
+    <button ion-button block class="search" (click)="searchName()">
+      <ion-icon name="search" ></ion-icon> search Furnitures
       </button>
-    </ion-item>
-  </ion-list>
+      <ion-grid>
+          <ion-row>
+              <ion-col>
+                  <button ion-button block class="search">
+                      <ion-icon name="compass"></ion-icon> Location
+                      </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button block (click)="search()" class="search">
+                    <ion-icon name="menu"></ion-icon> Categories
+                    </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-4 *ngFor="let pic of picArray">
+            <ion-thumbnail item-start (click)="viewPost(pic)">
+              <img [src]="src+(pic.filename)" class="imageView">
+            </ion-thumbnail>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
   <ion-fab right bottom>
     <button ion-fab color="blue" (click)="goToMyPosts()">
       <ion-icon name="folder-open"></ion-icon>

@@ -9,6 +9,8 @@ import {
   ServerResponse,
   CommentsResponse
 } from "../../intefaces/posting";
+import { favoriteResponse } from '../../intefaces/posting';
+
 @Injectable()
 export class MediaProvider {
   configUrl = "http://media.mw.metropolia.fi/wbma";
@@ -203,13 +205,57 @@ export class MediaProvider {
 
   getFileData(file_id) {
     const httpOptions = {
+        headers: new HttpHeaders({
+          "x-access-token": this.token
+        })
+      };
+          return this.http.get<Picture>(
+    this.configUrl + "/media/" + file_id,
+    httpOptions
+  );}
+  
+  addTag_category(data) {
+    const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": this.token
       })
     };
-    return this.http.get<Picture>(
-      this.configUrl + "/media/" + file_id,
-      httpOptions
-    );
+
+    return this.http.post(this.configUrl + "/tags",data,httpOptions);
+  }
+
+  
+  makeFavorite(data:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.post<Response>(this.configUrl+ "/favourites", data,httpOptions);
+  }
+  getAllPins(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.get<favoriteResponse[]>(this.configUrl+ "/favourites",httpOptions);
+  }
+  deleteFavourite(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.delete(this.configUrl+ "/favourites/file/"+id,httpOptions);
+  }
+  SearchWithWord(data){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'X-access-token': this.token,
+      })
+    };
+    return this.http.post<Picture[]>(this.configUrl+ "/media/search",data,httpOptions);
   }
 }
+  

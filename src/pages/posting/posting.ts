@@ -27,6 +27,7 @@ import { MediaProvider } from "../../providers/media/media";
   templateUrl: "posting.html"
 })
 export class PostingPage {
+  data = {};
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
@@ -121,6 +122,7 @@ export class PostingPage {
     if (this.postingForm.contact == undefined) {
       this.postingForm.contact = localStorage.userEmail;
     }
+
     this.postingForm.description =
       "description:" +
       this.postingForm.info_item +
@@ -159,10 +161,26 @@ export class PostingPage {
         .addTag_Giva(UploadResponse.file_id)
         .subscribe((TagResponse: TagsResponse) => {
           console.log("TagResponse", TagResponse);
+          this.addCategoryTag(
+            UploadResponse.file_id,
+            this.postingForm.category
+          );
         });
       // hide spinner
       this.loading();
     });
+  }
+  addCategoryTag(id, category) {
+    this.data = {
+      file_id: id,
+      tag: "GIVA_" + category
+    };
+    console.log(this.data);
+    this.mediaProvider
+      .addTag_category(this.data)
+      .subscribe((TagResponse: TagsResponse) => {
+        console.log("Second: ", TagResponse);
+      });
   }
 
   showPreview() {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, AlertController } from "ionic-angular";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { Picture } from "../../intefaces/posting";
+import { CategoriesPage } from "../categories/categories";
 
 import { HttpClient } from "@angular/common/http";
 import { RegisterPage } from "../register/register";
@@ -10,6 +11,7 @@ import { PostingPage } from "../posting/posting";
 import { MyItemsPage } from "../my-items/my-items";
 import { PostEditPage } from "../post-edit/post-edit";
 import { EditInfoPage } from "../edit-info/edit-info";
+import { MediaProvider } from "../../providers/media/media";
 
 @Component({
   selector: "page-home",
@@ -19,11 +21,14 @@ export class HomePage implements OnInit {
   picArray: Picture[];
 
   src = "http://media.mw.metropolia.fi/wbma/uploads/";
+  options = {};
 
   constructor(
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
-    public http: HttpClient
+    public http: HttpClient,
+    private alertCtrl: AlertController,
+    private mediaprovider: MediaProvider
   ) {}
 
   ngOnInit() {
@@ -98,5 +103,53 @@ export class HomePage implements OnInit {
 
   goToMyInfo() {
     this.navCtrl.push(EditInfoPage);
+  }
+  search() {
+    this.navCtrl.push(CategoriesPage);
+  }
+  searchName() {
+    console.log("searcName()");
+    this.options = {
+      title: "Search by title"
+    };
+    this.alertCustom(this.options);
+  }
+  alertCustom(options) {
+    let alert = this.alertCtrl.create({
+      title: options.title,
+      inputs: [
+        {
+          name: "result",
+          placeholder: "f.e chair"
+        }
+      ],
+      buttons: [
+        {
+          text: "cancel",
+          role: "cancel",
+          handler: data => {
+            console.log("vaihto peruttu");
+          }
+        },
+        {
+          text: "add",
+          handler: data => this.SearchWithWord(data.result)
+        }
+      ]
+    });
+    alert.present();
+  }
+  SearchWithWord(data) {
+    this.picArray = [];
+    console.log(data);
+    this.options = {
+      title: data,
+      description: data
+    };
+    this.mediaprovider
+      .SearchWithWord(this.options)
+      .subscribe((data: Picture[]) => {
+        this.picArray = data;
+      });
   }
 }

@@ -4,12 +4,15 @@ import { Picture, PostInfo } from "../../intefaces/posting";
 import { ChatBoxPage } from "../chat-box/chat-box";
 import { MediaProvider } from "../../providers/media/media";
 import { ServerResponse } from "../../intefaces/posting";
+
 @IonicPage()
 @Component({
   selector: "page-post-view",
   templateUrl: "post-view.html"
 })
+
 export class PostViewPage {
+    id;
   pic: Picture;
   postInfo: PostInfo = {};
   onChatBox = false;
@@ -89,8 +92,23 @@ export class PostViewPage {
     //   alert("sorry! this item is unavaiable now");
     // }
   }
-
+getMedia(){
+  this.mediaProvider.getSingleMedia(this.id).subscribe(
+  (pic: Picture)=>{
+     this.pic = pic;
+    console.log("this1", this.pic.title, this.pic.file_id);
+  }
+);
+}
   pin(){
-    
+    this.id = this.pic.file_id;
+    const fd = {
+      "file_id": this.id
+    }
+    this.mediaProvider.makeFavorite(fd).subscribe(
+      (response: Response) =>{
+        console.log(response);
+      }
+    )
   }
 }

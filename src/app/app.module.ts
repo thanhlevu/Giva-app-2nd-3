@@ -20,10 +20,12 @@ import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
-
-import { take } from "rxjs/operator/take";
 import { ReservedPage } from "../pages/reserved/reserved";
 import { ProfilePage } from "../pages/profile/profile";
+import { CategoriesPage } from "../pages/categories/categories";
+import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
+
+import { take } from "rxjs/operator/take";
 import { GoogleMapComponent } from "../components/google-map/google-map";
 import { Geolocation } from "@ionic-native/geolocation";
 
@@ -41,6 +43,8 @@ import {
   Polyline,
   Spherical
 } from "@ionic-native/google-maps";
+import { SizePipe } from "../pipes/size/size";
+import { PipesModule } from "../pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -58,13 +62,16 @@ import {
     ReservedPage,
     ProfilePage,
     GoogleMapComponent,
-    ChatBoxPage
+    ChatBoxPage,
+    CategoriesPage,
+    SpecificCategoryPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,7 +89,9 @@ import {
     ReservedPage,
     ProfilePage,
     GoogleMapComponent,
-    ChatBoxPage
+    ChatBoxPage,
+    CategoriesPage,
+    SpecificCategoryPage
   ],
   providers: [
     StatusBar,
@@ -93,7 +102,8 @@ import {
     Spherical,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    MediaProvider
+    MediaProvider,
+    PipesModule
   ]
 })
 export class AppModule {}
