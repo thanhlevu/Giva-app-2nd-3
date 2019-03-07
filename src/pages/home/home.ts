@@ -73,7 +73,7 @@ export class HomePage implements OnInit {
     if (Pic.user_id == localStorage.userID) {
       this.navCtrl.push(PostEditPage, Pic);
     } else {
-      this.navCtrl.push(PostViewPage, Pic);
+      this.navCtrl.push(PostViewPage, Pic.file_id);
     }
   }
 

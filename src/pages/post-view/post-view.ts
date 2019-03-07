@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Picture } from "../../intefaces/posting";
 import { MediaProvider } from "../../providers/media/media";
 
-/**
- * Generated class for the PostViewPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: "page-post-view",
@@ -17,21 +10,35 @@ import { MediaProvider } from "../../providers/media/media";
 })
 
 export class PostViewPage {
-
+/**
+ * 
+ * Gets an error when trying to get single media.. fix tomorrow
+ * 
+ * 
+ */
   id;
-  public pic: Picture;
+  public pic: Picture = {
+    file_id: 1
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public mediaprovdier: MediaProvider) {}
 
   ngOnInit() {
     console.log(this.navParams.data);
-    this.pic = this.navParams.data;
+    this.id = this.navParams.data;
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad PostViewPage");
+   this.getMedia();
   }
-
+getMedia(){
+  this.mediaprovdier.getSingleMedia(this.id).subscribe(
+  (pic: Picture)=>{
+     this.pic = pic;
+    console.log("this1", this.pic.title, this.pic.file_id);
+  }
+);
+}
   pin(){
     this.id = this.pic.file_id;
     const fd = {

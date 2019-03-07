@@ -23,7 +23,7 @@ export interface Picture {
   description?: string;
   media_type?: string;
   mime_type?: string;
-  time_added: string;
+  time_added?: string;
   screenshot?: string;
   thumbnails?: Thumbnail;
 }

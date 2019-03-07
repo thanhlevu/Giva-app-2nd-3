@@ -60,8 +60,7 @@ export class ReservedPage {
   
   viewPost(pic){
    this.navCtrl.push(PostViewPage, {
-     item: pic,
-     reserved: true
+     item: pic
    })
   }
 }
