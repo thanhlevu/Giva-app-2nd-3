@@ -20,13 +20,7 @@ export class PostViewPage {
   ) {}
 
   ngOnInit() {
-    console.log(
-      "???",
-      !this.navParams.data.description
-        .split("$blockedIDs:")[1]
-        .split(",")
-        .includes(localStorage.getItem("userID") + "")
-    );
+    console.log(this.navParams.data);
     if (
       (this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
         this.navParams.data.user_id == localStorage.getItem("userID") ||
@@ -62,9 +56,13 @@ export class PostViewPage {
     this.postInfo.contact_time_to = this.navParams.data.description
       .split("$")[6]
       .split("=")[1];
-    this.postInfo.reserved = this.navParams.data.description
-      .split("$")[7]
-      .split(":")[1];
+    if (
+      this.navParams.data.description.split("$")[7].split(":")[1] == "false"
+    ) {
+      this.postInfo.reserved = false;
+    } else {
+      this.postInfo.reserved = true;
+    }
   }
 
   goToChatBox() {

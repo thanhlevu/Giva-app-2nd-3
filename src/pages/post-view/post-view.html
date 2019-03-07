@@ -2,7 +2,11 @@
   <ion-navbar>
     <ion-title>post-view</ion-title>
     <ion-buttons end>
-      <button *ngIf="onChatBox" ion-fab (click)="goToChatBox()">
+      <button
+        *ngIf="onChatBox && !this.postInfo.reserved"
+        ion-fab
+        (click)="goToChatBox()"
+      >
         <ion-icon name="chatboxes"></ion-icon>
       </button>
     </ion-buttons>
@@ -56,8 +60,12 @@
           {{ this.postInfo.reserved }}
           <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
+        <ion-item>
+          <ion-label>Reserved</ion-label>
+          <ion-toggle disabled checked="false"></ion-toggle>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
-  <google-map> </google-map>
+  <google-map *ngIf="!this.postInfo.reserved"> </google-map>
 </ion-content>
