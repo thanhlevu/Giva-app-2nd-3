@@ -25,17 +25,12 @@ export class LoginPage {
   }
 
   loginClicked(formSignIn) {
-    console.log(this.username);
-    console.log(this.password);
-    console.log(formSignIn);
     this.mediaprovider.login(this.user).subscribe(
       (response: LoginResponse) => {
-        console.log("response");
-        console.log(response);
         localStorage.setItem("token", response.token);
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
-
+        console.log("LoginResponse", response);
         this.navCtrl.push(HomePage);
         this.mediaprovider.token = response.token;
         this.mediaprovider.loggedIn = true;

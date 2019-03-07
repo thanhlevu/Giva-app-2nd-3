@@ -1,14 +1,9 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Picture, PostInfo } from "../../intefaces/posting";
-
-/**
- * Generated class for the PostViewPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import { ChatBoxPage } from "../chat-box/chat-box";
+import { MediaProvider } from "../../providers/media/media";
+import { ServerResponse } from "../../intefaces/posting";
 @IonicPage()
 @Component({
   selector: "page-post-view",
@@ -17,10 +12,23 @@ import { Picture, PostInfo } from "../../intefaces/posting";
 export class PostViewPage {
   pic: Picture;
   postInfo: PostInfo = {};
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  onChatBox = false;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private mediaProvider: MediaProvider
+  ) {}
 
   ngOnInit() {
+    if (
+      this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
+      this.navParams.data.user_id == localStorage.getItem("userID") ||
+      this.navParams.data.description.split("$")[8].split(":")[1] ==
+        localStorage.getItem("userID")
+    ) {
+      this.onChatBox = true;
+    }
+
     this.postInfo.filename = this.navParams.data.filename;
 
     this.postInfo.title = this.navParams.data.title;
@@ -46,9 +54,30 @@ export class PostViewPage {
     this.postInfo.reserved = this.navParams.data.description
       .split("$")[7]
       .split(":")[1];
-
-    console.log("AS", this.postInfo);
   }
 
-  ionViewDidLoad() {}
+  goToChatBox() {
+    this.navCtrl.push(ChatBoxPage, this.navParams.data);
+
+    /*   // for updating the file's info, pass the Object, not JSON
+    this.mediaProvider
+      .updateFileInfo(this.navParams.data.file_id, {
+        description:
+          this.navParams.data.description + localStorage.getItem("userID")
+      })
+      .subscribe((UpdateResponse: ServerResponse) => {
+        console.log(UpdateResponse);
+      }); */
+
+    // if (
+    //   this.navParams.data.description.split("$")[8].split(":")[1] == "" &&
+    //   this.navParams.data.user_id !== localStorage.getItem("userID")
+    // ) {
+    //   this.navCtrl.push(ChatBoxPage);
+    // } else if (this.navParams.data.user_id == localStorage.getItem("userID")) {
+    //   this.navCtrl.push(ChatBoxPage);
+    // } else {
+    //   alert("sorry! this item is unavaiable now");
+    // }
+  }
 }

@@ -5,7 +5,9 @@ import {
   Picture,
   User,
   LoginResponse,
-  TagsResponse
+  TagsResponse,
+  ServerResponse,
+  CommentsResponse
 } from "../../intefaces/posting";
 @Injectable()
 export class MediaProvider {
@@ -88,6 +90,15 @@ export class MediaProvider {
     }
   }
 
+  getOtherUsersInfo(user_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get(this.configUrl + "/users/" + user_id, httpOptions);
+  }
+
   upload(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -101,15 +112,15 @@ export class MediaProvider {
     );
   }
 
-  updateFileInfo(file_id, newFormData) {
+  updateFileInfo(file_id, UpdateContent) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": localStorage.getItem("token")
       })
     };
-    return this.http.put<TagsResponse>(
+    return this.http.put<ServerResponse>(
       this.configUrl + "/media/" + file_id,
-      newFormData,
+      UpdateContent,
       httpOptions
     );
   }
@@ -132,6 +143,48 @@ export class MediaProvider {
     return this.http.delete(this.configUrl + "/media/" + file_id, httpOptions);
   }
 
+  sendComment(commentObject) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.post<ServerResponse>(
+      this.configUrl + "/comments",
+      commentObject,
+      httpOptions
+    );
+  }
+
+  getAllComments(file_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    console.log("this.configUrl", this.configUrl + "/comments/file/" + file_id);
+    return this.http.get<CommentsResponse[]>(
+      this.configUrl + "/comments/file/" + file_id,
+      httpOptions
+    );
+  }
+
+  deleteComment(comment_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    console.log(
+      "this.configUrl",
+      this.configUrl + "/comments/file/" + comment_id
+    );
+    return this.http.delete<ServerResponse[]>(
+      this.configUrl + "/comments/" + comment_id,
+      httpOptions
+    );
+  }
+
   addTag_Giva(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -144,6 +197,18 @@ export class MediaProvider {
         file_id: file_id,
         tag: "GIVA"
       },
+      httpOptions
+    );
+  }
+
+  getFileData(file_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get<Picture>(
+      this.configUrl + "/media/" + file_id,
       httpOptions
     );
   }

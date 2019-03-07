@@ -62,11 +62,25 @@ export interface User {
   email?: string;
   full_name?: string;
   data_created?: Date;
+  message?: string;
 }
 export interface LoginResponse {
   message: string;
   token?: string;
   user?: User;
+}
+
+export interface ServerResponse {
+  message?: string;
+}
+
+export interface CommentsResponse {
+  comment_id?: number;
+  comment?: string;
+  time_added?: string;
+  file_id?: number;
+  user_id?: number;
+  username?: string;
 }
 
 export interface UsernameResponse {
@@ -183,4 +197,9 @@ export interface DirectionLineData {
 export interface Geolocation {
   lat?: number;
   lng?: number;
+}
+
+export interface CommentRequest {
+  file_id?: number;
+  comment?: string;
 }

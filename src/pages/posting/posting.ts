@@ -139,17 +139,15 @@ export class PostingPage {
       "$contactTimeTo=" +
       this.postingForm.contactTimeTo +
       "$reserved:" +
-      this.postingForm.reserved;
+      this.postingForm.reserved +
+      "$chatter:";
     console.log("test: ", this.postingForm.description);
 
     const fd = new FormData();
     fd.append("file", this.postingForm.file);
     fd.append("title", this.postingForm.title);
-
     fd.append("description", this.postingForm.description);
-    console.log(this.postingForm.description);
 
-    console.log(fd);
     this.mediaProvider.upload(fd).subscribe((UploadResponse: TagsResponse) => {
       //set time out in 2s
       console.log("UploadResponse", UploadResponse);
@@ -184,7 +182,6 @@ export class PostingPage {
   handleChange($event) {
     console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
-
     this.showPreview();
   }
 

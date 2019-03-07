@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { HttpClientModule } from "@angular/common/http";
+import { ChatBoxPage } from "../pages/chat-box/chat-box";
 
 import { MyApp } from "./app.component";
 import { RegisterPage } from "../pages/register/register";
@@ -48,7 +49,8 @@ import {
     EditInfoPage,
     PostViewPage,
     PostEditPage,
-    GoogleMapComponent
+    GoogleMapComponent,
+    ChatBoxPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import {
     PostingPage,
     EditInfoPage,
     PostEditPage,
-    GoogleMapComponent
+    GoogleMapComponent,
+    ChatBoxPage
   ],
   providers: [
     StatusBar,

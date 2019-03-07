@@ -9,6 +9,7 @@ import { PostViewPage } from "../post-view/post-view";
 import { PostingPage } from "../posting/posting";
 import { MyItemsPage } from "../my-items/my-items";
 import { PostEditPage } from "../post-edit/post-edit";
+import { EditInfoPage } from "../edit-info/edit-info";
 
 @Component({
   selector: "page-home",
@@ -93,5 +94,9 @@ export class HomePage implements OnInit {
 
   goToMyPosts() {
     this.navCtrl.push(MyItemsPage);
+  }
+
+  goToMyInfo() {
+    this.navCtrl.push(EditInfoPage);
   }
 }
