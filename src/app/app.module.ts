@@ -24,7 +24,7 @@ import { ReservedPage } from "../pages/reserved/reserved";
 import { ProfilePage } from "../pages/profile/profile";
 import { CategoriesPage } from "../pages/categories/categories";
 import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
-
+import { FavoritesPage } from "../pages/favorites/favorites";
 import { take } from "rxjs/operator/take";
 import { GoogleMapComponent } from "../components/google-map/google-map";
 import { Geolocation } from "@ionic-native/geolocation";
@@ -63,6 +63,7 @@ import { PipesModule } from "../pipes/pipes.module";
     ProfilePage,
     GoogleMapComponent,
     ChatBoxPage,
+    FavoritesPage,
     CategoriesPage,
     SpecificCategoryPage
   ],
@@ -79,6 +80,7 @@ import { PipesModule } from "../pipes/pipes.module";
     RegisterPage,
     LoginPage,
     HomePage,
+    FavoritesPage,
     PostViewPage,
     MyItemsPage,
     UserInfoPage,

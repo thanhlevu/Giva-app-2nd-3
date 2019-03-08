@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { ReservedPage } from '../reserved/reserved';
-import { HomePage } from '../home/home';
-import { ProfilePage } from '../profile/profile';
-import { UserInfoPage } from '../user-info/user-info';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { HomePage } from "../home/home";
+import { ProfilePage } from "../profile/profile";
+import { UserInfoPage } from "../user-info/user-info";
+import { MyItemsPage } from "../my-items/my-items";
+import { FavoritesPage } from "../favorites/favorites";
+import { PostingPage } from "../posting/posting";
 
 @IonicPage()
 @Component({
-  selector: 'page-tabs',
-  templateUrl: 'tabs.html',
+  selector: "page-tabs",
+  templateUrl: "tabs.html"
 })
 export class TabsPage {
-
-  reservedPage = ReservedPage;
   homePage = HomePage;
-  profilePage = UserInfoPage; 
-
+  favoritesPage = FavoritesPage;
+  myItemsPage = MyItemsPage;
+  postingPage = PostingPage;
+  profilePage = UserInfoPage;
 }

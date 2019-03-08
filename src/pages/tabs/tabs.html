@@ -1,5 +1,15 @@
 <ion-tabs>
-    <ion-tab [root]=homePage tabTitle="home" tabIcon="home"></ion-tab>
-  <ion-tab [root]=reservedPage tabTitle="reserved" tabIcon="basket"></ion-tab>
-  <ion-tab [root]=profilePage tabTitle="profile" tabIcon="person"></ion-tab>
+  <ion-tab [root]="homePage" tabTitle="Home" tabIcon="home"></ion-tab>
+  <ion-tab
+    [root]="favoritesPage"
+    tabTitle="Favorites"
+    tabIcon="heart"
+  ></ion-tab>
+  <ion-tab [root]="myItemsPage" tabTitle="Mine" tabIcon="images"></ion-tab>
+  <ion-tab
+    [root]="postingPage"
+    tabTitle="Upload"
+    tabIcon="cloud-upload"
+  ></ion-tab>
+  <ion-tab [root]="profilePage" tabTitle="Account" tabIcon="contact"></ion-tab>
 </ion-tabs>

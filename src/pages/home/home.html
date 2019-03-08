@@ -1,51 +1,28 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title> Ionic Blank </ion-title>
-    <ion-buttons end>
-      <button ion-fab (click)="goToPost()">
-        <ion-icon name="add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding class="back">
-
-    <button ion-button block class="search" (click)="searchName()">
-      <ion-icon name="search" ></ion-icon> search Furnitures
-      </button>
-      <ion-grid>
-          <ion-row>
-              <ion-col>
-                  <button ion-button block class="search">
-                      <ion-icon name="compass"></ion-icon> Location
-                      </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button block (click)="search()" class="search">
-                    <ion-icon name="menu"></ion-icon> Categories
-                    </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-    <ion-grid>
-        <ion-row>
-            <ion-col col-4 *ngFor="let pic of picArray">
-            <ion-thumbnail item-start (click)="viewPost(pic)">
-              <img [src]="src+(pic.filename)" class="imageView">
-            </ion-thumbnail>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-  <ion-fab right bottom>
-    <button ion-fab color="blue" (click)="goToMyPosts()">
-      <ion-icon name="folder-open"></ion-icon>
-    </button>
-  </ion-fab>
-  <ion-fab left bottom>
-    <button ion-fab color="blue" (click)="goToMyInfo()">
-      <ion-icon name="create"></ion-icon>
-    </button>
-  </ion-fab>
+  <button ion-button block class="search" (click)="searchName()">
+    <ion-icon name="search"></ion-icon> search Furnitures
+  </button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block class="search">
+          <ion-icon name="compass"></ion-icon> Location
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block (click)="search()" class="search">
+          <ion-icon name="menu"></ion-icon> Categories
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 *ngFor="let pic of picArray">
+        <ion-thumbnail item-start (click)="viewPost(pic)">
+          <img [src]="src + pic.filename" class="imageView" />
+        </ion-thumbnail>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

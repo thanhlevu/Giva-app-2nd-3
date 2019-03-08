@@ -67,5 +67,16 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+
   <google-map *ngIf="!this.postInfo.reserved"> </google-map>
+  <ion-fab right bottom>
+    <button ion-fab color="green" (click)="openGallery()">
+      <ion-icon name="image"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab left bottom>
+    <button ion-fab color="green" (click)="openCamera()">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

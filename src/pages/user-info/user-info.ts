@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { MediaProvider } from "../../providers/media/media";
 import { User, LoginResponse } from "../../intefaces/posting";
+import { EditInfoPage } from "../edit-info/edit-info";
 
 @Component({
   selector: "page-user-info",
@@ -35,5 +36,20 @@ export class UserInfoPage {
         }
       );
     } else console.log("passwords dont match.");
+  }
+
+  editProfile() {
+    this.navCtrl.push(EditInfoPage);
+  }
+  logOut() {
+    localStorage.clear();
+    this.navCtrl.setRoot(LoginPage);
+    let elements = document.querySelectorAll(".tabbar");
+
+    if (elements != null) {
+      Object.keys(elements).map(key => {
+        elements[key].style.display = "none";
+      });
+    }
   }
 }

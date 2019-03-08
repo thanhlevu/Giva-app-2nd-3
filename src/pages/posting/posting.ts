@@ -17,7 +17,6 @@ import {
 } from "../../intefaces/posting";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
-
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { MediaProvider } from "../../providers/media/media";
 
@@ -31,7 +30,7 @@ export class PostingPage {
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
-  fileData: string;
+  fileData: string = "";
   itemLocation: Geolocation = {};
   constructor(
     public navCtrl: NavController,
@@ -43,16 +42,20 @@ export class PostingPage {
   ) {}
 
   ngOnInit() {
+    this.getCurrentLocation();
+  }
+
+  getCurrentLocation() {
     let that = this;
-    navigator.geolocation.getCurrentPosition(function(currentPosition) {
+    navigator.geolocation.getCurrentPosition(currentPosition => {
       // get current location
       that.itemLocation = {
         lat: currentPosition.coords.latitude,
         lng: currentPosition.coords.longitude
       };
+      console.log("this.itemLocation", that.itemLocation);
     });
   }
-
   openCamera() {
     const options: CameraOptions = {
       quality: 70,
@@ -119,56 +122,62 @@ export class PostingPage {
   }
 
   uploadImage() {
-    if (this.postingForm.contact == undefined) {
-      this.postingForm.contact = localStorage.userEmail;
-    }
+    if (this.itemLocation) {
+      if (this.postingForm.contact == undefined) {
+        this.postingForm.contact = localStorage.userEmail;
+      }
 
-    this.postingForm.description =
-      "description:" +
-      this.postingForm.info_item +
-      "$category:" +
-      this.postingForm.category +
-      "$geolocation:" +
-      this.itemLocation.lat +
-      "," +
-      this.itemLocation.lng +
-      "$endTime=" +
-      this.postingForm.endTime +
-      "$contact:" +
-      this.postingForm.contact +
-      "$contactTimeFrom=" +
-      this.postingForm.contactTimeFrom +
-      "$contactTimeTo=" +
-      this.postingForm.contactTimeTo +
-      "$reserved:" +
-      this.postingForm.reserved +
-      "$chatter:" +
-      "$blockedIDs:";
+      this.postingForm.description =
+        "description:" +
+        this.postingForm.info_item +
+        "$category:" +
+        this.postingForm.category +
+        "$geolocation:" +
+        this.itemLocation.lat +
+        "," +
+        this.itemLocation.lng +
+        "$endTime=" +
+        this.postingForm.endTime +
+        "$contact:" +
+        this.postingForm.contact +
+        "$contactTimeFrom=" +
+        this.postingForm.contactTimeFrom +
+        "$contactTimeTo=" +
+        this.postingForm.contactTimeTo +
+        "$reserved:" +
+        this.postingForm.reserved +
+        "$chatter:" +
+        "$blockedIDs:";
 
-    const fd = new FormData();
-    fd.append("file", this.postingForm.file);
-    //fd.append("file", this.fileData);
+      const fd = new FormData();
+      fd.append("file", this.postingForm.file);
+      //fd.append("file", this.fileData);
 
-    fd.append("title", this.postingForm.title);
-    fd.append("description", this.postingForm.description);
+      fd.append("title", this.postingForm.title);
+      fd.append("description", this.postingForm.description);
 
-    this.mediaProvider.upload(fd).subscribe((UploadResponse: TagsResponse) => {
-      //set time out in 2s
-      console.log("UploadResponse", UploadResponse);
-
-      //add GIVA tag to the Image
       this.mediaProvider
-        .addTag_Giva(UploadResponse.file_id)
-        .subscribe((TagResponse: TagsResponse) => {
-          console.log("TagResponse", TagResponse);
-          this.addCategoryTag(
-            UploadResponse.file_id,
-            this.postingForm.category
-          );
+        .upload(fd)
+        .subscribe((UploadResponse: TagsResponse) => {
+          //set time out in 2s
+          console.log("UploadResponse", UploadResponse);
+
+          //add GIVA tag to the Image
+          this.mediaProvider
+            .addTag_Giva(UploadResponse.file_id)
+            .subscribe((TagResponse: TagsResponse) => {
+              console.log("TagResponse", TagResponse);
+              this.addCategoryTag(
+                UploadResponse.file_id,
+                this.postingForm.category
+              );
+            });
+          // hide spinner
+          this.loading();
         });
-      // hide spinner
-      this.loading();
-    });
+    } else {
+      this.getCurrentLocation();
+    }
   }
   addCategoryTag(id, category) {
     this.data = {

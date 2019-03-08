@@ -1,8 +1,3 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>posting</ion-title>
-  </ion-navbar>
-</ion-header>
 <ion-content padding center text-center>
   <!-- <button ion-button full (click)="openCamera()">Open Camera</button>
   <button ion-button full (click)="openGallery()">Open Gallery</button>
@@ -12,11 +7,6 @@
   <form #formPosting="ngForm">
     <ion-card id="image">
       <img [src]="fileData" />
-      <!-- <ion-fab center middle>
-        <button ion-fab color="light" (click)="openGallery()">
-          <ion-icon name="arrow-round-up"></ion-icon>
-        </button>
-      </ion-fab> -->
       <ion-fab right bottom>
         <button ion-fab color="light" (click)="openGallery()">
           <ion-icon name="image"></ion-icon>
