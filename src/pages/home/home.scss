@@ -1,28 +1,27 @@
 page-home {
-
 }
-.back{
-    background-image: url(../../assets/imgs/Background.png); 
-    background-size:cover;
+.back {
+  background-image: url(../../assets/imgs/Background@3x.png);
+  background-size: cover;
+}
+.imageView {
+  border-radius: 10%;
+  border: 1px solid rgb(226, 211, 4);
+  height: 100px;
+  width: 100px;
+}
+.search {
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  border-radius: 15px !important;
+  span {
+    color: white !important;
+    font-weight: bold;
+    align-self: auto;
+    ion-icon {
+      color: white;
+      font-size: 20px;
+      margin: 8px;
     }
-.imageView{
-    border-radius: 10%;
-    border: 1px solid rgb(226, 211, 4);
-    height: 100px;
-    width: 100px;
-}
-.search{
-        height: 25px;
-        background-color: rgba(255, 255, 255, 0.4) !important;
-        border-radius: 15px !important;
-        span {
-            color: white !important;
-            font-weight: bold;
-            align-self: auto;
-            ion-icon {
-              color: white;
-              font-size: 20px;
-              margin: 8px;
-            }
-          }
+  }
 }

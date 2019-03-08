@@ -10,9 +10,8 @@ import { ServerResponse } from "../../intefaces/posting";
   selector: "page-post-view",
   templateUrl: "post-view.html"
 })
-
 export class PostViewPage {
-    id;
+  id;
   pic: Picture;
   postInfo: PostInfo = {};
   onChatBox = false;
@@ -23,6 +22,8 @@ export class PostViewPage {
   ) {}
 
   ngOnInit() {
+    console.log("1");
+
     console.log(this.navParams.data);
     if (
       (this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
@@ -92,23 +93,29 @@ export class PostViewPage {
     //   alert("sorry! this item is unavaiable now");
     // }
   }
-getMedia(){
-  this.mediaProvider.getSingleMedia(this.id).subscribe(
-  (pic: Picture)=>{
-     this.pic = pic;
-    console.log("this1", this.pic.title, this.pic.file_id);
+  getMedia() {
+    this.mediaProvider.getSingleMedia(this.id).subscribe((pic: Picture) => {
+      this.pic = pic;
+      console.log("this1", this.pic.title, this.pic.file_id);
+    });
   }
-);
-}
-  pin(){
+  pin() {
     this.id = this.pic.file_id;
     const fd = {
-      "file_id": this.id
-    }
-    this.mediaProvider.makeFavorite(fd).subscribe(
-      (response: Response) =>{
-        console.log(response);
-      }
-    )
+      file_id: this.id
+    };
+    this.mediaProvider.makeFavorite(fd).subscribe((response: Response) => {
+      console.log(response);
+    });
+  }
+
+  ionViewDidLeave() {
+    console.log("2");
+  }
+
+  ionViewWillUnload() {
+    localStorage.removeItem("current_location");
+    localStorage.removeItem("departure_point");
+    localStorage.removeItem("vehicle");
   }
 }

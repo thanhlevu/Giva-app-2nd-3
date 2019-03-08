@@ -146,8 +146,8 @@ export class PostingPage {
       "$blockedIDs:";
 
     const fd = new FormData();
-    //fd.append("file", this.postingForm.file);
-    fd.append("file", this.fileData);
+    fd.append("file", this.postingForm.file);
+    //fd.append("file", this.fileData);
 
     fd.append("title", this.postingForm.title);
     fd.append("description", this.postingForm.description);
