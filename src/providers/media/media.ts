@@ -39,7 +39,7 @@ export class MediaProvider {
 
   getMyItems() {
     return this.http.get<Picture[]>(
-      this.configUrl + "/media/user/" + this.user_id
+      this.configUrl + "/media/user/" + localStorage.getItem("userID")
     );
   }
 
@@ -98,9 +98,9 @@ export class MediaProvider {
         "x-access-token": this.token
       })
     };
-    if (this.user_id) {
+    if (localStorage.getItem("userID")) {
       return this.http.get(
-        this.configUrl + "/users/" + this.user_id,
+        this.configUrl + "/users/" + localStorage.getItem("userID"),
         httpOptions
       );
     }

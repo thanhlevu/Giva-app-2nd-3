@@ -19,7 +19,7 @@ import { PostEditPage } from "../post-edit/post-edit";
   templateUrl: "my-items.html"
 })
 export class MyItemsPage implements OnInit {
-  picArray: Picture[];
+  myItemArray: Picture[];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -27,11 +27,9 @@ export class MyItemsPage implements OnInit {
     public http: HttpClient
   ) {}
 
-  ngOnInit() {
-    return this.mediaProvider.getMyItems().subscribe(data => {
-      console.log(data);
-      this.picArray = data;
-    });
+  ngOnInit() {}
+  ionViewDidEnter() {
+    this.getMyItems();
   }
 
   ionViewDidLoad() {
@@ -39,7 +37,13 @@ export class MyItemsPage implements OnInit {
   }
 
   viewPost(Pic: Picture) {
-    this.navCtrl.push(PostEditPage, Pic);
-    // console.log(Pic);
+    this.navCtrl.push(PostViewPage, Pic);
+  }
+
+  getMyItems() {
+    this.mediaProvider.getMyItems().subscribe((response: Picture[]) => {
+      this.myItemArray = response;
+      console.log(this.myItemArray);
+    });
   }
 }

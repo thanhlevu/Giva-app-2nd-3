@@ -3,7 +3,7 @@
     ><img alt="logo" height="100" src="../../assets/icon/user.svg"
   /></ion-title>
   <ion-item>
-    <ion-label> <ion-icon item-left name="person"></ion-icon></ion-label>
+    <ion-label> <ion-icon item-left name="contact"></ion-icon></ion-label>
     <ion-input
       placeholder="Username"
       type="text"
@@ -21,7 +21,7 @@
   <ion-item>
     <ion-label> <ion-icon item-end name="lock"></ion-icon></ion-label>
     <ion-input
-      placeholder="Password"
+      placeholder="New Password"
       type="password"
       [(ngModel)]="userInfo.password"
     >
@@ -33,18 +33,15 @@
       ><ion-icon item-start size="large" name="lock"></ion-icon
     ></ion-label>
     <ion-input
-      placeholder="Confirm Password"
+      placeholder="Confirm New Password"
       type="password"
       [(ngModel)]="userInfo.password2"
     >
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
-  <button ion-button full (click)="onUpdateUserInfo()">
+  <button ion-button full (click)="updateUserInfo()">
     <ion-icon name="arrow-dropup"></ion-icon> Update
-  </button>
-  <button ion-button full (click)="editProfile()">
-    <ion-icon name="log-out"></ion-icon> Edit Profile
   </button>
   <button ion-button full (click)="logOut()">
     <ion-icon name="log-out"></ion-icon> Log Out

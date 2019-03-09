@@ -19,17 +19,24 @@ export class UserInfoPage {
   ) {}
 
   ionViewDidLoad() {
+    this.getUsersInfo();
     console.log("ionViewDidLoad UserInfoPage");
   }
 
-  onUpdateUserInfo() {
+  getUsersInfo() {
+    this.mediaProvider.getUsersInfo().subscribe((response: User) => {
+      this.userInfo = response;
+      console.log(response);
+    });
+  }
+
+  updateUserInfo() {
     if (this.userInfo.password2 == this.userInfo.password) {
       delete this.userInfo.password2;
       console.log("userInfo ", this.userInfo);
       this.mediaProvider.updateUserInfo(this.userInfo).subscribe(
         (response: LoginResponse) => {
           console.log(response);
-          this.navCtrl.pop().catch();
         },
         error => {
           console.log(error);
@@ -38,9 +45,6 @@ export class UserInfoPage {
     } else console.log("passwords dont match.");
   }
 
-  editProfile() {
-    this.navCtrl.push(EditInfoPage);
-  }
   logOut() {
     localStorage.clear();
     this.navCtrl.setRoot(LoginPage);

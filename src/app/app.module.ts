@@ -21,7 +21,6 @@ import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
 import { ReservedPage } from "../pages/reserved/reserved";
-import { ProfilePage } from "../pages/profile/profile";
 import { CategoriesPage } from "../pages/categories/categories";
 import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
 import { FavoritesPage } from "../pages/favorites/favorites";
@@ -60,7 +59,6 @@ import { PipesModule } from "../pipes/pipes.module";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage,
     GoogleMapComponent,
     ChatBoxPage,
     FavoritesPage,
@@ -89,7 +87,6 @@ import { PipesModule } from "../pipes/pipes.module";
     PostEditPage,
     TabsPage,
     ReservedPage,
-    ProfilePage,
     GoogleMapComponent,
     ChatBoxPage,
     CategoriesPage,

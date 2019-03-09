@@ -1,16 +1,12 @@
-<ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let pic of picArray" (click)="viewPost(pic)">
-      <ion-thumbnail item-start>
+<ion-content class="back">
+  <ion-row>
+    <ion-col col-4 *ngFor="let item of myItemArray">
+      <ion-thumbnail item-start (click)="viewPost(item)">
         <img
-          [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + pic.filename"
+          [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + item.filename"
+          class="imageView"
         />
       </ion-thumbnail>
-      <h2>{{ pic.title }}</h2>
-      <p>{{ pic.description }}</p>
-      <button ion-button clear item-end (click)="viewImage(pic.filename)">
-        View
-      </button>
-    </ion-item>
-  </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>

@@ -1,3 +1,12 @@
 page-my-items {
-
+  .back {
+    background-image: url(../../assets/imgs/Background@3x.png);
+    background-size: cover;
+  }
+  .imageView {
+    border-radius: 10%;
+    border: 1px solid rgb(226, 211, 4);
+    height: 100px;
+    width: 100px;
+  }
 }

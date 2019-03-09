@@ -36,7 +36,6 @@ export class LoginPage {
         this.mediaprovider.token = response.token;
         this.mediaprovider.loggedIn = true;
         this.mediaprovider.user_id = response.user.user_id;
-        console.log("user.id: " + this.mediaprovider.user_id);
       },
       error => {
         console.log(error);
