@@ -40,7 +40,10 @@ export class ChatBoxPage {
     this.commentRequest.comment = this.message;
     this.mediaProvider
       .sendComment(this.commentRequest)
-      .subscribe((res: ServerResponse) => console.log(res.message));
+      .subscribe((res: ServerResponse) => {
+        console.log(res.message);
+        this.message = "";
+      });
     this.getAllComments();
   }
 
@@ -104,19 +107,21 @@ export class ChatBoxPage {
   }
 
   getFileInfo(file_id) {
-    this.mediaProvider.getFileData(file_id).subscribe((fileData: Picture) => {
-      this.description = fileData.description;
-      console.log("this.description", this.description);
+    this.mediaProvider
+      .getFileDataById(file_id)
+      .subscribe((fileData: Picture) => {
+        this.description = fileData.description;
+        console.log("this.description", this.description);
 
-      this.reserverID = fileData.description
-        .split("$chatter:")[1]
-        .split("$blockedIDs:")[0];
-      if (fileData.user_id == Number(localStorage.getItem("userID"))) {
-        this.isMyPost = true;
-      }
-      this.blockedIDs = this.description.split("$blockedIDs:")[1].split(",");
-      console.log("blockedIDs", this.blockedIDs);
-    });
+        this.reserverID = fileData.description
+          .split("$chatter:")[1]
+          .split("$blockedIDs:")[0];
+        if (fileData.user_id == Number(localStorage.getItem("userID"))) {
+          this.isMyPost = true;
+        }
+        this.blockedIDs = this.description.split("$blockedIDs:")[1].split(",");
+        console.log("blockedIDs", this.blockedIDs);
+      });
   }
 
   blockThisUserID(user_id) {

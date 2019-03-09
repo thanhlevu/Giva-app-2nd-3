@@ -19,6 +19,9 @@ import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { MediaProvider } from "../../providers/media/media";
+import { HomePage } from "../home/home";
+import { App } from "ionic-angular";
+import { PostViewPage } from "../post-view/post-view";
 
 @IonicPage()
 @Component({
@@ -32,13 +35,15 @@ export class PostingPage {
   file: File;
   fileData: string = "";
   itemLocation: Geolocation = {};
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private camera: Camera,
     public http: HttpClient,
     private mediaProvider: MediaProvider,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private app: App
   ) {}
 
   ngOnInit() {
@@ -157,7 +162,7 @@ export class PostingPage {
       fd.append("description", this.postingForm.description);
 
       this.mediaProvider
-        .upload(fd)
+        .uploadImage(fd)
         .subscribe((UploadResponse: TagsResponse) => {
           //set time out in 2s
           console.log("UploadResponse", UploadResponse);
@@ -192,7 +197,7 @@ export class PostingPage {
       });
   }
 
-  showPreview() {
+  showMediaPreview() {
     var reader = new FileReader();
     reader.onloadend = evt => {
       //using arrow fuction to change the reference, if not ==> error of this.
@@ -211,7 +216,7 @@ export class PostingPage {
   handleChange($event) {
     console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
-    this.showPreview();
+    this.showMediaPreview();
   }
 
   loading() {
@@ -220,7 +225,7 @@ export class PostingPage {
 
     setTimeout(() => {
       loading.dismiss();
-      this.navCtrl.pop().catch();
-    }, 2000);
+      this.navCtrl.parent.select(0);
+    }, 1000);
   }
 }

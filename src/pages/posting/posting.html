@@ -20,7 +20,7 @@
     </ion-card>
 
     <ion-item>
-      <ion-label>File</ion-label>
+      <ion-label>File:</ion-label>
       <ion-input
         type="file"
         accept="image"
@@ -29,7 +29,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Title</ion-label>
+      <ion-label>Title:</ion-label>
       <ion-input
         type="text"
         name="title"
@@ -40,7 +40,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Description</ion-label>
+      <ion-label>Description:</ion-label>
       <ion-input
         type="text"
         name="description"
@@ -51,7 +51,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Categories</ion-label>
+      <ion-label>Categories:</ion-label>
       <ion-select [(ngModel)]="postingForm.category" name="category">
         <ion-option value="Electronics">Electronics</ion-option>
         <ion-option value="Furnitures">Furnitures</ion-option>
@@ -64,7 +64,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>End Time</ion-label>
+      <ion-label>End Time:</ion-label>
       <ion-datetime
         name="endTime"
         [(ngModel)]="postingForm.endTime"
@@ -73,7 +73,7 @@
       ></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Contact to Me</ion-label>
+      <ion-label>Contact:</ion-label>
       <ion-input
         type="text"
         name="contact"
@@ -83,7 +83,7 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Contact Time from:</ion-label>
+      <ion-label>From:</ion-label>
       <ion-datetime
         [(ngModel)]="postingForm.contactTimeFrom"
         name="contactTimeF"
@@ -93,7 +93,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Contact Time to:</ion-label>
+      <ion-label>To:</ion-label>
       <ion-datetime
         [(ngModel)]="postingForm.contactTimeTo"
         name="contactTimeTo"

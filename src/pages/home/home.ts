@@ -52,7 +52,7 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.loadItems_GivaTag();
   }
-  loadItems() {
+  /*   loadItems() {
     return this.http
       .get<Picture[]>("../../assets/test.json")
       .subscribe(data => {
@@ -67,17 +67,15 @@ export class HomePage implements OnInit {
       .subscribe((data: Picture[]) => {
         this.picArray = data;
       });
-  }
+  } */
 
   loadItems_GivaTag() {
-    return this.http
-      .get<Picture[]>("http://media.mw.metropolia.fi/wbma/tags/GIVA")
-      .subscribe(items => {
-        //order by the newest post
-        this.picArray = items.sort(
-          (a, b) => Number(b.file_id) - Number(a.file_id)
-        );
-      });
+    this.mediaprovider.getAllItemsWithGivaTag().subscribe(items => {
+      //order by the newest post
+      this.picArray = items.sort(
+        (a, b) => Number(b.file_id) - Number(a.file_id)
+      );
+    });
   }
 
   viewImage(url: string) {

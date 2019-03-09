@@ -10,10 +10,20 @@
         <ion-icon name="chatboxes"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end *ngIf="!this.postInfo.reserved">
+      <button ion-fab class="fab-map" (click)="showGoogleMap()">
+        <ion-icon name="globe"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="isMyPost">
+      <button ion-fab class="fab-map" (click)="deleteImage()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="back">
   <ion-card>
     <img
       [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + postInfo.filename"
@@ -21,62 +31,79 @@
     <ion-card-content>
       <ion-list>
         <ion-item>
-          <ion-icon name="cart" item-start></ion-icon>Title:
+          <ion-icon name="cart" item-start></ion-icon>
           {{ postInfo.title }}
-          <ion-icon name="checkmark-circle-outline" item-end></ion-icon>
+          <!--           <ion-icon name="checkmark-circle-outline" item-end></ion-icon> -->
         </ion-item>
         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Description:
+          <ion-icon name="list-box" item-start></ion-icon>
           {{ postInfo.description }}
-          <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Category:
+          <ion-icon name="aperture" item-start></ion-icon>
           {{ postInfo.category }}
-          <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>End Time:
+          <ion-icon name="calendar" item-start></ion-icon>
           {{ this.postInfo.end_time }}
-          <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Contact:
+          <ion-icon name="text" item-start></ion-icon>
           {{ this.postInfo.contact }}
-          <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Contact Time From:
-          {{ this.postInfo.contact_time_from }}
-          <ion-icon name="rose" item-end></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Contact Time To:
+          <ion-icon name="alarm" item-start></ion-icon>
+          {{ this.postInfo.contact_time_from }} -
           {{ this.postInfo.contact_time_to }}
-          <ion-icon name="rose" item-end></ion-icon>
         </ion-item>
         <!--         <ion-item>
           <ion-icon name="leaf" item-start></ion-icon>Reserved:
           {{ this.postInfo.reserved }}
           <ion-icon name="rose" item-end></ion-icon>
         </ion-item> -->
-        <ion-item>
-          <ion-label>Reserved</ion-label>
-          <ion-toggle disabled checked="false"></ion-toggle>
-        </ion-item>
       </ion-list>
+      <ion-item *ngIf="!isMyPost">
+        <ion-icon name="heart" item-start></ion-icon>
+        <ion-label>Favorite:</ion-label>
+        <ion-toggle
+          color="royal"
+          (ionChange)="toggleFavorite()"
+          [(ngModel)]="onFavorite"
+        ></ion-toggle>
+      </ion-item>
     </ion-card-content>
   </ion-card>
+  <!--   <div style="position: relative">
+    <ion-fab left top *ngIf="!this.postInfo.reserved">
+      <button ion-fab class="fab-map" (click)="showGoogleMap()">
+        <ion-icon name="globe"></ion-icon>
+      </button>
+    </ion-fab>
+  </div> -->
 
-  <google-map *ngIf="!this.postInfo.reserved"> </google-map>
-  <ion-fab right bottom>
-    <button ion-fab color="green" (click)="openGallery()">
-      <ion-icon name="image"></ion-icon>
+  <google-map *ngIf="!this.postInfo.reserved && onMap"> </google-map>
+  <!--   <ion-fab right bottom *ngIf="!isMyPost && !onFavorite">
+    <button ion-fab color="green" (click)="addFavorites()">
+      <ion-icon name="heart"></ion-icon>
     </button>
   </ion-fab>
-  <ion-fab left bottom>
-    <button ion-fab color="green" (click)="openCamera()">
-      <ion-icon name="camera"></ion-icon>
+  <ion-fab left bottom *ngIf="!isMyPost && onFavorite">
+    <button ion-fab color="green" (click)="deleteFavourite()">
+      <ion-icon name="heart-half"></ion-icon>
     </button>
   </ion-fab>
+  <ion-fab right bottom *ngIf="isMyPost">
+    <button ion-fab color="green" (click)="deleteImage()">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+  </ion-fab> -->
+
+  <!--   <ion-fab right bottom>
+    <button ion-fab color="black">
+      <ion-icon name="arrow-dropleft"></ion-icon>
+    </button>
+    <ion-fab-list side="left">
+      <google-map *ngIf="!this.postInfo.reserved"> </google-map>
+    </ion-fab-list>
+  </ion-fab> -->
 </ion-content>

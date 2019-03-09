@@ -1,1 +1,15 @@
-<ion-content padding> </ion-content>
+<ion-content class="back">
+  <ion-row>
+    <ion-col col-4 *ngFor="let favoriteItem of favoriteItemArray">
+      <ion-thumbnail item-start (click)="viewPost(favoriteItem)">
+        <img
+          [src]="
+            'http://media.mw.metropolia.fi/wbma/uploads/' +
+            favoriteItem.filename
+          "
+          class="imageView"
+        />
+      </ion-thumbnail>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -9,7 +9,7 @@ import {
   ServerResponse,
   CommentsResponse
 } from "../../intefaces/posting";
-import { favoriteResponse } from '../../intefaces/posting';
+import { FavoriteResponse } from "../../intefaces/posting";
 
 @Injectable()
 export class MediaProvider {
@@ -21,23 +21,37 @@ export class MediaProvider {
   constructor(public http: HttpClient) {
     console.log("Hello MediaProvider Provider");
   }
-  getAllMedia() {
+  /*   getAllMedia() {
     return this.http.get<Picture[]>(this.configUrl + "/media");
   }
 
   getSingleMedia(id) {
     return this.http.get<Picture>(this.configUrl + "/media/" + id);
-  }
+  } */
 
   getAvatars() {
-    return this.http.get<TagsResponse[]>(
-      "http://media.mw.metropolia.fi/wbma/tags/profile"
-    );
+    return this.http.get<TagsResponse[]>(this.configUrl + "/tags/profile");
+  }
+
+  getAllItemsWithGivaTag() {
+    return this.http.get<Picture[]>(this.configUrl + "/tags/GIVA");
   }
 
   getMyItems() {
     return this.http.get<Picture[]>(
       this.configUrl + "/media/user/" + this.user_id
+    );
+  }
+
+  getAllMyFavoriteItems() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get<FavoriteResponse[]>(
+      this.configUrl + "/favourites",
+      httpOptions
     );
   }
 
@@ -101,7 +115,7 @@ export class MediaProvider {
     return this.http.get(this.configUrl + "/users/" + user_id, httpOptions);
   }
 
-  upload(data: any) {
+  uploadImage(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": localStorage.getItem("token")
@@ -203,17 +217,18 @@ export class MediaProvider {
     );
   }
 
-  getFileData(file_id) {
+  getFileDataById(file_id) {
     const httpOptions = {
-        headers: new HttpHeaders({
-          "x-access-token": this.token
-        })
-      };
-          return this.http.get<Picture>(
-    this.configUrl + "/media/" + file_id,
-    httpOptions
-  );}
-  
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get<Picture>(
+      this.configUrl + "/media/" + file_id,
+      httpOptions
+    );
+  }
+
   addTag_category(data) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -221,41 +236,56 @@ export class MediaProvider {
       })
     };
 
-    return this.http.post(this.configUrl + "/tags",data,httpOptions);
+    return this.http.post(this.configUrl + "/tags", data, httpOptions);
   }
 
-  
-  makeFavorite(data:any){
+  addFavorite(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-access-token': this.token,
+        "X-access-token": this.token
       })
     };
-    return this.http.post<Response>(this.configUrl+ "/favourites", data,httpOptions);
+    return this.http.post<Response>(
+      this.configUrl + "/favourites",
+      data,
+      httpOptions
+    );
   }
-  getAllPins(){
+
+  deleteFavourite(id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-access-token': this.token,
+        "X-access-token": this.token
       })
     };
-    return this.http.get<favoriteResponse[]>(this.configUrl+ "/favourites",httpOptions);
+    return this.http.delete(
+      this.configUrl + "/favourites/file/" + id,
+      httpOptions
+    );
   }
-  deleteFavourite(id){
+
+  getAllFavourites() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-access-token': this.token,
+        "X-access-token": this.token
       })
     };
-    return this.http.delete(this.configUrl+ "/favourites/file/"+id,httpOptions);
+    return this.http.get<FavoriteResponse[]>(
+      this.configUrl + "/favourites",
+      httpOptions
+    );
   }
-  SearchWithWord(data){
+
+  SearchWithWord(data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-access-token': this.token,
+        "X-access-token": this.token
       })
     };
-    return this.http.post<Picture[]>(this.configUrl+ "/media/search",data,httpOptions);
+    return this.http.post<Picture[]>(
+      this.configUrl + "/media/search",
+      data,
+      httpOptions
+    );
   }
 }
-  

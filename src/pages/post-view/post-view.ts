@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Picture, PostInfo } from "../../intefaces/posting";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController
+} from "ionic-angular";
+import { Picture, PostInfo, FavoriteResponse } from "../../intefaces/posting";
 import { ChatBoxPage } from "../chat-box/chat-box";
 import { MediaProvider } from "../../providers/media/media";
 import { ServerResponse } from "../../intefaces/posting";
@@ -15,16 +20,19 @@ export class PostViewPage {
   pic: Picture;
   postInfo: PostInfo = {};
   onChatBox = false;
+  isMyPost = false;
+  onFavorite = false;
+  onMap = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private mediaProvider: MediaProvider
+    private mediaProvider: MediaProvider,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
-    console.log("1");
-
     console.log(this.navParams.data);
+    this.checkFavorite();
     if (
       (this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
         this.navParams.data.user_id == localStorage.getItem("userID") ||
@@ -37,7 +45,9 @@ export class PostViewPage {
     ) {
       this.onChatBox = true;
     }
-
+    if (this.navParams.data.user_id == localStorage.getItem("userID")) {
+      this.isMyPost = true;
+    }
     this.postInfo.filename = this.navParams.data.filename;
 
     this.postInfo.title = this.navParams.data.title;
@@ -93,29 +103,78 @@ export class PostViewPage {
     //   alert("sorry! this item is unavaiable now");
     // }
   }
-  getMedia() {
-    this.mediaProvider.getSingleMedia(this.id).subscribe((pic: Picture) => {
+  /*   getMedia() {
+    this.mediaProvider.getFileDataById(this.id).subscribe((pic: Picture) => {
       this.pic = pic;
       console.log("this1", this.pic.title, this.pic.file_id);
     });
-  }
-  pin() {
-    this.id = this.pic.file_id;
-    const fd = {
-      file_id: this.id
-    };
-    this.mediaProvider.makeFavorite(fd).subscribe((response: Response) => {
-      console.log(response);
-    });
-  }
+  } */
 
-  ionViewDidLeave() {
-    console.log("2");
-  }
+  ionViewDidLeave() {}
 
   ionViewWillUnload() {
     localStorage.removeItem("current_location");
     localStorage.removeItem("departure_point");
     localStorage.removeItem("vehicle");
+  }
+
+  checkFavorite() {
+    this.mediaProvider
+      .getAllFavourites()
+      .subscribe((response: FavoriteResponse[]) => {
+        console.log("FavoriteResponse", response);
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].file_id == this.navParams.data.file_id) {
+            this.onFavorite = true;
+            console.log("onFavorite", this.onFavorite);
+          }
+        }
+      });
+  }
+
+  addFavorites() {
+    const fd = {
+      file_id: this.navParams.data.file_id
+    };
+    this.mediaProvider.addFavorite(fd).subscribe((response: Response) => {
+      console.log("addFavorites", response);
+    });
+  }
+
+  deleteFavourite() {
+    this.mediaProvider
+      .deleteFavourite(this.navParams.data.file_id)
+      .subscribe((response: Response) => {
+        console.log("deleteFavourite", response);
+      });
+  }
+
+  public toggleFavorite() {
+    if (!this.onFavorite) {
+      this.deleteFavourite();
+    } else {
+      this.addFavorites();
+    }
+  }
+
+  deleteImage() {
+    this.mediaProvider
+      .deleteFile(this.navParams.data.file_id)
+      .subscribe(res => console.log(res));
+    let loading = this.loadingCtrl.create({});
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 300);
+    this.navCtrl.pop();
+  }
+
+  showGoogleMap() {
+    if (!this.onMap) {
+      this.onMap = true;
+    } else {
+      this.onMap = false;
+    }
   }
 }

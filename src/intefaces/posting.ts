@@ -194,7 +194,7 @@ export interface DirectionLineData {
   };
 }
 
-export interface favoriteResponse {
+export interface FavoriteResponse {
   favourite_id?: number;
   file_id?: number;
   user_id?: number;

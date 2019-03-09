@@ -44,8 +44,8 @@ export class UserInfoPage {
   logOut() {
     localStorage.clear();
     this.navCtrl.setRoot(LoginPage);
-    let elements = document.querySelectorAll(".tabbar");
 
+    let elements = document.querySelectorAll(".tabbar");
     if (elements != null) {
       Object.keys(elements).map(key => {
         elements[key].style.display = "none";
