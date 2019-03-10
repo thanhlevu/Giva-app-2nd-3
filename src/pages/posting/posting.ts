@@ -29,7 +29,6 @@ import { PostViewPage } from "../post-view/post-view";
   templateUrl: "posting.html"
 })
 export class PostingPage {
-  data = {};
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
   file: File;
@@ -135,24 +134,22 @@ export class PostingPage {
       this.postingForm.description =
         "description:" +
         this.postingForm.info_item +
-        "$category:" +
-        this.postingForm.category +
-        "$geolocation:" +
+        "(@!GIVA?#)geolocation:" +
         this.itemLocation.lat +
         "," +
         this.itemLocation.lng +
-        "$endTime=" +
+        "(@!GIVA?#)endTime=" +
         this.postingForm.endTime +
-        "$contact:" +
+        "(@!GIVA?#)contact:" +
         this.postingForm.contact +
-        "$contactTimeFrom=" +
+        "(@!GIVA?#)contactTimeFrom=" +
         this.postingForm.contactTimeFrom +
-        "$contactTimeTo=" +
+        "(@!GIVA?#)contactTimeTo=" +
         this.postingForm.contactTimeTo +
-        "$reserved:" +
+        "(@!GIVA?#)reserved:" +
         this.postingForm.reserved +
-        "$chatter:" +
-        "$blockedIDs:";
+        "(@!GIVA?#)chatter:" +
+        "(@!GIVA?#)blockedIDs:";
 
       const fd = new FormData();
       fd.append("file", this.postingForm.file);
@@ -172,26 +169,28 @@ export class PostingPage {
             .addTag_Giva(UploadResponse.file_id)
             .subscribe((TagResponse: TagsResponse) => {
               console.log("TagResponse", TagResponse);
+
+              //add Category tag to the image
               this.addCategoryTag(
                 UploadResponse.file_id,
                 this.postingForm.category
               );
             });
-          // hide spinner
+
           this.loading();
         });
     } else {
       this.getCurrentLocation();
     }
   }
-  addCategoryTag(id, category) {
-    this.data = {
-      file_id: id,
-      tag: "GIVA_" + category
+
+  addCategoryTag(file_Id, category) {
+    let data = {
+      file_id: file_Id,
+      tag: "GIVA_Category/" + category
     };
-    console.log(this.data);
     this.mediaProvider
-      .addTag_category(this.data)
+      .addTag_Category(data)
       .subscribe((TagResponse: TagsResponse) => {
         console.log("Second: ", TagResponse);
       });

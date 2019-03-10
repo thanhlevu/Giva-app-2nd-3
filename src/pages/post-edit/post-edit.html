@@ -1,6 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>post-edit</ion-title>
+    <ion-buttons end>
+      <button
+        ion-fab
+        class="fab-map"
+        color="danger"
+        (click)="deletePost(navParams.data.file_id)"
+      >
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding center text-center>
@@ -9,9 +18,12 @@
       <img [src]="fileData" />
     </ion-card>
     <ion-item>
-      <ion-label>Reverved</ion-label>
+      <ion-icon name="checkbox-outline" item-start></ion-icon>
+      <ion-label>Reserved:</ion-label>
       <ion-toggle
         name="reserved"
+        color="royal"
+        (ionChange)="toggleReserve()"
         [(ngModel)]="postingForm.reserved"
       ></ion-toggle>
     </ion-item>
@@ -51,7 +63,7 @@
       <ion-select [(ngModel)]="postingForm.category" name="category">
         <ion-option value="Electronics">Electronics</ion-option>
         <ion-option value="Furnitures">Furnitures</ion-option>
-        <ion-option value="Clothes_Accessories"
+        <ion-option value="Clothes&Accessories"
           >Clothes & Accessories</ion-option
         >
         <ion-option value="Vehicles">Vehicles</ion-option>
@@ -107,9 +119,4 @@
       Update
     </button>
   </form>
-  <ion-fab right top>
-    <button ion-fab color="danger" (click)="deletePost(navParams.data.file_id)">
-      <ion-icon name="trash"></ion-icon>
-    </button>
-  </ion-fab>
 </ion-content>

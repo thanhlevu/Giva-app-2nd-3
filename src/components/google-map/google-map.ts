@@ -52,13 +52,13 @@ export class GoogleMapComponent {
   ngOnInit() {
     this.destination.lat = Number(
       this.navParams.data.description
-        .split("$")[2]
+        .split("(@!GIVA?#)")[1]
         .split(":")[1]
         .split(",")[0]
     );
     this.destination.lng = Number(
       this.navParams.data.description
-        .split("$")[2]
+        .split("(@!GIVA?#)")[1]
         .split(":")[1]
         .split(",")[1]
     );

@@ -5,10 +5,17 @@ import {
   NavParams,
   LoadingController
 } from "ionic-angular";
-import { Picture, PostInfo, FavoriteResponse } from "../../intefaces/posting";
+import {
+  Picture,
+  PostInfo,
+  FavoriteResponse,
+  PostEdit,
+  TagsResponse
+} from "../../intefaces/posting";
 import { ChatBoxPage } from "../chat-box/chat-box";
 import { MediaProvider } from "../../providers/media/media";
 import { ServerResponse } from "../../intefaces/posting";
+import { PostEditPage } from "../post-edit/post-edit";
 
 @IonicPage()
 @Component({
@@ -29,54 +36,108 @@ export class PostViewPage {
     private mediaProvider: MediaProvider,
     private loadingCtrl: LoadingController
   ) {}
+  ngOnInit() {}
+  ionViewDidEnter() {
+    this.mediaProvider
+      .getFileDataById(this.navParams.data.file_id)
+      .subscribe((response: Picture) => {
+        this.navParams.data = response;
 
-  ngOnInit() {
-    console.log(this.navParams.data);
-    this.checkFavorite();
-    if (
-      (this.navParams.data.description.split("$")[8].split(":")[1] == "" ||
-        this.navParams.data.user_id == localStorage.getItem("userID") ||
-        this.navParams.data.description.split("$")[8].split(":")[1] ==
-          localStorage.getItem("userID")) &&
-      !this.navParams.data.description
-        .split("$blockedIDs:")[1]
-        .split(",")
-        .includes(localStorage.getItem("userID") + "")
-    ) {
-      this.onChatBox = true;
-    }
-    if (this.navParams.data.user_id == localStorage.getItem("userID")) {
-      this.isMyPost = true;
-    }
-    this.postInfo.filename = this.navParams.data.filename;
+        console.log(this.navParams.data);
+        console.log(this.navParams.data.description.split("(@!GIVA?#)"));
 
-    this.postInfo.title = this.navParams.data.title;
+        this.checkFavorite();
 
-    this.postInfo.description = this.navParams.data.description
-      .split("$")[0]
-      .split(":")[1];
-    this.postInfo.category = this.navParams.data.description
-      .split("$")[1]
-      .split(":")[1];
-    this.postInfo.end_time = this.navParams.data.description
-      .split("$")[3]
-      .split("=")[1];
-    this.postInfo.contact = this.navParams.data.description
-      .split("$")[4]
-      .split(":")[1];
-    this.postInfo.contact_time_from = this.navParams.data.description
-      .split("$")[5]
-      .split("=")[1];
-    this.postInfo.contact_time_to = this.navParams.data.description
-      .split("$")[6]
-      .split("=")[1];
-    if (
-      this.navParams.data.description.split("$")[7].split(":")[1] == "false"
-    ) {
-      this.postInfo.reserved = false;
+        if (
+          (this.navParams.data.description
+            .split("(@!GIVA?#)")[7]
+            .split(":")[1] == "" ||
+            this.navParams.data.user_id == localStorage.getItem("userID") ||
+            this.navParams.data.description
+              .split("(@!GIVA?#)")[7]
+              .split(":")[1] == localStorage.getItem("userID")) &&
+          !this.navParams.data.description
+            .split("(@!GIVA?#)blockedIDs:")[1]
+            .split(",")
+            .includes(localStorage.getItem("userID") + "")
+        ) {
+          this.onChatBox = true;
+        }
+
+        if (this.navParams.data.user_id == localStorage.getItem("userID")) {
+          this.isMyPost = true;
+        }
+
+        this.postInfo.filename = this.navParams.data.filename;
+        this.postInfo.title = this.navParams.data.title;
+        this.postInfo.description = this.navParams.data.description
+          .split("(@!GIVA?#)")[0]
+          .split(":")[1];
+        this.postInfo.end_time = this.navParams.data.description
+          .split("(@!GIVA?#)")[2]
+          .split("=")[1];
+        this.postInfo.contact = this.navParams.data.description
+          .split("(@!GIVA?#)")[3]
+          .split(":")[1];
+        this.postInfo.contact_time_from = this.navParams.data.description
+          .split("(@!GIVA?#)")[4]
+          .split("=")[1];
+        this.postInfo.contact_time_to = this.navParams.data.description
+          .split("(@!GIVA?#)")[5]
+          .split("=")[1];
+
+        if (
+          this.navParams.data.description
+            .split("(@!GIVA?#)")[6]
+            .split(":")[1] == "false"
+        ) {
+          this.postInfo.reserved = false;
+        } else {
+          this.postInfo.reserved = true;
+        }
+      });
+  }
+
+  // set item reserved ==> update description
+  toggleReserve() {
+    let newFormData: PostEdit = {};
+    console.log("reserved...");
+    if (!this.postInfo.reserved) {
+      newFormData.description =
+        this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
+        "(@!GIVA?#)reserved:false(@!GIVA?#)chatter:" +
+        this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
+      console.log(newFormData.description);
     } else {
-      this.postInfo.reserved = true;
+      newFormData.description =
+        this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
+        "(@!GIVA?#)reserved:true(@!GIVA?#)chatter:" +
+        this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
+      console.log(newFormData.description);
     }
+    this.mediaProvider
+      .updateFileInfo(this.navParams.data.file_id, newFormData)
+      .subscribe(response => {
+        console.log(response);
+      });
+  }
+
+  goToPostEdit() {
+    this.mediaProvider
+      .getFileDataById(this.navParams.data.file_id)
+      .subscribe((response: Picture) => {
+        this.navParams.data = response;
+        this.navCtrl.push(PostEditPage, this.navParams.data);
+      });
+  }
+
+  refreshFileData() {
+    this.mediaProvider
+      .getFileDataById(this.navParams.data.file_id)
+      .subscribe((response: Picture) => {
+        this.navParams.data = response;
+      });
+    console.log("this.navParams.data12", this.navParams.data);
   }
 
   goToChatBox() {
@@ -93,7 +154,7 @@ export class PostViewPage {
       }); */
 
     // if (
-    //   this.navParams.data.description.split("$")[8].split(":")[1] == "" &&
+    //   this.navParams.data.description.split("(@!GIVA?#)")[8].split(":")[1] == "" &&
     //   this.navParams.data.user_id !== localStorage.getItem("userID")
     // ) {
     //   this.navCtrl.push(ChatBoxPage);
@@ -103,14 +164,6 @@ export class PostViewPage {
     //   alert("sorry! this item is unavaiable now");
     // }
   }
-  /*   getMedia() {
-    this.mediaProvider.getFileDataById(this.id).subscribe((pic: Picture) => {
-      this.pic = pic;
-      console.log("this1", this.pic.title, this.pic.file_id);
-    });
-  } */
-
-  ionViewDidLeave() {}
 
   ionViewWillUnload() {
     localStorage.removeItem("current_location");

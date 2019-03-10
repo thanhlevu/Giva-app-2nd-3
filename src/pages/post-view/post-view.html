@@ -1,22 +1,26 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>post-view</ion-title>
     <ion-buttons end>
       <button
-        *ngIf="onChatBox && !this.postInfo.reserved"
+        *ngIf="onChatBox && (!this.postInfo.reserved || isMyPost)"
         ion-fab
         (click)="goToChatBox()"
       >
         <ion-icon name="chatboxes"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end *ngIf="!this.postInfo.reserved">
+    <ion-buttons end *ngIf="!this.postInfo.reserved || isMyPost">
       <button ion-fab class="fab-map" (click)="showGoogleMap()">
         <ion-icon name="globe"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="isMyPost">
-      <button ion-fab class="fab-map" (click)="deleteImage()">
+      <button ion-fab class="fab-map" (click)="goToPostEdit()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="isMyPost">
+      <button ion-fab color="danger" class="fab-map" (click)="deleteImage()">
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-buttons>
@@ -28,40 +32,41 @@
     <img
       [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + postInfo.filename"
     />
+    <div *ngIf="this.postInfo.reserved" class="card-title">
+      RESERVED
+    </div>
     <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-icon name="cart" item-start></ion-icon>
-          {{ postInfo.title }}
-          <!--           <ion-icon name="checkmark-circle-outline" item-end></ion-icon> -->
-        </ion-item>
-        <ion-item>
-          <ion-icon name="list-box" item-start></ion-icon>
-          {{ postInfo.description }}
-        </ion-item>
-        <ion-item>
-          <ion-icon name="aperture" item-start></ion-icon>
-          {{ postInfo.category }}
-        </ion-item>
-        <ion-item>
-          <ion-icon name="calendar" item-start></ion-icon>
-          {{ this.postInfo.end_time }}
-        </ion-item>
-        <ion-item>
-          <ion-icon name="text" item-start></ion-icon>
-          {{ this.postInfo.contact }}
-        </ion-item>
-        <ion-item>
-          <ion-icon name="alarm" item-start></ion-icon>
-          {{ this.postInfo.contact_time_from }} -
-          {{ this.postInfo.contact_time_to }}
-        </ion-item>
-        <!--         <ion-item>
-          <ion-icon name="leaf" item-start></ion-icon>Reserved:
-          {{ this.postInfo.reserved }}
-          <ion-icon name="rose" item-end></ion-icon>
-        </ion-item> -->
-      </ion-list>
+      <ion-item *ngIf="isMyPost">
+        <ion-icon name="checkbox-outline" item-start></ion-icon>
+        <ion-label>Reserved:</ion-label>
+        <ion-toggle
+          color="royal"
+          (ionChange)="toggleReserve()"
+          [(ngModel)]="this.postInfo.reserved"
+        ></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="cart" item-start></ion-icon>
+        {{ postInfo.title }}
+        <!--           <ion-icon name="checkmark-circle-outline" item-end></ion-icon> -->
+      </ion-item>
+      <ion-item>
+        <ion-icon name="list-box" item-start></ion-icon>
+        {{ postInfo.description }}
+      </ion-item>
+      <ion-item>
+        <ion-icon name="calendar" item-start></ion-icon>
+        {{ this.postInfo.end_time }}
+      </ion-item>
+      <ion-item *ngIf="!this.postInfo.reserved || isMyPost">
+        <ion-icon name="text" item-start></ion-icon>
+        {{ this.postInfo.contact }}
+      </ion-item>
+      <ion-item *ngIf="!this.postInfo.reserved || isMyPost">
+        <ion-icon name="alarm" item-start></ion-icon>
+        {{ this.postInfo.contact_time_from }} -
+        {{ this.postInfo.contact_time_to }}
+      </ion-item>
       <ion-item *ngIf="!isMyPost">
         <ion-icon name="heart" item-start></ion-icon>
         <ion-label>Favorite:</ion-label>

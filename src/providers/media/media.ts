@@ -106,6 +106,18 @@ export class MediaProvider {
     }
   }
 
+  getTagsByFileId(file_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get<TagsResponse[]>(
+      this.configUrl + "/tags/file/" + file_id,
+      httpOptions
+    );
+  }
+
   getOtherUsersInfo(user_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -229,14 +241,22 @@ export class MediaProvider {
     );
   }
 
-  addTag_category(data) {
+  addTag_Category(data) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": this.token
       })
     };
-
     return this.http.post(this.configUrl + "/tags", data, httpOptions);
+  }
+
+  deleteTag_Category(tag_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.delete(this.configUrl + "/tags/" + tag_id, httpOptions);
   }
 
   addFavorite(data: any) {

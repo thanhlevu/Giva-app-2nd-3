@@ -83,8 +83,10 @@ export class ChatBoxPage {
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, {
         description: this.description.replace(
-          this.description.split("$chatter:")[1],
-          user_id + "$blockedIDs:" + this.description.split("$blockedIDs:")[1]
+          this.description.split("(@!GIVA?#)chatter:")[1],
+          user_id +
+            "(@!GIVA?#)blockedIDs:" +
+            this.description.split("(@!GIVA?#)blockedIDs:")[1]
         )
       })
       .subscribe((serverResponse: ServerResponse) => {
@@ -96,8 +98,9 @@ export class ChatBoxPage {
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, {
         description: this.description.replace(
-          this.description.split("$chatter:")[1],
-          "$blockedIDs:" + this.description.split("$blockedIDs:")[1]
+          this.description.split("(@!GIVA?#)chatter:")[1],
+          "(@!GIVA?#)blockedIDs:" +
+            this.description.split("(@!GIVA?#)blockedIDs:")[1]
         )
       })
       .subscribe((serverResponse: ServerResponse) => {
@@ -114,18 +117,20 @@ export class ChatBoxPage {
         console.log("this.description", this.description);
 
         this.reserverID = fileData.description
-          .split("$chatter:")[1]
-          .split("$blockedIDs:")[0];
+          .split("(@!GIVA?#)chatter:")[1]
+          .split("(@!GIVA?#)blockedIDs:")[0];
         if (fileData.user_id == Number(localStorage.getItem("userID"))) {
           this.isMyPost = true;
         }
-        this.blockedIDs = this.description.split("$blockedIDs:")[1].split(",");
+        this.blockedIDs = this.description
+          .split("(@!GIVA?#)blockedIDs:")[1]
+          .split(",");
         console.log("blockedIDs", this.blockedIDs);
       });
   }
 
   blockThisUserID(user_id) {
-    if (!this.description.split("$blockedIDs")[1].includes(user_id)) {
+    if (!this.description.split("(@!GIVA?#)blockedIDs")[1].includes(user_id)) {
       this.mediaProvider
         .updateFileInfo(this.navParams.data.file_id, {
           description: this.description + user_id + ","
@@ -138,7 +143,7 @@ export class ChatBoxPage {
   }
 
   unblockThisUserID(user_id) {
-    if (this.description.split("$blockedIDs")[1].includes(user_id)) {
+    if (this.description.split("(@!GIVA?#)blockedIDs")[1].includes(user_id)) {
       this.mediaProvider
         .updateFileInfo(this.navParams.data.file_id, {
           description: this.description.replace(user_id + ",", "")

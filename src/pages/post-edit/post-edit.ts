@@ -10,19 +10,17 @@ import {
   ActionSheet,
   ActionSheetOptions
 } from "@ionic-native/action-sheet/ngx";
-import { PostingForm, PostEdit } from "../../intefaces/posting";
+import {
+  PostingForm,
+  PostEdit,
+  Picture,
+  TagsResponse
+} from "../../intefaces/posting";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { MediaProvider } from "../../providers/media/media";
-
-/**
- * Generated class for the PostEditPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -34,6 +32,7 @@ export class PostEditPage implements OnInit {
   myPhoto: any;
   file: File;
   fileData: string;
+  categoryTagId: number;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,54 +43,95 @@ export class PostEditPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.compileData();
+    this.getCategoryTag();
+  }
+
+  refreshFileData() {
+    this.mediaProvider
+      .getFileDataById(this.navParams.data.file_id)
+      .subscribe((response: Picture) => {
+        this.navParams.data = response;
+      });
+  }
+
+  addCategoryTag(file_Id, category) {
+    this.mediaProvider.deleteTag_Category(this.categoryTagId);
+    let data = {
+      file_id: file_Id,
+      tag: "GIVA_Category/" + category
+    };
+    this.mediaProvider
+      .addTag_Category(data)
+      .subscribe((TagResponse: TagsResponse) => {
+        console.log("Second: ", TagResponse);
+      });
+  }
+
+  getCategoryTag() {
+    this.mediaProvider
+      .getTagsByFileId(this.navParams.data.file_id)
+      .subscribe((response: TagsResponse[]) => {
+        console.log(response);
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].tag.includes("GIVA_Category/")) {
+            this.postingForm.category = response[i].tag.split(
+              "GIVA_Category/"
+            )[1];
+            this.categoryTagId = response[i].tag_id;
+            console.log(this.postingForm.category);
+          }
+        }
+      });
+  }
+
+  toggleReserve() {
+    let newFormData: PostEdit = {};
+    if (!this.postingForm.reserved) {
+      newFormData.description =
+        this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
+        "(@!GIVA?#)reserved:false(@!GIVA?#)chatter:" +
+        this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
+    } else {
+      newFormData.description =
+        this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
+        "(@!GIVA?#)reserved:true(@!GIVA?#)chatter:" +
+        this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
+    }
+    this.mediaProvider
+      .updateFileInfo(this.navParams.data.file_id, newFormData)
+      .subscribe(response => {
+        console.log(response);
+      });
+  }
+
+  compileData() {
     this.fileData =
-      "https://media.mw.metropolia.fi/wbma/uploads/" +
+      "http://media.mw.metropolia.fi/wbma/uploads/" +
       this.navParams.data.filename;
     this.postingForm.title = this.navParams.data.title;
     this.postingForm.info_item = this.navParams.data.description
-      .split("$")[0]
-      .split(":")[1];
-    console.log(
-      "de:" + this.navParams.data.description.split("$")[0].split(":")[1]
-    );
-    this.postingForm.category = this.navParams.data.description
-      .split("$")[1]
+      .split("(@!GIVA?#)")[0]
       .split(":")[1];
     this.postingForm.location = this.navParams.data.description
-      .split("$")[2]
+      .split("(@!GIVA?#)")[1]
       .split(":")[1];
-    this.postingForm.endTime =
-      this.navParams.data.description.split("$")[3].split(":")[1] +
-      ":" +
-      this.navParams.data.description.split("$")[3].split(":")[2] +
-      ":" +
-      this.navParams.data.description.split("$")[3].split(":")[3];
-    console.log(
-      "here: $$$ ",
-      this.navParams.data.description.split("$")[3].split(":")[1] +
-        ":" +
-        this.navParams.data.description.split("$")[3].split(":")[2] +
-        ":" +
-        this.navParams.data.description.split("$")[3].split(":")[3]
-    );
+    this.postingForm.endTime = this.navParams.data.description
+      .split("(@!GIVA?#)endTime=")[1]
+      .split("(@!GIVA?#)contact:")[0];
     this.postingForm.contact = this.navParams.data.description
-      .split("$")[4]
+      .split("(@!GIVA?#)")[3]
       .split(":")[1];
-    this.postingForm.contactTimeFrom =
-      this.navParams.data.description.split("$")[5].split(":")[1] +
-      ":" +
-      this.navParams.data.description.split("$")[6].split(":")[2];
-    this.postingForm.contactTimeTo =
-      this.navParams.data.description.split("$")[6].split(":")[1] +
-      ":" +
-      this.navParams.data.description.split("$")[6].split(":")[2];
-
+    this.postingForm.contactTimeFrom = this.navParams.data.description
+      .split("(@!GIVA?#)contactTimeFrom=")[1]
+      .split("(@!GIVA?#)contactTimeTo=")[0];
+    this.postingForm.contactTimeTo = this.navParams.data.description
+      .split("(@!GIVA?#)contactTimeTo=")[1]
+      .split("(@!GIVA?#)reserved:")[0];
     this.postingForm.reserved = this.navParams.data.description
-      .split("$")[7]
+      .split("(@!GIVA?#)")[6]
       .split(":")[1];
-  }
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad PostPage");
+    console.log("this.navParams.222");
   }
 
   openCamera() {
@@ -163,20 +203,20 @@ export class PostEditPage implements OnInit {
     this.postingForm.description =
       "description:" +
       this.postingForm.info_item +
-      "$category:" +
-      this.postingForm.category +
-      "$location:" +
+      "(@!GIVA?#)geolocation:" +
       this.postingForm.location +
-      "$endTime:" +
+      "(@!GIVA?#)endTime=" +
       this.postingForm.endTime +
-      "$contact:" +
+      "(@!GIVA?#)contact:" +
       this.postingForm.contact +
-      "$contactTimeFrom:" +
+      "(@!GIVA?#)contactTimeFrom=" +
       this.postingForm.contactTimeFrom +
-      "$contactTimeTo:" +
+      "(@!GIVA?#)contactTimeTo=" +
       this.postingForm.contactTimeTo +
-      "$reserved:" +
-      this.postingForm.reserved;
+      "(@!GIVA?#)reserved:" +
+      this.postingForm.reserved +
+      "(@!GIVA?#)chatter:" +
+      this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
 
     let newFormData: PostEdit = {};
     newFormData.title = this.postingForm.title;
@@ -188,13 +228,15 @@ export class PostEditPage implements OnInit {
       // hide spinner
       this.loading();
     });
+
+    this.addCategoryTag(this.navParams.data.file_id, this.postingForm.category);
   }
 
   deletePost(file_id) {
     this.mediaProvider.deleteFile(file_id).subscribe(res => {
       console.log(res);
     });
-    this.navCtrl.pop().catch();
+    this.loading();
   }
 
   showPreview() {
@@ -224,7 +266,7 @@ export class PostEditPage implements OnInit {
     loading.present();
     setTimeout(() => {
       loading.dismiss();
-      this.navCtrl.pop().catch();
-    }, 2000);
+      this.navCtrl.popToRoot();
+    }, 1000);
   }
 }

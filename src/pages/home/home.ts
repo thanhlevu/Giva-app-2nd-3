@@ -78,16 +78,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  viewImage(url: string) {
-    //this.photoViewer.show(this.src + url);
-  }
-
   viewPost(Pic: Picture) {
-    // if (Pic.user_id == localStorage.userID) {
-    //   this.navCtrl.push(PostEditPage, Pic);
-    // } else {
-    //   this.navCtrl.push(PostViewPage, Pic);
-    // }
     this.navCtrl.push(PostViewPage, Pic);
   }
 

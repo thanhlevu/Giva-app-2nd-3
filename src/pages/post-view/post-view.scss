@@ -1,6 +1,16 @@
 page-post-view {
-}
-.back {
-  background-image: url(../../assets/imgs/Background@3x.png);
-  background-size: cover;
+  .back {
+    background-image: url(../../assets/imgs/Background@3x.png);
+    background-size: cover;
+  }
+
+  .card-title {
+    position: absolute;
+    top: 26%;
+    font-size: 3em;
+    width: 100%;
+    font-weight: bold;
+    color: rgb(251, 1, 1);
+    text-align: center;
+  }
 }
