@@ -12,17 +12,19 @@ import { MyItemsPage } from "../my-items/my-items";
 import { PostEditPage } from "../post-edit/post-edit";
 import { EditInfoPage } from "../edit-info/edit-info";
 import { MediaProvider } from "../../providers/media/media";
-
+declare var google;
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
 })
 export class HomePage implements OnInit {
   picArray: Picture[];
-
+  selectedCategory: string;
   src = "http://media.mw.metropolia.fi/wbma/uploads/";
   options = {};
-
+  title: string;
+  currentLocation: any;
+  distance = 0;
   constructor(
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
@@ -32,21 +34,56 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    /*     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(currentPosition) {
-        // get current location
-        let currentLocation = {
-          lat: currentPosition.coords.latitude,
-          lng: currentPosition.coords.longitude
-        };
-        console.log("currentLocation: ", currentLocation);
-        // save the current location to Local Storage
-        localStorage.setItem(
-          "current_location",
-          JSON.stringify(currentLocation)
-        );
+    navigator.geolocation.getCurrentPosition(currentPosition => {
+      // get current location
+      this.currentLocation = {
+        lat: currentPosition.coords.latitude,
+        lng: currentPosition.coords.longitude
+      };
+      localStorage.setItem(
+        "current_location",
+        JSON.stringify(this.currentLocation)
+      );
+      console.log("current_Location", this.currentLocation);
+    });
+  }
+
+  searchByCategory() {
+    this.mediaprovider
+      .getFilesByTag("GIVA_Category." + this.selectedCategory)
+      .subscribe((response: Picture[]) => {
+        this.picArray = response;
+        console.log("eeeeeeee", response);
       });
-    } */
+  }
+
+  searchByTitle(ev: any) {
+    this.mediaprovider
+      .getFilesByTitle({ title: "GIVA_Title_" + ev.target.value })
+      .subscribe((response: Picture[]) => {
+        this.picArray = response;
+        console.log("eeeeeeee", response);
+      });
+  }
+
+  searchByDistance() {
+    console.log("current_Locationsss", this.currentLocation);
+    console.log("this.picArray", this.picArray);
+
+    for (var i = 0; i < this.picArray.length; i++) {
+      var loc1 = new google.maps.LatLng(this.currentLocation);
+      var loc2 = new google.maps.LatLng(
+        this.picArray[i].description.split("(@!GIVA?#)")[1].split(",")[0],
+        this.picArray[i].description.split("(@!GIVA?#)")[1].split(",")[1]
+      );
+
+      google.maps.geometry.spherical.computeDistanceBetween(loc1, loc2);
+
+      console.log(
+        "distance",
+        google.maps.geometry.spherical.computeDistanceBetween(loc1, loc2)
+      );
+    }
   }
 
   ionViewDidEnter() {

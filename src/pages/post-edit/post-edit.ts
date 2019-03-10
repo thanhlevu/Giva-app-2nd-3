@@ -59,7 +59,7 @@ export class PostEditPage implements OnInit {
     this.mediaProvider.deleteTag_Category(this.categoryTagId);
     let data = {
       file_id: file_Id,
-      tag: "GIVA_Category/" + category
+      tag: "GIVA_Category." + category
     };
     this.mediaProvider
       .addTag_Category(data)
@@ -74,9 +74,9 @@ export class PostEditPage implements OnInit {
       .subscribe((response: TagsResponse[]) => {
         console.log(response);
         for (var i = 0; i < response.length; i++) {
-          if (response[i].tag.includes("GIVA_Category/")) {
+          if (response[i].tag.includes("GIVA_Category.")) {
             this.postingForm.category = response[i].tag.split(
-              "GIVA_Category/"
+              "GIVA_Category."
             )[1];
             this.categoryTagId = response[i].tag_id;
             console.log(this.postingForm.category);

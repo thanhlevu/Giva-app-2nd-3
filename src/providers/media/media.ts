@@ -259,6 +259,27 @@ export class MediaProvider {
     return this.http.delete(this.configUrl + "/tags/" + tag_id, httpOptions);
   }
 
+  getFilesByTag(tag) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get<Picture[]>(
+      this.configUrl + "/tags/" + tag,
+      httpOptions
+    );
+  }
+
+  getFilesByTitle(data) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.post(this.configUrl + "/media/search", data, httpOptions);
+  }
+
   addFavorite(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({

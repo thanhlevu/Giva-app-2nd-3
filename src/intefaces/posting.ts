@@ -30,6 +30,7 @@ export interface Picture {
     lat?: number;
     lng?: number;
   };
+  tag?: string;
 }
 
 export interface PostInfo {

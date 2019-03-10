@@ -155,7 +155,7 @@ export class PostingPage {
       fd.append("file", this.postingForm.file);
       //fd.append("file", this.fileData);
 
-      fd.append("title", this.postingForm.title);
+      fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);
 
       this.mediaProvider
@@ -187,7 +187,7 @@ export class PostingPage {
   addCategoryTag(file_Id, category) {
     let data = {
       file_id: file_Id,
-      tag: "GIVA_Category/" + category
+      tag: "GIVA_Category." + category
     };
     this.mediaProvider
       .addTag_Category(data)
