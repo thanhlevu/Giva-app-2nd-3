@@ -12,6 +12,12 @@ page-login {
   .scroll-content {
     padding: 32px !important;
   }
+
+  h3{
+    color: red;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 15px !important;
+  }
   ion-content {
     margin-top: 10vh;
     background-color: transparent !important;

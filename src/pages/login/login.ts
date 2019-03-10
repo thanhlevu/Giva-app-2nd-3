@@ -13,6 +13,7 @@ import { TabsPage } from "../tabs/tabs";
 })
 export class LoginPage {
   user: User = {};
+  loginMessage: boolean = false;
   username: string;
   password: string;
   constructor(
@@ -28,6 +29,7 @@ export class LoginPage {
   loginClicked(formSignIn) {
     this.mediaprovider.login(this.user).subscribe(
       (response: LoginResponse) => {
+      
         localStorage.setItem("token", response.token);
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
@@ -38,6 +40,7 @@ export class LoginPage {
         this.mediaprovider.user_id = response.user.user_id;
       },
       error => {
+        this.loginMessage = true;
         console.log(error);
       }
     );
