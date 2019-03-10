@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { MediaProvider } from "../../providers/media/media";
 import { User, LoginResponse } from "../../intefaces/posting";
-import { EditInfoPage } from "../edit-info/edit-info";
 
 @Component({
   selector: "page-user-info",

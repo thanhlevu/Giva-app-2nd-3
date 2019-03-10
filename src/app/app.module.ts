@@ -13,15 +13,12 @@ import { HomePage } from "../pages/home/home";
 import { MyItemsPage } from "../pages/my-items/my-items";
 import { UserInfoPage } from "../pages/user-info/user-info";
 import { PostingPage } from "../pages/posting/posting";
-import { EditInfoPage } from "../pages/edit-info/edit-info";
 import { Camera } from "@ionic-native/camera";
 import { PhotoLibrary } from "@ionic-native/photo-library";
 import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
-import { ReservedPage } from "../pages/reserved/reserved";
-import { CategoriesPage } from "../pages/categories/categories";
 import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
 import { FavoritesPage } from "../pages/favorites/favorites";
 import { take } from "rxjs/operator/take";
@@ -54,15 +51,12 @@ import { PipesModule } from "../pipes/pipes.module";
     MyItemsPage,
     UserInfoPage,
     PostingPage,
-    EditInfoPage,
     PostViewPage,
     PostEditPage,
     TabsPage,
-    ReservedPage,
     GoogleMapComponent,
     ChatBoxPage,
     FavoritesPage,
-    CategoriesPage,
     SpecificCategoryPage
   ],
   imports: [
@@ -83,13 +77,10 @@ import { PipesModule } from "../pipes/pipes.module";
     MyItemsPage,
     UserInfoPage,
     PostingPage,
-    EditInfoPage,
     PostEditPage,
     TabsPage,
-    ReservedPage,
     GoogleMapComponent,
     ChatBoxPage,
-    CategoriesPage,
     SpecificCategoryPage
   ],
   providers: [

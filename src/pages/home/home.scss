@@ -1,5 +1,17 @@
 page-home {
-  .back {
+  .refresher {
+    background-image: url(../../assets/imgs/Background@3x.png);
+    background-size: cover;
+  }
+
+  .content-ios {
+    background: rgba(0, 0, 0, 0);
+  }
+  .content-md {
+    color: #000;
+    background: rgba(0, 0, 0, 0);
+  }
+  .content {
     background-image: url(../../assets/imgs/Background@3x.png);
     background-size: cover;
   }
