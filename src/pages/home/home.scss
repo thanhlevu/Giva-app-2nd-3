@@ -7,7 +7,7 @@ page-home {
   .imageView {
     border-radius: 10%;
     width: 200px;
-    height: 200px;
+    height: 150px;
     border: 1px solid rgb(226, 211, 4);
   }
   .ion-searchbar{
@@ -16,13 +16,7 @@ page-home {
     border-radius: 15px !important;
   }
   .radius{
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.4); 
-    height: 150px;
-
-  .input-wrapper{
-    
-    }
+    border-radius: 15px; 
   }
   .category{
     border-radius: 15px !important;
@@ -45,5 +39,31 @@ page-home {
   }
 .searchbar-input-container{
 background-color: black;
+  }
+}
+.zoomInLeft {
+  -webkit-animation-name: zoomInLeft;
+  animation-name: zoomInLeft;
+}
+
+.zoomInLeft {
+  -webkit-animation-name: zoomInLeft;
+  animation-name: zoomInLeft;
+}
+@-webkit-keyframes zoomInRight {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
   }
 }

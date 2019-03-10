@@ -1,6 +1,6 @@
 <ion-content class="back">
   <ion-row>
-    <ion-col col-4 *ngFor="let item of myItemArray">
+    <ion-col col-6 col-md-4 col-lg-3 *ngFor="let item of myItemArray">
       <ion-thumbnail item-start (click)="viewPost(item)">
         <img
           [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + item.filename"

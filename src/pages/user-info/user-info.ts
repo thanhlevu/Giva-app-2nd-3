@@ -11,7 +11,7 @@ import { EditInfoPage } from "../edit-info/edit-info";
 })
 export class UserInfoPage {
   userInfo: User = {};
-
+  error:string ="";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,7 +31,8 @@ export class UserInfoPage {
   }
 
   updateUserInfo() {
-    if (this.userInfo.password2 == this.userInfo.password) {
+    if(this.checkUsername()){
+    if (this.checkPasswords()) {
       delete this.userInfo.password2;
       console.log("userInfo ", this.userInfo);
       this.mediaProvider.updateUserInfo(this.userInfo).subscribe(
@@ -42,7 +43,12 @@ export class UserInfoPage {
           console.log(error);
         }
       );
-    } else console.log("passwords dont match.");
+    } else{
+      this.error = "Check passwords";
+    }
+  }else{
+    this.error = "check username";
+  }
   }
 
   logOut() {
@@ -54,6 +60,36 @@ export class UserInfoPage {
       Object.keys(elements).map(key => {
         elements[key].style.display = "none";
       });
+    }
+  }
+  checkUsername(){
+    if(this.userInfo.username != null){
+      if(this.userInfo.full_name != null){
+        if(this.userInfo.email != null){
+          return true;
+        }else{
+          this.error = "Check email";
+          return false;
+        }
+      }else{
+        this.error = "Check full name";
+        return false;
+      }
+      
+    }else{
+      this.error = "Check username";
+      return false;
+    }
+  }
+  checkPasswords(){
+    if(this.userInfo.password.length > 0 && this.userInfo.password2.length > 0 ){
+      if(this.userInfo.password == this.userInfo.password2){
+
+      }else{
+        return false;
+      }
+    }else{
+      return false;
     }
   }
 }

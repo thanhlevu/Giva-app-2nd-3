@@ -6,13 +6,6 @@ import { Picture } from "../../intefaces/posting";
 import { PostViewPage } from "../post-view/post-view";
 import { PostEditPage } from "../post-edit/post-edit";
 
-/**
- * Generated class for the MyItemsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: "page-my-items",

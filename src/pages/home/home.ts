@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, trigger, state, style, transition, animate, keyframes } from "@angular/core";
 import { NavController, NavParams, AlertController } from "ionic-angular";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { Picture } from "../../intefaces/posting";
@@ -22,6 +22,7 @@ declare var google;
 export class HomePage implements OnInit {
   picArray: Picture[];
   selectedCategory: string ="all";
+  Radiushows: boolean = false;
   src = "http://media.mw.metropolia.fi/wbma/uploads/";
   options = {};
   title: string;
@@ -186,5 +187,14 @@ export class HomePage implements OnInit {
       .subscribe((data: Picture[]) => {
         this.picArray = data;
       });
+  }
+  showRadius(){
+    if(this.Radiushows){
+      console.log("hide");
+      this.Radiushows = false;
+    }else{
+      console.log("show");
+      this.Radiushows = true;
+    }
   }
 }

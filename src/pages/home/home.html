@@ -1,8 +1,31 @@
 <ion-content padding class="back">
 
     
-    <ion-item class="radius">
-        <ion-label>how close(km)?</ion-label>
+
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+              <button ion-button block (click)="showRadius()">radius</button>
+          </ion-col>
+          <ion-col>
+              <ion-item class="category">
+                  <ion-select
+                    name="category"
+                    (ionChange)="searchByCategory()"
+                    [(ngModel)]="selectedCategory">
+                    <ion-option value="all">all</ion-option>
+                    <ion-option value="Electronics">Electronics</ion-option>
+                    <ion-option value="Furnitures">Furnitures</ion-option>
+                    <ion-option value="Clothes_Accessories">Clothes & Accessories</ion-option>
+                    <ion-option value="Vehicles">Vehicles</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                  </ion-select>
+                </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    <ion-item class="radius" *ngIf="Radiushows">
         <ion-range
           (ionChange)="searchByDistance()"
           [(ngModel)]="distance"
@@ -11,20 +34,7 @@
         ></ion-range>
       </ion-item>
 
-          <ion-item class="category">
-              <ion-label>category</ion-label>
-              <ion-select
-                name="category"
-                (ionChange)="searchByCategory()"
-                [(ngModel)]="selectedCategory">
-                <ion-option value="all">all</ion-option>
-                <ion-option value="Electronics">Electronics</ion-option>
-                <ion-option value="Furnitures">Furnitures</ion-option>
-                <ion-option value="Clothes_Accessories">Clothes & Accessories</ion-option>
-                <ion-option value="Vehicles">Vehicles</ion-option>
-                <ion-option value="Others">Others</ion-option>
-              </ion-select>
-            </ion-item>
+         
           <ion-searchbar (ionInput)="searchByTitle($event)"  ></ion-searchbar>
   <ion-grid>
     <ion-row>
