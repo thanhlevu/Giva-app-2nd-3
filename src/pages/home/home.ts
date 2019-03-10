@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController } from "ionic-angular";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
 import { Picture } from "../../intefaces/posting";
 import { CategoriesPage } from "../categories/categories";
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 import { HttpClient } from "@angular/common/http";
 import { RegisterPage } from "../register/register";
@@ -30,7 +31,8 @@ export class HomePage implements OnInit {
     private photoViewer: PhotoViewer,
     public http: HttpClient,
     private alertCtrl: AlertController,
-    private mediaprovider: MediaProvider
+    private mediaprovider: MediaProvider,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
