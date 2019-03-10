@@ -16,7 +16,7 @@ export class MediaProvider {
   configUrl = "http://media.mw.metropolia.fi/wbma";
   picArray: Picture[];
   loggedIn = false;
-  token: string;
+  token = localStorage.getItem("token");
   user_id: number;
   constructor(public http: HttpClient) {
     console.log("Hello MediaProvider Provider");

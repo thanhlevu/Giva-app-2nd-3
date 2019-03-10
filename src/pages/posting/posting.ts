@@ -46,6 +46,7 @@ export class PostingPage {
   ) {}
 
   ngOnInit() {
+    console.log("ttt", this.itemLocation, this.itemLocation.lat ? true : false);
     this.getCurrentLocation();
   }
 
@@ -57,7 +58,7 @@ export class PostingPage {
         lat: currentPosition.coords.latitude,
         lng: currentPosition.coords.longitude
       };
-      console.log("this.itemLocation", that.itemLocation);
+      console.log("current Location: ", that.itemLocation);
     });
   }
   openCamera() {
@@ -126,7 +127,7 @@ export class PostingPage {
   }
 
   uploadImage() {
-    if (this.itemLocation) {
+    if (this.itemLocation.lat) {
       if (this.postingForm.contact == undefined) {
         this.postingForm.contact = localStorage.userEmail;
       }

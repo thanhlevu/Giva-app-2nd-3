@@ -22,7 +22,9 @@ export class LoginPage {
   ) {}
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad LoginPage");
+    if (localStorage.getItem("token")) {
+      this.navCtrl.push(TabsPage);
+    }
   }
 
   loginClicked(formSignIn) {

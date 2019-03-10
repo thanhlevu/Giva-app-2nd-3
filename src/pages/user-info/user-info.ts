@@ -25,7 +25,7 @@ export class UserInfoPage {
   getUsersInfo() {
     this.mediaProvider.getUsersInfo().subscribe((response: User) => {
       this.userInfo = response;
-      console.log(response);
+      console.log("this.navCtrl.push(TabsPage);", response);
     });
   }
 

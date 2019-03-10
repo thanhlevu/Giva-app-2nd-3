@@ -109,7 +109,7 @@ export class PostEditPage implements OnInit {
     this.fileData =
       "http://media.mw.metropolia.fi/wbma/uploads/" +
       this.navParams.data.filename;
-    this.postingForm.title = this.navParams.data.title;
+    this.postingForm.title = this.navParams.data.title.split("GIVA_Title_")[1];
     this.postingForm.info_item = this.navParams.data.description
       .split("(@!GIVA?#)")[0]
       .split(":")[1];
@@ -219,7 +219,7 @@ export class PostEditPage implements OnInit {
       this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
 
     let newFormData: PostEdit = {};
-    newFormData.title = this.postingForm.title;
+    newFormData.title = "GIVA_Title_" + this.postingForm.title;
     newFormData.description = this.postingForm.description;
     console.log("test: ", newFormData);
     this.mediaProvider.updateFileInfo(file_id, newFormData).subscribe(res => {

@@ -23,7 +23,6 @@ import { PostEditPage } from "../post-edit/post-edit";
   templateUrl: "post-view.html"
 })
 export class PostViewPage {
-  id;
   pic: Picture;
   postInfo: PostInfo = {};
   onChatBox = false;
@@ -69,7 +68,7 @@ export class PostViewPage {
         }
 
         this.postInfo.filename = this.navParams.data.filename;
-        this.postInfo.title = this.navParams.data.title;
+        this.postInfo.title = this.navParams.data.title.split("GIVA_Title_")[1];
         this.postInfo.description = this.navParams.data.description
           .split("(@!GIVA?#)")[0]
           .split(":")[1];
