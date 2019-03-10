@@ -2,6 +2,7 @@ page-home {
   .back {
     background-image: url(../../assets/imgs/Background@3x.png);
     background-size: cover;
+
   }
   .imageView {
     border-radius: 10%;
@@ -9,10 +10,28 @@ page-home {
     height: 200px;
     border: 1px solid rgb(226, 211, 4);
   }
+  .ion-searchbar{
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 15px !important;
+  }
+  .radius{
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.4); 
+    height: 150px;
+
+  .input-wrapper{
+    
+    }
+  }
+  .category{
+    border-radius: 15px !important;
+  }
   .search {
     height: 25px;
     background-color: rgba(255, 255, 255, 0.4) !important;
     border-radius: 15px !important;
+    color: black;
     span {
       color: white !important;
       font-weight: bold;
@@ -23,5 +42,8 @@ page-home {
         margin: 8px;
       }
     }
+  }
+.searchbar-input-container{
+background-color: black;
   }
 }

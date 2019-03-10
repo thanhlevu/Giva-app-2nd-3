@@ -13,6 +13,7 @@ import { MyItemsPage } from "../my-items/my-items";
 import { PostEditPage } from "../post-edit/post-edit";
 import { EditInfoPage } from "../edit-info/edit-info";
 import { MediaProvider } from "../../providers/media/media";
+
 declare var google;
 @Component({
   selector: "page-home",
@@ -20,7 +21,7 @@ declare var google;
 })
 export class HomePage implements OnInit {
   picArray: Picture[];
-  selectedCategory: string;
+  selectedCategory: string ="all";
   src = "http://media.mw.metropolia.fi/wbma/uploads/";
   options = {};
   title: string;
@@ -51,12 +52,18 @@ export class HomePage implements OnInit {
   }
 
   searchByCategory() {
-    this.mediaprovider
+    console.log(this.selectedCategory);
+    if(this.selectedCategory == "all"){
+      this.loadItems_GivaTag();
+    }else{
+      this.mediaprovider
       .getFilesByTag("GIVA_Category." + this.selectedCategory)
       .subscribe((response: Picture[]) => {
         this.picArray = response;
         console.log("eeeeeeee", response);
       });
+    }
+    
   }
 
   searchByTitle(ev: any) {
