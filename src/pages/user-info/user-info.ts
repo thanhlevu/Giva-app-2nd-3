@@ -72,7 +72,6 @@ export class UserInfoPage {
       })
       .subscribe((response: Picture[]) => {
         if (response.length != 0) {
-          console.log("Ok");
           this.avatar = response;
           console.log("response.file_id", Boolean(response[0].file_id));
           this.avatarUrl =
@@ -80,7 +79,6 @@ export class UserInfoPage {
             response[0].filename;
           console.log("avatarUrl", this.avatarUrl);
         }
-        console.log("response", response);
       });
   }
 

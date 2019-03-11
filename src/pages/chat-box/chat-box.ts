@@ -25,7 +25,6 @@ export class ChatBoxPage {
   reserverID: string = "";
   description: string = "";
   blockedIDs: any[];
-  te: any = {};
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

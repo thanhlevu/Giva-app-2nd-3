@@ -19,7 +19,6 @@ import { MediaProvider } from "../providers/media/media";
 import { PostViewPage } from "../pages/post-view/post-view";
 import { PostEditPage } from "../pages/post-edit/post-edit";
 import { TabsPage } from "../pages/tabs/tabs";
-import { SpecificCategoryPage } from "../pages/specific-category/specific-category";
 import { FavoritesPage } from "../pages/favorites/favorites";
 import { take } from "rxjs/operator/take";
 import { GoogleMapComponent } from "../components/google-map/google-map";
@@ -56,8 +55,7 @@ import { PipesModule } from "../pipes/pipes.module";
     TabsPage,
     GoogleMapComponent,
     ChatBoxPage,
-    FavoritesPage,
-    SpecificCategoryPage
+    FavoritesPage
   ],
   imports: [
     BrowserModule,
@@ -80,8 +78,7 @@ import { PipesModule } from "../pipes/pipes.module";
     PostEditPage,
     TabsPage,
     GoogleMapComponent,
-    ChatBoxPage,
-    SpecificCategoryPage
+    ChatBoxPage
   ],
   providers: [
     StatusBar,
