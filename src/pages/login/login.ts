@@ -33,6 +33,7 @@ export class LoginPage {
         localStorage.setItem("token", response.token);
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
+        localStorage.setItem("isApp", !document.URL.startsWith("http") + "");
 
         this.navCtrl.push(TabsPage);
         this.mediaprovider.token = response.token;

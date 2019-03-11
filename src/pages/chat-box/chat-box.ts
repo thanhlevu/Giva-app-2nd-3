@@ -8,6 +8,8 @@ import {
   Picture
 } from "../../intefaces/posting";
 import { MediaProvider } from "../../providers/media/media";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/zip";
 
 @IonicPage()
 @Component({
@@ -17,12 +19,13 @@ import { MediaProvider } from "../../providers/media/media";
 export class ChatBoxPage {
   message: string;
   commentRequest: CommentRequest = {};
-  cmtArray: CommentsResponse[];
+  cmtArray: any = [{}];
   myId: number;
   isMyPost = false;
   reserverID: string = "";
   description: string = "";
   blockedIDs: any[];
+  te: any = {};
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -52,8 +55,8 @@ export class ChatBoxPage {
 
     this.mediaProvider
       .getAllComments(this.navParams.data.file_id)
-      .subscribe((res: CommentsResponse[]) => {
-        this.cmtArray = res.map((cmt: CommentsResponse) => {
+      .subscribe((response: CommentsResponse[]) => {
+        this.cmtArray = response.map((cmt: CommentsResponse) => {
           cmt.time_added = cmt.time_added.split("T")[1];
           cmt.time_added = cmt.time_added.replace(
             ":" + cmt.time_added.split(":")[2],
@@ -66,6 +69,23 @@ export class ChatBoxPage {
             });
           return cmt;
         });
+
+        for (var i = 0; i < this.cmtArray.length; i++) {
+          let a = i;
+          this.mediaProvider
+            .getFilesByTitle({
+              title: "GIVA_Avartar_" + this.cmtArray[i].user_id
+            })
+            .subscribe((avatarResponse: Picture[]) => {
+              if (avatarResponse.length != 0) {
+                this.cmtArray[a].filename = avatarResponse[0].filename;
+                console.log(
+                  "this.cmtArray[a].filename",
+                  this.cmtArray[a].filename
+                );
+              }
+            });
+        }
         this.cmtArray.reverse();
         console.log("this.cmtArray", this.cmtArray);
       });

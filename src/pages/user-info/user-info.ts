@@ -1,8 +1,18 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController
+} from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { MediaProvider } from "../../providers/media/media";
-import { User, LoginResponse } from "../../intefaces/posting";
+import {
+  User,
+  LoginResponse,
+  TagsResponse,
+  Picture
+} from "../../intefaces/posting";
 
 @Component({
   selector: "page-user-info",
@@ -10,23 +20,68 @@ import { User, LoginResponse } from "../../intefaces/posting";
 })
 export class UserInfoPage {
   userInfo: User = {};
+  avatar: Picture[] = [];
+  avatarUrl = "../../assets/icon/user.svg";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaProvider: MediaProvider
+    public mediaProvider: MediaProvider,
+    private loadingCtrl: LoadingController
   ) {}
 
-  ionViewDidLoad() {
+  ngOnInit() {
+    this.searchUserAvatarByTitle();
     this.getUsersInfo();
-    console.log("ionViewDidLoad UserInfoPage");
   }
 
   getUsersInfo() {
     this.mediaProvider.getUsersInfo().subscribe((response: User) => {
       this.userInfo = response;
-      console.log("this.navCtrl.push(TabsPage);", response);
+      console.log("response", response);
     });
+  }
+
+  // upload new avatar
+  handleChange($event) {
+    // delete the using avatar
+    if (this.avatar) {
+      for (var i = 0; i < this.avatar.length; i++) {
+        this.mediaProvider.deleteFile(this.avatar[i].file_id).subscribe(res => {
+          console.log(res);
+        });
+      }
+    }
+
+    // upload avatar file with the special title: "GIVA_Avartar_userID"
+    const fd = new FormData();
+    fd.append("file", $event.target.files[0]);
+    fd.append("title", "GIVA_Avartar_" + localStorage.getItem("userID"));
+    this.mediaProvider
+      .uploadImage(fd)
+      .subscribe((UploadResponse: TagsResponse) => {
+        this.searchUserAvatarByTitle();
+      });
+  }
+
+  // search user'avatar if exist
+  searchUserAvatarByTitle() {
+    this.mediaProvider
+      .getFilesByTitle({
+        title: "GIVA_Avartar_" + localStorage.getItem("userID")
+      })
+      .subscribe((response: Picture[]) => {
+        if (response.length != 0) {
+          console.log("Ok");
+          this.avatar = response;
+          console.log("response.file_id", Boolean(response[0].file_id));
+          this.avatarUrl =
+            "http://media.mw.metropolia.fi/wbma/uploads/" +
+            response[0].filename;
+          console.log("avatarUrl", this.avatarUrl);
+        }
+        console.log("response", response);
+      });
   }
 
   updateUserInfo() {
@@ -54,5 +109,14 @@ export class UserInfoPage {
         elements[key].style.display = "none";
       });
     }
+  }
+
+  loading() {
+    let loading = this.loadingCtrl.create({});
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 1000);
   }
 }

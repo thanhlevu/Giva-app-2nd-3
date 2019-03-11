@@ -82,6 +82,7 @@ export interface CommentsResponse {
   file_id?: number;
   user_id?: number;
   username?: string;
+  [key: string]: any;
 }
 
 export interface UsernameResponse {

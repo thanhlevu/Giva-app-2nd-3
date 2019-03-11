@@ -10,7 +10,13 @@
       <ion-item-sliding *ngFor="let cmt of cmtArray">
         <ion-item>
           <ion-avatar item-start>
-            <ion-icon name="happy"></ion-icon>
+            <img
+              [src]="
+                cmt.filename != undefined
+                  ? 'http://media.mw.metropolia.fi/wbma/uploads/' + cmt.filename
+                  : avatarUrl
+              "
+            />
           </ion-avatar>
           <h2>{{ cmt.username }}</h2>
           <p>

@@ -33,6 +33,8 @@ export class PostEditPage implements OnInit {
   file: File;
   fileData: string;
   categoryTagId: number;
+  isApp = localStorage.getItem("isApp") == "true" ? true : false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

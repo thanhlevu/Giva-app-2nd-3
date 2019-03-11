@@ -34,6 +34,7 @@ export class PostingPage {
   file: File;
   fileData: string = "";
   itemLocation: Geolocation = {};
+  isApp = localStorage.getItem("isApp") == "true" ? true : false;
 
   constructor(
     public navCtrl: NavController,
@@ -46,7 +47,6 @@ export class PostingPage {
   ) {}
 
   ngOnInit() {
-    console.log("ttt", this.itemLocation, this.itemLocation.lat ? true : false);
     this.getCurrentLocation();
   }
 
@@ -61,6 +61,7 @@ export class PostingPage {
       console.log("current Location: ", that.itemLocation);
     });
   }
+
   openCamera() {
     const options: CameraOptions = {
       quality: 70,
@@ -197,6 +198,12 @@ export class PostingPage {
       });
   }
 
+  handleChange($event) {
+    console.log($event.target.files[0]);
+    this.postingForm.file = $event.target.files[0];
+    this.showMediaPreview();
+  }
+
   showMediaPreview() {
     var reader = new FileReader();
     reader.onloadend = evt => {
@@ -211,12 +218,6 @@ export class PostingPage {
     } else {
       reader.readAsDataURL(this.postingForm.file);
     }
-  }
-
-  handleChange($event) {
-    console.log($event.target.files[0]);
-    this.postingForm.file = $event.target.files[0];
-    this.showMediaPreview();
   }
 
   loading() {

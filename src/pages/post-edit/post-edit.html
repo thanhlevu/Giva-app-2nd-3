@@ -16,6 +16,16 @@
   <form #formPosting="ngForm">
     <ion-card id="image">
       <img [src]="fileData" />
+      <ion-fab right bottom *ngIf="isApp">
+        <button ion-fab color="light" (click)="openGallery()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-fab>
+      <ion-fab left bottom *ngIf="isApp">
+        <button ion-fab color="light" (click)="openCamera()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-fab>
     </ion-card>
     <ion-item>
       <ion-icon name="checkbox-outline" item-start></ion-icon>
@@ -27,7 +37,7 @@
         [(ngModel)]="postingForm.reserved"
       ></ion-toggle>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="!isApp">
       <ion-label>File</ion-label>
       <ion-input
         type="file"

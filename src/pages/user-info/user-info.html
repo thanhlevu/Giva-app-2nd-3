@@ -1,44 +1,73 @@
 <ion-content padding center text-center>
   <ion-title
-    ><img alt="logo" height="100" src="../../assets/icon/user.svg"
+    ><img
+      alt="Avatar"
+      height="100"
+      [src]="
+        avatar.length != 0
+          ? 'http://media.mw.metropolia.fi/wbma/uploads/' + avatar[0]?.filename
+          : avatarUrl
+      "
   /></ion-title>
+  <form #formPosting="ngForm">
+    <ion-item>
+      <ion-label><ion-icon item-left name="contact"></ion-icon></ion-label>
+      <ion-input
+        name="username"
+        placeholder="Username"
+        type="text"
+        [(ngModel)]="userInfo.username"
+      >
+      </ion-input>
+      <ion-icon item-end name="create"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label> <ion-icon item-left name="mail"></ion-icon></ion-label>
+      <ion-input
+        name="email"
+        placeholder="Email"
+        type="email"
+        [(ngModel)]="userInfo.email"
+      >
+      </ion-input>
+      <ion-icon item-end name="create"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label> <ion-icon item-end name="lock"></ion-icon></ion-label>
+      <ion-input
+        name="password"
+        placeholder="New Password"
+        type="password"
+        [(ngModel)]="userInfo.password"
+      >
+      </ion-input>
+      <ion-icon item-end name="create"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label
+        ><ion-icon item-start size="large" name="lock"></ion-icon
+      ></ion-label>
+      <ion-input
+        name="password2"
+        placeholder="Confirm New Password"
+        type="password"
+        [(ngModel)]="userInfo.password2"
+      >
+      </ion-input>
+      <ion-icon item-end name="create"></ion-icon>
+    </ion-item>
+  </form>
   <ion-item>
-    <ion-label><ion-icon item-left name="contact"></ion-icon></ion-label>
+    <ion-label><ion-icon item-left name="images"></ion-icon></ion-label>
     <ion-input
-      placeholder="Username"
-      type="text"
-      [(ngModel)]="userInfo.username"
+      *ngIf="!isApp"
+      placeholder="Avatar"
+      type="file"
+      accept="image"
+      (change)="handleChange($event)"
     >
     </ion-input>
-    <ion-icon item-end name="create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label> <ion-icon item-left name="mail"></ion-icon></ion-label>
-    <ion-input placeholder="Email" type="email" [(ngModel)]="userInfo.email">
-    </ion-input>
-    <ion-icon item-end name="create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label> <ion-icon item-end name="lock"></ion-icon></ion-label>
-    <ion-input
-      placeholder="New Password"
-      type="password"
-      [(ngModel)]="userInfo.password"
-    >
-    </ion-input>
-    <ion-icon item-end name="create"></ion-icon>
-  </ion-item>
-  <ion-item>
-    <ion-label
-      ><ion-icon item-start size="large" name="lock"></ion-icon
-    ></ion-label>
-    <ion-input
-      placeholder="Confirm New Password"
-      type="password"
-      [(ngModel)]="userInfo.password2"
-    >
-    </ion-input>
-    <ion-icon item-end name="create"></ion-icon>
+    <ion-icon item-end name="happy"></ion-icon>
   </ion-item>
   <button ion-button full (click)="updateUserInfo()">
     <ion-icon name="arrow-dropup"></ion-icon> Update

@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
     private photoViewer: PhotoViewer,
     public http: HttpClient,
     private alertCtrl: AlertController,
-    private mediaprovider: MediaProvider,
+    private mediaProvider: MediaProvider,
     private loadingCtrl: LoadingController
   ) {}
 
@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
   }
 
   searchByCategory() {
-    this.mediaprovider
+    this.mediaProvider
       .getFilesByTag("GIVA_Category." + this.selectedCategory)
       .subscribe((response: Picture[]) => {
         this.picArray = response;
@@ -56,7 +56,7 @@ export class HomePage implements OnInit {
   }
 
   searchByTitle(ev: any) {
-    this.mediaprovider
+    this.mediaProvider
       .getFilesByTitle({ title: "GIVA_Title_" + ev.target.value })
       .subscribe((response: Picture[]) => {
         this.picArray = response;
@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
   }
 
   searchByDistance() {
-    this.mediaprovider.getAllItemsWithGivaTag().subscribe(items => {
+    this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
       //order by the newest post
       let array = items.sort((a, b) => Number(b.file_id) - Number(a.file_id));
 
@@ -112,25 +112,9 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.loadItems_GivaTag();
   }
-  /*   loadItems() {
-    return this.http
-      .get<Picture[]>("../../assets/test.json")
-      .subscribe(data => {
-        //console.log(data);
-        this.picArray = data;
-      });
-  }
-
-  loadItemsFromServer() {
-    return this.http
-      .get<Picture[]>("http://media.mw.metropolia.fi/wbma/media")
-      .subscribe((data: Picture[]) => {
-        this.picArray = data;
-      });
-  } */
 
   loadItems_GivaTag() {
-    this.mediaprovider.getAllItemsWithGivaTag().subscribe(items => {
+    this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
       //order by the newest post
       this.picArray = items.sort(
         (a, b) => Number(b.file_id) - Number(a.file_id)
@@ -148,51 +132,5 @@ export class HomePage implements OnInit {
 
   goToMyPosts() {
     this.navCtrl.push(MyItemsPage);
-  }
-
-  searchName() {
-    console.log("searcName()");
-    this.options = {
-      title: "Search by title"
-    };
-    this.alertCustom(this.options);
-  }
-  alertCustom(options) {
-    let alert = this.alertCtrl.create({
-      title: options.title,
-      inputs: [
-        {
-          name: "result",
-          placeholder: "f.e chair"
-        }
-      ],
-      buttons: [
-        {
-          text: "cancel",
-          role: "cancel",
-          handler: data => {
-            console.log("vaihto peruttu");
-          }
-        },
-        {
-          text: "add",
-          handler: data => this.SearchWithWord(data.result)
-        }
-      ]
-    });
-    alert.present();
-  }
-  SearchWithWord(data) {
-    this.picArray = [];
-    console.log(data);
-    this.options = {
-      title: data,
-      description: data
-    };
-    this.mediaprovider
-      .SearchWithWord(this.options)
-      .subscribe((data: Picture[]) => {
-        this.picArray = data;
-      });
   }
 }
