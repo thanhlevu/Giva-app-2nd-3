@@ -6,11 +6,13 @@ import { UserInfoPage } from "../user-info/user-info";
 import { MediaProvider } from "../../providers/media/media";
 import { User, LoginResponse, UsernameResponse } from "../../intefaces/posting";
 import { TabsPage } from "../tabs/tabs";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "page-login",
   templateUrl: "login.html"
 })
+
 export class LoginPage {
   user: User = {};
   loginMessage: boolean = false;
@@ -19,8 +21,13 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaprovider: MediaProvider
-  ) {}
+    public mediaprovider: MediaProvider,
+    public formBuilder: FormBuilder
+  ) {
+
+  }
+  
+  loginForm : any;
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
@@ -49,4 +56,5 @@ export class LoginPage {
   goRegisterPage() {
     this.navCtrl.push(RegisterPage);
   }
+
 }

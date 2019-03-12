@@ -8,6 +8,10 @@ page-user-info {
     color: white;
     font-size: 3rem;
   }
+  h3{
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 15px !important;
+  }
   .scroll-content {
     padding: 32px !important;
   }
@@ -67,4 +71,5 @@ page-user-info {
       }
     }
   }
+
 }

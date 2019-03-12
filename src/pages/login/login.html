@@ -14,7 +14,6 @@
         type="text"
         [(ngModel)]="user.username"
         name="username"
-        ngModel
         required
       >
       </ion-input>
@@ -34,7 +33,9 @@
       </ion-input>
     </ion-item>
     <!-- <i>Forgot Password</i> -->
+    
     <h3 *ngIf="loginMessage">check username and password</h3>
+
     <button ion-button full (click)="loginClicked(formSignIn)">
       <ion-icon name="log-in"></ion-icon> Log In
     </button>

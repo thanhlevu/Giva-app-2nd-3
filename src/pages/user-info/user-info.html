@@ -37,10 +37,11 @@
       type="password"
       [(ngModel)]="userInfo.password2"
     >
-    <h2>{{error}}</h2>
     </ion-input>
     <ion-icon item-end name="create"></ion-icon>
   </ion-item>
+  <h3 *ngIf="message" name="error">{{error}}</h3>
+
   <button ion-button full (click)="updateUserInfo()">
     <ion-icon name="arrow-dropup"></ion-icon> Update
   </button>

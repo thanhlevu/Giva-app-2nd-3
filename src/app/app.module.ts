@@ -44,6 +44,7 @@ import {
 } from "@ionic-native/google-maps";
 import { SizePipe } from "../pipes/size/size";
 import { PipesModule } from "../pipes/pipes.module";
+import { ValidatorProvider } from '../providers/validator/validator';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { PipesModule } from "../pipes/pipes.module";
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MediaProvider,
-    PipesModule
+    PipesModule,
+    ValidatorProvider
   ]
 })
 export class AppModule {}

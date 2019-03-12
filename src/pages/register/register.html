@@ -59,6 +59,7 @@
       >
       </ion-input>
     </ion-item>
+    <h3 *ngIf="message" name="error">{{error}}</h3>
     <button ion-button full (click)="signUp()">
       <ion-icon name="log-in"></ion-icon> Sign Up
     </button>

@@ -19,6 +19,7 @@ import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { MediaProvider } from "../../providers/media/media";
+import { ValidatorProvider } from "../../providers/validator/validator";
 import { HomePage } from "../home/home";
 import { App } from "ionic-angular";
 import { PostViewPage } from "../post-view/post-view";
@@ -34,6 +35,7 @@ export class PostingPage {
   file: File;
   fileData: string = "";
   itemLocation: Geolocation = {};
+  checkdata:boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -42,7 +44,8 @@ export class PostingPage {
     public http: HttpClient,
     private mediaProvider: MediaProvider,
     private loadingCtrl: LoadingController,
-    private app: App
+    private app: App,
+    private validator: ValidatorProvider
   ) {}
 
   ngOnInit() {
@@ -126,6 +129,7 @@ export class PostingPage {
   }
 
   uploadImage() {
+
     if (this.itemLocation) {
       if (this.postingForm.contact == undefined) {
         this.postingForm.contact = localStorage.userEmail;
@@ -158,6 +162,8 @@ export class PostingPage {
       fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);
 
+      if(this.validator.validateData(this.postingForm)){
+
       this.mediaProvider
         .uploadImage(fd)
         .subscribe((UploadResponse: TagsResponse) => {
@@ -179,6 +185,9 @@ export class PostingPage {
 
           this.loading();
         });
+      }else{
+        this.checkdata = true;
+      }
     } else {
       this.getCurrentLocation();
     }

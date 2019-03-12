@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { User, LoginResponse } from "../../intefaces/posting";
 import { MediaProvider } from "../../providers/media/media";
+import { ValidatorProvider } from "../../providers/validator/validator";
 
 @Component({
   selector: "page-register",
@@ -10,11 +11,14 @@ import { MediaProvider } from "../../providers/media/media";
 })
 export class RegisterPage {
   user: User = { username: null };
+  message: boolean = false;
+  error: string = "";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaProvider: MediaProvider
+    public mediaProvider: MediaProvider,
+    private validator: ValidatorProvider
   ) {}
 
   ionViewDidLoad() {
@@ -22,17 +26,23 @@ export class RegisterPage {
   }
 
   signUp() {
-    console.log(this.user);
-
-    this.mediaProvider.register(this.user).subscribe(
-      response => {
-        console.log(response);
-        this.navCtrl.pop().catch();
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.validator.validateRegister(this.user)
+    .then((data) => {
+      console.log("send", this.user);
+      this.mediaProvider.register(this.user).subscribe(
+        response => {
+          console.log(response);
+          this.navCtrl.pop().catch();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }).catch((err) => {
+      this.error = "Check "+err;
+      this.message = true;
+    })
+  
   }
 
   goLoginPage() {

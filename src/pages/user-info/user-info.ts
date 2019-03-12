@@ -4,6 +4,7 @@ import { LoginPage } from "../login/login";
 import { MediaProvider } from "../../providers/media/media";
 import { User, LoginResponse } from "../../intefaces/posting";
 import { EditInfoPage } from "../edit-info/edit-info";
+import {  ValidatorProvider } from "../../providers/validator/validator";
 
 @Component({
   selector: "page-user-info",
@@ -11,11 +12,14 @@ import { EditInfoPage } from "../edit-info/edit-info";
 })
 export class UserInfoPage {
   userInfo: User = {};
+  message: boolean = false;
   error:string ="";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaProvider: MediaProvider
+    public mediaProvider: MediaProvider,
+    private validator: ValidatorProvider
   ) {}
 
   ionViewDidLoad() {
@@ -31,10 +35,9 @@ export class UserInfoPage {
   }
 
   updateUserInfo() {
-    if(this.checkUsername()){
-    if (this.checkPasswords()) {
+    this.validator.validateUserData(this.userInfo)
+    .then((data) => {
       delete this.userInfo.password2;
-      console.log("userInfo ", this.userInfo);
       this.mediaProvider.updateUserInfo(this.userInfo).subscribe(
         (response: LoginResponse) => {
           console.log(response);
@@ -43,12 +46,13 @@ export class UserInfoPage {
           console.log(error);
         }
       );
-    } else{
-      this.error = "Check passwords";
-    }
-  }else{
-    this.error = "check username";
-  }
+    })
+    .catch((err) => {
+      console.log("err",err);
+      this.error = "Check "+err;
+      this.message = true;
+    })
+ 
   }
 
   logOut() {
@@ -60,36 +64,6 @@ export class UserInfoPage {
       Object.keys(elements).map(key => {
         elements[key].style.display = "none";
       });
-    }
-  }
-  checkUsername(){
-    if(this.userInfo.username != null){
-      if(this.userInfo.full_name != null){
-        if(this.userInfo.email != null){
-          return true;
-        }else{
-          this.error = "Check email";
-          return false;
-        }
-      }else{
-        this.error = "Check full name";
-        return false;
-      }
-      
-    }else{
-      this.error = "Check username";
-      return false;
-    }
-  }
-  checkPasswords(){
-    if(this.userInfo.password.length > 0 && this.userInfo.password2.length > 0 ){
-      if(this.userInfo.password == this.userInfo.password2){
-
-      }else{
-        return false;
-      }
-    }else{
-      return false;
     }
   }
 }
