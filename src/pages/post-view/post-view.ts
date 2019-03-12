@@ -37,11 +37,16 @@ export class PostViewPage {
   ) {}
   ngOnInit() {}
   ionViewDidEnter() {
+    // get the file data by file_id
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)
       .subscribe((response: Picture) => {
-        this.navParams.data = response;
+        this.navParams.data = response; // assign new and correct data incase the user wants to go further.(chat room, setting map, edit post)
+
+        // check favorite item?
         this.checkFavorite();
+
+        // set condition to show the chatbox button.
         if (
           (this.navParams.data.description
             .split("(@!GIVA?#)")[7]
@@ -58,10 +63,12 @@ export class PostViewPage {
           this.onChatBox = true;
         }
 
+        // check if the item is mine
         if (this.navParams.data.user_id == localStorage.getItem("userID")) {
           this.isMyPost = true;
         }
 
+        // assign values and show up.
         this.postInfo.filename = this.navParams.data.filename;
         this.postInfo.title = this.navParams.data.title.split("GIVA_Title_")[1];
         this.postInfo.description = this.navParams.data.description
@@ -80,6 +87,7 @@ export class PostViewPage {
           .split("(@!GIVA?#)")[5]
           .split("=")[1];
 
+        // check reserve and assign boolean values to "this.postInfo.reserved" that helps to limit other users's activity (see the map, get in the chat box ...)
         if (
           this.navParams.data.description
             .split("(@!GIVA?#)")[6]
@@ -113,6 +121,7 @@ export class PostViewPage {
       });
   }
 
+  // go to PostEditPage along with data
   goToPostEdit() {
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)
@@ -122,24 +131,28 @@ export class PostViewPage {
       });
   }
 
+  /*   //
   refreshFileData() {
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)
       .subscribe((response: Picture) => {
         this.navParams.data = response;
       });
-  }
+  } */
 
+  // go to ChatBoxPage with data
   goToChatBox() {
     this.navCtrl.push(ChatBoxPage, this.navParams.data);
   }
 
+  // remove the ruote data, in case the user is moving so the current location should be update
   ionViewWillUnload() {
     localStorage.removeItem("current_location");
     localStorage.removeItem("departure_point");
     localStorage.removeItem("vehicle");
   }
 
+  // check if the item add as my favorite
   checkFavorite() {
     this.mediaProvider
       .getAllFavourites()
@@ -152,6 +165,7 @@ export class PostViewPage {
       });
   }
 
+  // add the item to my favorite items
   addFavorites() {
     const fd = {
       file_id: this.navParams.data.file_id
@@ -159,6 +173,7 @@ export class PostViewPage {
     this.mediaProvider.addFavorite(fd).subscribe((response: Response) => {});
   }
 
+  // delete the item from my favorite item
   deleteFavourite() {
     this.mediaProvider
       .deleteFavourite(this.navParams.data.file_id)
@@ -167,7 +182,8 @@ export class PostViewPage {
       });
   }
 
-  public toggleFavorite() {
+  // toggle the favorite button to add or delete the favorite
+  toggleFavorite() {
     if (!this.onFavorite) {
       this.deleteFavourite();
     } else {
@@ -175,6 +191,7 @@ export class PostViewPage {
     }
   }
 
+  // delete this image and go back to HomePage
   deleteImage() {
     this.mediaProvider
       .deleteFile(this.navParams.data.file_id)
@@ -190,6 +207,7 @@ export class PostViewPage {
     this.navCtrl.pop();
   }
 
+  // show/hide the map
   showGoogleMap() {
     if (!this.onMap) {
       this.onMap = true;

@@ -43,7 +43,7 @@ export class UserInfoPage {
     });
   }
 
-  // upload new avatar
+  // upload new avatar when the user input a new picture
   handleChange($event) {
     // delete the using avatar
     if (this.avatar) {
@@ -83,6 +83,7 @@ export class UserInfoPage {
       });
   }
 
+  // update the user' data
   updateUserInfo() {
     if (this.userInfo.password2 == this.userInfo.password) {
       delete this.userInfo.password2;
@@ -95,6 +96,7 @@ export class UserInfoPage {
     } else alert("Passwords DO NOT match.");
   }
 
+  // log out = clear localstorage, go back to LoginPage and hide the tab bar
   logOut() {
     localStorage.clear();
     this.navCtrl.setRoot(LoginPage);
@@ -107,12 +109,12 @@ export class UserInfoPage {
     }
   }
 
+  // loading for a while if refreshing data needed
   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();
-
     setTimeout(() => {
       loading.dismiss();
-    }, 1000);
+    }, 500);
   }
 }

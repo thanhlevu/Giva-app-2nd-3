@@ -32,20 +32,17 @@ export class MyItemsPage implements OnInit {
     this.getMyItems();
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad MyItemsPage");
-  }
-
+  // go to PostViewPage
   viewPost(Pic: Picture) {
     this.navCtrl.push(PostViewPage, Pic);
   }
 
+  // load all my items except avatar
   getMyItems() {
     this.mediaProvider.getMyItems().subscribe((response: Picture[]) => {
-      this.myItemArray = response.filter(obj => {
-        !obj.filename.includes("GIVA_Avatar_");
-      });
-      console.log(this.myItemArray);
+      this.myItemArray = response.filter(
+        obj => !obj.filename.includes("GIVA_Avatar_")
+      );
     });
   }
 }

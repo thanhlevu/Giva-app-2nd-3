@@ -65,6 +65,7 @@ export class GoogleMapComponent {
     this.calculateAndDisplayRoute();
   }
 
+  // calculate and display the route to the map
   calculateAndDisplayRoute() {
     let that = this;
 
@@ -85,7 +86,6 @@ export class GoogleMapComponent {
             lng: currentPosition.coords.longitude
           };
           map.setCenter(that.currentLocation); // adjust the camera to the current location
-          console.log("currentLocation: ", that.currentLocation);
           // save the current location to Local Storage
           localStorage.setItem(
             "current_location",
@@ -123,7 +123,6 @@ export class GoogleMapComponent {
                 travelMode: google.maps.TravelMode[that.selectedMode], // "TRANSIT"
                 transitOptions: {
                   departureTime: that.departureTime, // Date Format:  "Tue Feb 26 2019 12:50:53 GMT+0200"
-                  //arrivalTime: new Date("2019-03-25T22:00:00Z"),
                   modes: [that.transportMode], // BUS, RAIL, SUBWAY, TRAIN, TRAM
                   routingPreference: "FEWER_TRANSFERS" // "FEWER_TRANSFERS" or "LESS_WALKING"
                 }
@@ -145,14 +144,12 @@ export class GoogleMapComponent {
     }
   }
 
+  // open modal to set the new route
   openModal() {
     // set Modal options
     const myModalOptions: ModalOptions = {
       //showBackdrop: false,
       enableBackdropDismiss: false // do not allow to touch on backdrop to close the Modal
-      // enterAnimation?: string;
-      // leaveAnimation?: string;
-      // cssClass?: string;
     };
 
     // prepare the route data for transfering to SettingMapPage
@@ -174,7 +171,7 @@ export class GoogleMapComponent {
       myModalOptions
     );
 
-    settingMapModal.present(); // present the Modal
+    settingMapModal.present(); // show the Modal
 
     // onWillDismiss function will be executed BEFORE dismissing the SettingMap Modal
     settingMapModal.onWillDismiss(directionLineData => {
@@ -185,6 +182,7 @@ export class GoogleMapComponent {
     settingMapModal.onDidDismiss(directionLineData => {
       this.origin = directionLineData.origin;
 
+      // assign the setting values and calculate then display the route
       this.selectedMode = directionLineData.travelMode;
       this.departureTime = directionLineData.transitOptions.departureTime;
       if (this.selectedMode == "TRANSIT") {

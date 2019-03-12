@@ -28,10 +28,13 @@ export class FavoritesPage {
     private mediaProvider: MediaProvider
   ) {}
 
+  // load all my favorite items
   ionViewDidEnter() {
     this.getAllMyFavoriteItems();
     console.log("ionViewDidLoad FavoritesPage");
   }
+
+  // get all my favorite items except from avatar
   getAllMyFavoriteItems() {
     this.mediaProvider
       .getAllMyFavoriteItems()
@@ -52,6 +55,7 @@ export class FavoritesPage {
       });
   }
 
+  // go to PostViewPage along with the data
   viewPost(Pic: Picture) {
     this.navCtrl.push(PostViewPage, Pic);
   }

@@ -49,10 +49,6 @@ export class SettingMapPage {
     this.setRouteInfo();
   }
 
-  //to get the location's info by Geolocation ==> https://maps.googleapis.com/maps/api/geocode/json?latlng=60.221501,%2024.778792&key=AIzaSyAj6v6LHIeWH3B-Il-AZiXuhMWq3hHsQu8
-
-  //to get the location's info by name ==> https://maps.googleapis.com/maps/api/geocode/json?address=helsinki&key=AIzaSyAj6v6LHIeWH3B-Il-AZiXuhMWq3hHsQu8
-
   setRouteInfo() {
     // save or resave the vehicle if the user input the new vehicle
     localStorage.setItem("vehicle", this.vehicle);
@@ -61,9 +57,7 @@ export class SettingMapPage {
     this.routeData.departure_time.setHours(this.departure_time.split(":")[0]);
     this.routeData.departure_time.getMinutes(this.departure_time.split(":")[1]);
 
-    //Get The Route's Info AIzaSyAj6v6LHIeWH3B-Il-AZiXuhMWq3hHsQu8    ====     AIzaSyDHY3SLJrzEYN-nWVsI5ix4dU1hrL5TJ3o
-    //https://maps.googleapis.com/maps/api/directions/json?origin=60.221501, 24.778792&destination=helsinky&mode=transit&transit_mode=train&departure_time=now&key=AIzaSyDHY3SLJrzEYN-nWVsI5ix4dU1hrL5TJ3o
-
+    // get the origin place that the user inputs
     if (this.originGeo) {
       this.routeUrl = `/api/directions/json?origin=${this.originGeo}
         &destination=${this.routeData.destinationGeo.lat}, ${
@@ -82,6 +76,7 @@ export class SettingMapPage {
       localStorage.removeItem("departure_point");
     }
 
+    // format the route Url with the selected vehicle
     switch (this.vehicle) {
       case "car": {
         this.routeUrl += "&mode=driving";
@@ -116,6 +111,7 @@ export class SettingMapPage {
         break;
       }
     }
+
     // set the departure time if using the public transport    (if transit => departure_time doesnt include milisecond)
     if (this.routeUrl.includes("&mode=transit&")) {
       this.routeUrl += `&departure_time=${Math.round(
@@ -125,7 +121,6 @@ export class SettingMapPage {
       this.routeUrl += `&departure_time=${this.routeData.departure_time.getTime()}&key=AIzaSyAj6v6LHIeWH3B-Il-AZiXuhMWq3hHsQu8`;
     }
 
-    console.log("https://maps.googleapis.com/maps", this.routeUrl);
     // get the direction route data from google map API
     this.http
       .get(this.routeUrl)

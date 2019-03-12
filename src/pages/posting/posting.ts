@@ -50,6 +50,7 @@ export class PostingPage {
     this.getCurrentLocation();
   }
 
+  // get the user current locaton
   getCurrentLocation() {
     let that = this;
     navigator.geolocation.getCurrentPosition(currentPosition => {
@@ -62,6 +63,7 @@ export class PostingPage {
     });
   }
 
+  // open camera if using mobile devices
   openCamera() {
     const options: CameraOptions = {
       quality: 70,
@@ -82,6 +84,7 @@ export class PostingPage {
     );
   }
 
+  // open gallery if using mobile devices
   openGallery() {
     const options: CameraOptions = {
       quality: 70,
@@ -104,35 +107,14 @@ export class PostingPage {
     );
   }
 
-  cropImage() {
-    const options: CameraOptions = {
-      quality: 70,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: false,
-      allowEdit: true,
-      targetHeight: 300,
-      targetWidth: 300
-    };
-
-    this.camera.getPicture(options).then(
-      imageData => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        this.myPhoto = "data:image/jpeg;base64," + imageData;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
+  // update a image
   uploadImage() {
+    // if the user allows to access the current location.
     if (this.itemLocation.lat) {
       if (this.postingForm.contact == undefined) {
         this.postingForm.contact = localStorage.userEmail;
       }
-
+      //format the description that contains more data: item's detail, item's geolocation, deadline for taking items, how to contact and contacting time.
       this.postingForm.description =
         "description:" +
         this.postingForm.info_item +
@@ -153,6 +135,7 @@ export class PostingPage {
         "(@!GIVA?#)chatter:" +
         "(@!GIVA?#)blockedIDs:";
 
+      // set up form data for the uploading file
       const fd = new FormData();
       if (this.isApp) {
         fd.append("file", this.fileData);
@@ -162,12 +145,10 @@ export class PostingPage {
       fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);
 
+      // upload the file
       this.mediaProvider
         .uploadImage(fd)
         .subscribe((UploadResponse: TagsResponse) => {
-          //set time out in 2s
-          console.log("UploadResponse", UploadResponse);
-
           //add GIVA tag to the Image
           this.mediaProvider
             .addTag_Giva(UploadResponse.file_id)
@@ -180,14 +161,15 @@ export class PostingPage {
                 this.postingForm.category
               );
             });
-
           this.loading();
         });
     } else {
+      alert("uploading a image needs to access the location");
       this.getCurrentLocation();
     }
   }
 
+  // add the category to image by file id
   addCategoryTag(file_Id, category) {
     let data = {
       file_id: file_Id,
@@ -200,18 +182,18 @@ export class PostingPage {
       });
   }
 
+  // get the selected image then show preview
   handleChange($event) {
-    console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
     this.showMediaPreview();
   }
 
+  // show the image
   showMediaPreview() {
     if (this.postingForm.file) {
       var reader = new FileReader();
       reader.onloadend = evt => {
         //using arrow fuction to change the reference, if not ==> error of this.
-        //console.log(reader.result)
         this.fileData = reader.result;
       };
       if (this.postingForm.file.type.includes("video")) {
@@ -224,10 +206,10 @@ export class PostingPage {
     }
   }
 
+  // loading 1s to refresh the new data, and go back to HomePage
   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();
-
     setTimeout(() => {
       loading.dismiss();
       this.navCtrl.parent.select(0);

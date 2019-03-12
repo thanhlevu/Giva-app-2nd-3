@@ -43,16 +43,18 @@ export class ChatBoxPage {
 
   @ViewChild(Content) content: Content;
 
+  // sroll to the bottom to see the new message
   ionViewDidEnter() {
     this.content.scrollToBottom(300);
   }
 
+  // get the user Id and load all comment of the item
   ngOnInit() {
     this.myId = Number(localStorage.getItem("userID"));
-    console.log("this.navParams.data", this.navParams.data);
     this.getAllComments();
   }
 
+  // send a new comment to item
   sendComment() {
     this.commentRequest.file_id = this.navParams.data.file_id;
     this.commentRequest.comment = this.message;
@@ -66,16 +68,18 @@ export class ChatBoxPage {
     this.loading();
   }
 
+  // loading for fetching new comments
   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();
 
     setTimeout(() => {
       loading.dismiss();
-      this.content.scrollToBottom(10);
-    }, 50);
+      this.content.scrollToBottom(100);
+    }, 500);
   }
 
+  // get all comment of the item
   getAllComments() {
     this.getFileInfo(this.navParams.data.file_id);
 
@@ -96,6 +100,7 @@ export class ChatBoxPage {
           return cmt;
         });
 
+        // take the avatar of people who did comment
         for (var i = 0; i < this.cmtArray.length; i++) {
           let a = i;
           this.mediaProvider
@@ -108,18 +113,18 @@ export class ChatBoxPage {
               }
             });
         }
-
-        console.log("this.cmtArray", this.cmtArray);
       });
   }
 
+  // delete the comment by comment id
   deleteComment(comment_id) {
     this.mediaProvider
       .deleteComment(comment_id)
-      .subscribe(res => console.log(res));
+      .subscribe((res: ServerResponse) => console.log(res.message));
     this.getAllComments();
   }
 
+  // choose the chatter that makes the chat room private
   choseReceiver(user_id) {
     // for updating the file's info, pass the Object, not JSON
     this.mediaProvider
@@ -132,10 +137,12 @@ export class ChatBoxPage {
         )
       })
       .subscribe((serverResponse: ServerResponse) => {
-        //console.log(serverResponse.message);
+        console.log(serverResponse.message);
       });
     this.getAllComments();
   }
+
+  // if no agreement reached, remove the chatter, the chat room becomes public
   cancelReceiver() {
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, {
@@ -146,18 +153,17 @@ export class ChatBoxPage {
         )
       })
       .subscribe((serverResponse: ServerResponse) => {
-        //console.log(serverResponse.message);
+        console.log(serverResponse.message);
       });
     this.getAllComments();
   }
 
+  // get the file info by file_id
   getFileInfo(file_id) {
     this.mediaProvider
       .getFileDataById(file_id)
       .subscribe((fileData: Picture) => {
         this.description = fileData.description;
-        console.log("this.description", this.description);
-
         this.reserverID = fileData.description
           .split("(@!GIVA?#)chatter:")[1]
           .split("(@!GIVA?#)blockedIDs:")[0];
@@ -167,10 +173,10 @@ export class ChatBoxPage {
         this.blockedIDs = this.description
           .split("(@!GIVA?#)blockedIDs:")[1]
           .split(",");
-        console.log("blockedIDs", this.blockedIDs);
       });
   }
 
+  // block the user who messes up the chat room.
   blockThisUserID(user_id) {
     if (!this.description.split("(@!GIVA?#)blockedIDs")[1].includes(user_id)) {
       this.mediaProvider
@@ -178,12 +184,13 @@ export class ChatBoxPage {
           description: this.description + user_id + ","
         })
         .subscribe((serverResponse: ServerResponse) => {
-          //console.log(serverResponse.message);
+          console.log(serverResponse.message);
         });
     }
     this.getAllComments();
   }
 
+  // unblock the user who messed up the chat room.
   unblockThisUserID(user_id) {
     if (this.description.split("(@!GIVA?#)blockedIDs")[1].includes(user_id)) {
       this.mediaProvider
@@ -191,7 +198,7 @@ export class ChatBoxPage {
           description: this.description.replace(user_id + ",", "")
         })
         .subscribe((serverResponse: ServerResponse) => {
-          //console.log(serverResponse.message);
+          console.log(serverResponse.message);
         });
     }
     this.getAllComments();

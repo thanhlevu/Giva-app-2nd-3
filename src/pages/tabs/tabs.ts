@@ -12,6 +12,7 @@ import { PostingPage } from "../posting/posting";
   templateUrl: "tabs.html"
 })
 export class TabsPage {
+  // set pages to navigate the user to
   homePage = HomePage;
   favoritesPage = FavoritesPage;
   myItemsPage = MyItemsPage;

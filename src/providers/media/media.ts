@@ -15,27 +15,23 @@ import {
 export class MediaProvider {
   configUrl = "http://media.mw.metropolia.fi/wbma";
   picArray: Picture[];
-  loggedIn = false;
   token = localStorage.getItem("token");
-  user_id: number;
-  constructor(public http: HttpClient) {
-    console.log("Hello MediaProvider Provider");
-  }
+  user_id = localStorage.getItem("userID");
+  constructor(public http: HttpClient) {}
 
-  getAvatars() {
-    return this.http.get<TagsResponse[]>(this.configUrl + "/tags/profile");
-  }
-
+  // get all items with GIVA tag
   getAllItemsWithGivaTag() {
     return this.http.get<Picture[]>(this.configUrl + "/tags/GIVA");
   }
 
+  // get my items
   getMyItems() {
     return this.http.get<Picture[]>(
       this.configUrl + "/media/user/" + localStorage.getItem("userID")
     );
   }
 
+  // get all my favorite items
   getAllMyFavoriteItems() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -48,6 +44,7 @@ export class MediaProvider {
     );
   }
 
+  // to check login
   login(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -61,6 +58,7 @@ export class MediaProvider {
     );
   }
 
+  // register a new account
   register(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -68,18 +66,19 @@ export class MediaProvider {
       })
     };
     delete user.password2;
-    console.log("User", user);
-
     return this.http.post<LoginResponse>(
       this.configUrl + "/users",
       user,
       httpOptions
     );
   }
+
+  // check if the username is available
   checkIfUserExists(user: User) {
     return this.http.get(this.configUrl + "/users/username/" + user.username);
   }
 
+  // get the user's data
   getUsersInfo() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -94,6 +93,17 @@ export class MediaProvider {
     }
   }
 
+  // get other users data
+  getOtherUsersInfo(user_id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "x-access-token": this.token
+      })
+    };
+    return this.http.get(this.configUrl + "/users/" + user_id, httpOptions);
+  }
+
+  // get all tags of a file by file Id
   getTagsByFileId(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -106,15 +116,7 @@ export class MediaProvider {
     );
   }
 
-  getOtherUsersInfo(user_id) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "x-access-token": this.token
-      })
-    };
-    return this.http.get(this.configUrl + "/users/" + user_id, httpOptions);
-  }
-
+  // upload the selected image to server
   uploadImage(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -128,6 +130,7 @@ export class MediaProvider {
     );
   }
 
+  // update info of file
   updateFileInfo(file_id, UpdateContent) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -141,6 +144,7 @@ export class MediaProvider {
     );
   }
 
+  // update the user's info
   updateUserInfo(userInfo: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -150,6 +154,7 @@ export class MediaProvider {
     return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
   }
 
+  // delete a file by file_id
   deleteFile(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -159,6 +164,7 @@ export class MediaProvider {
     return this.http.delete(this.configUrl + "/media/" + file_id, httpOptions);
   }
 
+  // send a comment to the post
   sendComment(commentObject) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -172,35 +178,33 @@ export class MediaProvider {
     );
   }
 
+  // get all comment of items by file_id
   getAllComments(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": this.token
       })
     };
-    console.log("this.configUrl", this.configUrl + "/comments/file/" + file_id);
     return this.http.get<CommentsResponse[]>(
       this.configUrl + "/comments/file/" + file_id,
       httpOptions
     );
   }
 
+  // delete a commemt by comment_id
   deleteComment(comment_id) {
     const httpOptions = {
       headers: new HttpHeaders({
         "x-access-token": this.token
       })
     };
-    console.log(
-      "this.configUrl",
-      this.configUrl + "/comments/file/" + comment_id
-    );
-    return this.http.delete<ServerResponse[]>(
+    return this.http.delete<ServerResponse>(
       this.configUrl + "/comments/" + comment_id,
       httpOptions
     );
   }
 
+  // after uploading a image, add GIVA tag to it that we can distinguish between our project's posts and others
   addTag_Giva(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -217,6 +221,7 @@ export class MediaProvider {
     );
   }
 
+  // get file's data by file_id
   getFileDataById(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -229,6 +234,7 @@ export class MediaProvider {
     );
   }
 
+  // after uploading image, add category tag that we can search for it by category
   addTag_Category(data) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -238,6 +244,7 @@ export class MediaProvider {
     return this.http.post(this.configUrl + "/tags", data, httpOptions);
   }
 
+  // for updating image's category
   deleteTag_Category(tag_id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -247,6 +254,7 @@ export class MediaProvider {
     return this.http.delete(this.configUrl + "/tags/" + tag_id, httpOptions);
   }
 
+  // to load all items with a specific tag
   getFilesByTag(tag) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -259,6 +267,7 @@ export class MediaProvider {
     );
   }
 
+  // get file by title = searching
   getFilesByTitle(data) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -268,6 +277,7 @@ export class MediaProvider {
     return this.http.post(this.configUrl + "/media/search", data, httpOptions);
   }
 
+  // add favorite to the item
   addFavorite(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -281,18 +291,20 @@ export class MediaProvider {
     );
   }
 
-  deleteFavourite(id) {
+  // delete favorite from the item by file_id
+  deleteFavourite(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
         "X-access-token": this.token
       })
     };
     return this.http.delete(
-      this.configUrl + "/favourites/file/" + id,
+      this.configUrl + "/favourites/file/" + file_id,
       httpOptions
     );
   }
 
+  // get all favorite items
   getAllFavourites() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -301,19 +313,6 @@ export class MediaProvider {
     };
     return this.http.get<FavoriteResponse[]>(
       this.configUrl + "/favourites",
-      httpOptions
-    );
-  }
-
-  SearchWithWord(data) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "X-access-token": this.token
-      })
-    };
-    return this.http.post<Picture[]>(
-      this.configUrl + "/media/search",
-      data,
       httpOptions
     );
   }

@@ -8,6 +8,7 @@ import { Picture } from "../../intefaces/interfaces";
 export class SizePipe implements PipeTransform {
   constructor(public mediaProvider: MediaProvider) {}
 
+  // get the proper size of image by using thumbnail
   transform(id: String, ...args) {
     console.log("id", id);
     return new Promise((resolve, rejects) => {

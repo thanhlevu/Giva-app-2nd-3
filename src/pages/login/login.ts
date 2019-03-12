@@ -25,12 +25,14 @@ export class LoginPage {
     public mediaprovider: MediaProvider
   ) {}
 
+  // check if the user logged in before, if true ==> go to HomePage directly
   ionViewDidLoad() {
     if (localStorage.getItem("token")) {
       this.navCtrl.push(TabsPage);
     }
   }
 
+  // login clicked: store token, userId, user's email, isApp inside localstorage.
   loginClicked(formSignIn) {
     this.mediaprovider.login(this.user).subscribe(
       (response: LoginResponse) => {
@@ -38,11 +40,8 @@ export class LoginPage {
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
         localStorage.setItem("isApp", !document.URL.startsWith("http") + "");
-
+        console.log("isApp", localStorage.getItem("isApp"));
         this.navCtrl.push(TabsPage);
-        this.mediaprovider.token = response.token;
-        this.mediaprovider.loggedIn = true;
-        this.mediaprovider.user_id = response.user.user_id;
       },
       error => {
         console.log(error);
@@ -50,6 +49,7 @@ export class LoginPage {
     );
   }
 
+  //go to RegisterPage
   goRegisterPage() {
     this.navCtrl.push(RegisterPage);
   }

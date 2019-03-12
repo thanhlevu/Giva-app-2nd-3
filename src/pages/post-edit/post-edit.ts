@@ -14,7 +14,8 @@ import {
   PostingForm,
   PostEdit,
   Picture,
-  TagsResponse
+  TagsResponse,
+  ServerResponse
 } from "../../intefaces/interfaces";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
@@ -49,6 +50,7 @@ export class PostEditPage implements OnInit {
     this.getCategoryTag();
   }
 
+  // refresh new file data (after update)
   refreshFileData() {
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)
@@ -57,6 +59,7 @@ export class PostEditPage implements OnInit {
       });
   }
 
+  // add new category tage to item
   addCategoryTag(file_Id, category) {
     this.mediaProvider.deleteTag_Category(this.categoryTagId);
     let data = {
@@ -70,6 +73,7 @@ export class PostEditPage implements OnInit {
       });
   }
 
+  // get the category of the item
   getCategoryTag() {
     this.mediaProvider
       .getTagsByFileId(this.navParams.data.file_id)
@@ -87,6 +91,7 @@ export class PostEditPage implements OnInit {
       });
   }
 
+  // get/set item reserved
   toggleReserve() {
     let newFormData: PostEdit = {};
     if (!this.postingForm.reserved) {
@@ -102,11 +107,12 @@ export class PostEditPage implements OnInit {
     }
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, newFormData)
-      .subscribe(response => {
-        console.log(response);
+      .subscribe((response: ServerResponse) => {
+        console.log(response.message);
       });
   }
 
+  // get data from description string, and show up
   compileData() {
     this.fileData =
       "http://media.mw.metropolia.fi/wbma/uploads/" +
@@ -133,9 +139,9 @@ export class PostEditPage implements OnInit {
     this.postingForm.reserved = this.navParams.data.description
       .split("(@!GIVA?#)")[6]
       .split(":")[1];
-    console.log("this.navParams.222");
   }
 
+  // open camera if using mobile devices
   openCamera() {
     const options: CameraOptions = {
       quality: 70,
@@ -156,6 +162,7 @@ export class PostEditPage implements OnInit {
     );
   }
 
+  // open gallery if using mobile devices
   openGallery() {
     const options: CameraOptions = {
       quality: 70,
@@ -178,29 +185,7 @@ export class PostEditPage implements OnInit {
     );
   }
 
-  cropImage() {
-    const options: CameraOptions = {
-      quality: 70,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: false,
-      allowEdit: true,
-      targetHeight: 300,
-      targetWidth: 300
-    };
-
-    this.camera.getPicture(options).then(
-      imageData => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        this.myPhoto = "data:image/jpeg;base64," + imageData;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
+  // update new data
   updateFile(file_id) {
     this.postingForm.description =
       "description:" +
@@ -224,16 +209,18 @@ export class PostEditPage implements OnInit {
     newFormData.title = "GIVA_Title_" + this.postingForm.title;
     newFormData.description = this.postingForm.description;
     console.log("test: ", newFormData);
-    this.mediaProvider.updateFileInfo(file_id, newFormData).subscribe(res => {
-      //set time out in 2s
-      console.log(res);
-      // hide spinner
-      this.loading();
-    });
+    this.mediaProvider
+      .updateFileInfo(file_id, newFormData)
+      .subscribe((res: ServerResponse) => {
+        console.log(res.message);
+        this.loading();
+      });
 
+    // add category tage to image
     this.addCategoryTag(this.navParams.data.file_id, this.postingForm.category);
   }
 
+  // delete the image
   deletePost(file_id) {
     this.mediaProvider.deleteFile(file_id).subscribe(res => {
       console.log(res);
@@ -241,11 +228,11 @@ export class PostEditPage implements OnInit {
     this.loading();
   }
 
+  // show preview of image
   showPreview() {
     var reader = new FileReader();
     reader.onloadend = evt => {
       //using arrow fuction to change the reference, if not ==> error of this.
-      //console.log(reader.result)
       this.fileData = reader.result;
     };
     if (this.postingForm.file.type.includes("video")) {
@@ -257,12 +244,13 @@ export class PostEditPage implements OnInit {
     }
   }
 
+  // when the user input a new image
   handleChange($event) {
-    console.log($event.target.files[0]);
     this.postingForm.file = $event.target.files[0];
     this.showPreview();
   }
 
+  // loading in 1s and go back to HomePage
   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();

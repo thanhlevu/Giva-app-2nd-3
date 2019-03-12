@@ -47,6 +47,7 @@ export class HomePage implements OnInit {
     });
   }
 
+  // search items by category
   searchByCategory() {
     if (this.selectedCategory != "all") {
       this.mediaProvider
@@ -59,6 +60,7 @@ export class HomePage implements OnInit {
     }
   }
 
+  // search items by title
   searchByTitle(ev: any) {
     this.keyword = ev.target.value.toLowerCase();
     if (ev.target.value != "") {
@@ -79,6 +81,8 @@ export class HomePage implements OnInit {
       this.loadItems_GivaTag();
     }
   }
+
+  // search items by distance
 
   searchByDistance() {
     this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
@@ -108,16 +112,16 @@ export class HomePage implements OnInit {
     });
   }
 
+  // refresh new data
   doRefresh(event) {
     this.loadItems_GivaTag();
     setTimeout(() => {
-      console.log("Async operation has ended");
-      console.log(event);
       event.complete();
     }, 2000);
   }
 
-  loading() {
+  //
+  /*   loading() {
     let loading = this.loadingCtrl.create({});
     loading.present();
 
@@ -125,11 +129,14 @@ export class HomePage implements OnInit {
       loading.dismiss();
       this.navCtrl.parent.select(0);
     }, 1000);
-  }
+  } */
+
+  // reload item when the page showed again
   ionViewDidEnter() {
     this.loadItems_GivaTag();
   }
 
+  // load all item with GIVA tag
   loadItems_GivaTag() {
     this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
       //order by the newest post
@@ -139,15 +146,8 @@ export class HomePage implements OnInit {
     });
   }
 
+  // got to PostViewPage
   viewPost(Pic: Picture) {
     this.navCtrl.push(PostViewPage, Pic);
-  }
-
-  goToPost() {
-    this.navCtrl.push(PostingPage);
-  }
-
-  goToMyPosts() {
-    this.navCtrl.push(MyItemsPage);
   }
 }
