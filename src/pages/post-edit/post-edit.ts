@@ -15,7 +15,7 @@ import {
   PostEdit,
   Picture,
   TagsResponse
-} from "../../intefaces/posting";
+} from "../../intefaces/interfaces";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 

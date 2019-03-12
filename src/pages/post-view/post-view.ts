@@ -10,11 +10,11 @@ import {
   PostInfo,
   FavoriteResponse,
   PostEdit,
-  TagsResponse
-} from "../../intefaces/posting";
+  TagsResponse,
+  ServerResponse
+} from "../../intefaces/interfaces";
 import { ChatBoxPage } from "../chat-box/chat-box";
 import { MediaProvider } from "../../providers/media/media";
-import { ServerResponse } from "../../intefaces/posting";
 import { PostEditPage } from "../post-edit/post-edit";
 
 @IonicPage()
@@ -41,12 +41,7 @@ export class PostViewPage {
       .getFileDataById(this.navParams.data.file_id)
       .subscribe((response: Picture) => {
         this.navParams.data = response;
-
-        console.log(this.navParams.data);
-        console.log(this.navParams.data.description.split("(@!GIVA?#)"));
-
         this.checkFavorite();
-
         if (
           (this.navParams.data.description
             .split("(@!GIVA?#)")[7]
@@ -100,24 +95,21 @@ export class PostViewPage {
   // set item reserved ==> update description
   toggleReserve() {
     let newFormData: PostEdit = {};
-    console.log("reserved...");
     if (!this.postInfo.reserved) {
       newFormData.description =
         this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
         "(@!GIVA?#)reserved:false(@!GIVA?#)chatter:" +
         this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
-      console.log(newFormData.description);
     } else {
       newFormData.description =
         this.navParams.data.description.split("(@!GIVA?#)reserved:")[0] +
         "(@!GIVA?#)reserved:true(@!GIVA?#)chatter:" +
         this.navParams.data.description.split("(@!GIVA?#)chatter:")[1];
-      console.log(newFormData.description);
     }
     this.mediaProvider
       .updateFileInfo(this.navParams.data.file_id, newFormData)
-      .subscribe(response => {
-        console.log(response);
+      .subscribe((response: ServerResponse) => {
+        console.log(response.message);
       });
   }
 
@@ -136,32 +128,10 @@ export class PostViewPage {
       .subscribe((response: Picture) => {
         this.navParams.data = response;
       });
-    console.log("this.navParams.data12", this.navParams.data);
   }
 
   goToChatBox() {
     this.navCtrl.push(ChatBoxPage, this.navParams.data);
-
-    /*   // for updating the file's info, pass the Object, not JSON
-    this.mediaProvider
-      .updateFileInfo(this.navParams.data.file_id, {
-        description:
-          this.navParams.data.description + localStorage.getItem("userID")
-      })
-      .subscribe((UpdateResponse: ServerResponse) => {
-        console.log(UpdateResponse);
-      }); */
-
-    // if (
-    //   this.navParams.data.description.split("(@!GIVA?#)")[8].split(":")[1] == "" &&
-    //   this.navParams.data.user_id !== localStorage.getItem("userID")
-    // ) {
-    //   this.navCtrl.push(ChatBoxPage);
-    // } else if (this.navParams.data.user_id == localStorage.getItem("userID")) {
-    //   this.navCtrl.push(ChatBoxPage);
-    // } else {
-    //   alert("sorry! this item is unavaiable now");
-    // }
   }
 
   ionViewWillUnload() {
@@ -174,11 +144,9 @@ export class PostViewPage {
     this.mediaProvider
       .getAllFavourites()
       .subscribe((response: FavoriteResponse[]) => {
-        console.log("FavoriteResponse", response);
         for (var i = 0; i < response.length; i++) {
           if (response[i].file_id == this.navParams.data.file_id) {
             this.onFavorite = true;
-            console.log("onFavorite", this.onFavorite);
           }
         }
       });
@@ -188,16 +156,14 @@ export class PostViewPage {
     const fd = {
       file_id: this.navParams.data.file_id
     };
-    this.mediaProvider.addFavorite(fd).subscribe((response: Response) => {
-      console.log("addFavorites", response);
-    });
+    this.mediaProvider.addFavorite(fd).subscribe((response: Response) => {});
   }
 
   deleteFavourite() {
     this.mediaProvider
       .deleteFavourite(this.navParams.data.file_id)
-      .subscribe((response: Response) => {
-        console.log("deleteFavourite", response);
+      .subscribe((response: ServerResponse) => {
+        console.log(response.message);
       });
   }
 
@@ -212,7 +178,9 @@ export class PostViewPage {
   deleteImage() {
     this.mediaProvider
       .deleteFile(this.navParams.data.file_id)
-      .subscribe(res => console.log(res));
+      .subscribe((response: ServerResponse) => {
+        console.log(response.message);
+      });
     let loading = this.loadingCtrl.create({});
     loading.present();
 

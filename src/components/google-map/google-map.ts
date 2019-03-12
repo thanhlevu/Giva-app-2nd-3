@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Geolocation } from "@ionic-native/geolocation";
 import { HttpClient } from "@angular/common/http";
 import "rxjs/add/operator/map";
-import { DirectionMapJson } from "../../intefaces/posting";
+import { DirectionMapJson } from "../../intefaces/interfaces";
 import { Modal, ModalController, ModalOptions } from "ionic-angular";
 import {
   GoogleMaps,

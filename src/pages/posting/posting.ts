@@ -14,7 +14,7 @@ import {
   PostingForm,
   TagsResponse,
   Geolocation
-} from "../../intefaces/posting";
+} from "../../intefaces/interfaces";
 import { Observable, Subject, ReplaySubject } from "rxjs";
 import { map, filter, switchMap } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -154,9 +154,11 @@ export class PostingPage {
         "(@!GIVA?#)blockedIDs:";
 
       const fd = new FormData();
-      fd.append("file", this.postingForm.file);
-      //fd.append("file", this.fileData);
-
+      if (this.isApp) {
+        fd.append("file", this.fileData);
+      } else {
+        fd.append("file", this.postingForm.file);
+      }
       fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);
 
@@ -205,18 +207,20 @@ export class PostingPage {
   }
 
   showMediaPreview() {
-    var reader = new FileReader();
-    reader.onloadend = evt => {
-      //using arrow fuction to change the reference, if not ==> error of this.
-      //console.log(reader.result)
-      this.fileData = reader.result;
-    };
-    if (this.postingForm.file.type.includes("video")) {
-      this.fileData = "http://via.placeholder.com/500x200/000?text=Video";
-    } else if (this.postingForm.file.type.includes("audio")) {
-      this.fileData = "http://via.placeholder.com/500x200/000?text=Audio";
-    } else {
-      reader.readAsDataURL(this.postingForm.file);
+    if (this.postingForm.file) {
+      var reader = new FileReader();
+      reader.onloadend = evt => {
+        //using arrow fuction to change the reference, if not ==> error of this.
+        //console.log(reader.result)
+        this.fileData = reader.result;
+      };
+      if (this.postingForm.file.type.includes("video")) {
+        this.fileData = "http://via.placeholder.com/500x200/000?text=Video";
+      } else if (this.postingForm.file.type.includes("audio")) {
+        this.fileData = "http://via.placeholder.com/500x200/000?text=Audio";
+      } else {
+        reader.readAsDataURL(this.postingForm.file);
+      }
     }
   }
 

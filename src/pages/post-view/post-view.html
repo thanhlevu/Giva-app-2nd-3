@@ -30,7 +30,11 @@
 <ion-content padding class="back">
   <ion-card>
     <img
-      [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + postInfo.filename"
+      [src]="
+        postInfo.filename
+          ? 'http://media.mw.metropolia.fi/wbma/uploads/' + postInfo.filename
+          : ''
+      "
     />
     <div *ngIf="this.postInfo.reserved" class="card-title">
       RESERVED

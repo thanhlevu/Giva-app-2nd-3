@@ -7,9 +7,9 @@ import {
   LoginResponse,
   TagsResponse,
   ServerResponse,
-  CommentsResponse
-} from "../../intefaces/posting";
-import { FavoriteResponse } from "../../intefaces/posting";
+  CommentsResponse,
+  FavoriteResponse
+} from "../../intefaces/interfaces";
 
 @Injectable()
 export class MediaProvider {
@@ -21,13 +21,6 @@ export class MediaProvider {
   constructor(public http: HttpClient) {
     console.log("Hello MediaProvider Provider");
   }
-  /*   getAllMedia() {
-    return this.http.get<Picture[]>(this.configUrl + "/media");
-  }
-
-  getSingleMedia(id) {
-    return this.http.get<Picture>(this.configUrl + "/media/" + id);
-  } */
 
   getAvatars() {
     return this.http.get<TagsResponse[]>(this.configUrl + "/tags/profile");
@@ -55,14 +48,6 @@ export class MediaProvider {
     );
   }
 
-  onRegister(formValues) {
-    const url = this.configUrl + "/users";
-
-    this.http.post(url, formValues).subscribe(status => {
-      alert(status["message"]);
-    });
-  }
-
   login(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -75,6 +60,7 @@ export class MediaProvider {
       httpOptions
     );
   }
+
   register(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -82,6 +68,8 @@ export class MediaProvider {
       })
     };
     delete user.password2;
+    console.log("User", user);
+
     return this.http.post<LoginResponse>(
       this.configUrl + "/users",
       user,

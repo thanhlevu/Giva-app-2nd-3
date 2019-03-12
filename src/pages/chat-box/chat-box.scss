@@ -5,6 +5,11 @@ page-chat-box {
       align-self: flex-start;
       margin-top: 14px;
     }
+    .list-avatar-page {
+      overflow: auto; /* redundant, but just in case */
+      display: flex; /* redundant, but just in case */
+      flex-direction: column-reverse;
+    }
     p {
       white-space: normal !important;
       width: 100%;
@@ -12,10 +17,10 @@ page-chat-box {
     }
     ion-avatar {
       top: 0 !important;
-    }
-    div {
-      height: 90%;
-      overflow: scroll;
+      img {
+        height: 50px !important;
+        width: 50px !important;
+      }
     }
     ion-list {
       background-color: aquamarine;

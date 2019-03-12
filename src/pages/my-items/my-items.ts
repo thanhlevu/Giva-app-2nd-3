@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { MediaProvider } from "../../providers/media/media";
 import { HttpClient } from "@angular/common/http";
-import { Picture } from "../../intefaces/posting";
+import { Picture } from "../../intefaces/interfaces";
 import { PostViewPage } from "../post-view/post-view";
 import { PostEditPage } from "../post-edit/post-edit";
 

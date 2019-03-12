@@ -1,13 +1,5 @@
-<ion-content padding class="content">
-  <ion-refresher
-    class="refresher"
-    slot="fixed"
-    (ionRefresh)="doRefresh($event)"
-  >
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<ion-header>
   <ion-searchbar (ionInput)="searchByTitle($event)"></ion-searchbar>
-
   <ion-grid>
     <ion-row>
       <ion-col col-6>
@@ -19,6 +11,7 @@
               (ionChange)="searchByCategory()"
               [(ngModel)]="selectedCategory"
             >
+              <ion-option value="all">--All--</ion-option>
               <ion-option value="Electronics">Electronics</ion-option>
               <ion-option value="Furnitures">Furnitures</ion-option>
               <ion-option value="Clothes_Accessories"
@@ -53,23 +46,15 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!--   <button ion-button block class="search" (click)="searchName()">
-    <ion-icon name="search"></ion-icon> search Furnitures
-  </button>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button ion-button block class="search">
-          <ion-icon name="compass"></ion-icon> Location
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button block (click)="search()" class="search">
-          <ion-icon name="menu"></ion-icon> Categories
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
+</ion-header>
+<ion-content padding class="content">
+  <ion-refresher
+    class="refresher"
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-row>
       <ion-col col-4 *ngFor="let pic of picArray">

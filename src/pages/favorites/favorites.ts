@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Picture, FavoriteResponse } from "../../intefaces/posting";
+import { Picture, FavoriteResponse } from "../../intefaces/interfaces";
 import { HttpClient } from "@angular/common/http";
 import { MediaProvider } from "../../providers/media/media";
 import { Observable } from "rxjs";

@@ -6,7 +6,7 @@ import {
   LocalAddressJson,
   GeolocationByName,
   DirectionLineData
-} from "../../intefaces/posting";
+} from "../../intefaces/interfaces";
 declare var google;
 
 @IonicPage()

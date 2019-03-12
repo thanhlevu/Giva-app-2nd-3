@@ -15,6 +15,8 @@ page-user-info {
     border-radius: 50%;
     width: 150px;
     height: 150px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   ion-content {
     margin-top: 0vh;

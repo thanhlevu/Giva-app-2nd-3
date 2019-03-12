@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoginPage } from "../login/login";
-import { User, LoginResponse } from "../../intefaces/posting";
+import { User, LoginResponse } from "../../intefaces/interfaces";
 import { MediaProvider } from "../../providers/media/media";
 
 @Component({
@@ -9,7 +9,7 @@ import { MediaProvider } from "../../providers/media/media";
   templateUrl: "register.html"
 })
 export class RegisterPage {
-  user: User = { username: null };
+  user: User = {};
 
   constructor(
     public navCtrl: NavController,
@@ -17,13 +17,7 @@ export class RegisterPage {
     public mediaProvider: MediaProvider
   ) {}
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad RegisterPage");
-  }
-
   signUp() {
-    console.log(this.user);
-
     this.mediaProvider.register(this.user).subscribe(
       response => {
         console.log(response);
@@ -35,7 +29,7 @@ export class RegisterPage {
     );
   }
 
-  goLoginPage() {
+  goToLoginPage() {
     this.navCtrl.pop().catch();
   }
 }

@@ -4,7 +4,11 @@ import { RegisterPage } from "../register/register";
 import { HomePage } from "../home/home";
 import { UserInfoPage } from "../user-info/user-info";
 import { MediaProvider } from "../../providers/media/media";
-import { User, LoginResponse, UsernameResponse } from "../../intefaces/posting";
+import {
+  User,
+  LoginResponse,
+  UsernameResponse
+} from "../../intefaces/interfaces";
 import { TabsPage } from "../tabs/tabs";
 
 @Component({

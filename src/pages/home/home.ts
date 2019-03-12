@@ -6,8 +6,7 @@ import {
   LoadingController
 } from "ionic-angular";
 import { PhotoViewer } from "@ionic-native/photo-viewer";
-import { Picture } from "../../intefaces/posting";
-
+import { Picture } from "../../intefaces/interfaces";
 import { HttpClient } from "@angular/common/http";
 import { RegisterPage } from "../register/register";
 import { PostViewPage } from "../post-view/post-view";
@@ -28,6 +27,7 @@ export class HomePage implements OnInit {
   title: string;
   currentLocation: any;
   selectedRadius = 0;
+  keyword: string = "";
   constructor(
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
@@ -48,19 +48,36 @@ export class HomePage implements OnInit {
   }
 
   searchByCategory() {
-    this.mediaProvider
-      .getFilesByTag("GIVA_Category." + this.selectedCategory)
-      .subscribe((response: Picture[]) => {
-        this.picArray = response;
-      });
+    if (this.selectedCategory != "all") {
+      this.mediaProvider
+        .getFilesByTag("GIVA_Category." + this.selectedCategory)
+        .subscribe((response: Picture[]) => {
+          this.picArray = response;
+        });
+    } else {
+      this.loadItems_GivaTag();
+    }
   }
 
   searchByTitle(ev: any) {
-    this.mediaProvider
-      .getFilesByTitle({ title: "GIVA_Title_" + ev.target.value })
-      .subscribe((response: Picture[]) => {
-        this.picArray = response;
-      });
+    this.keyword = ev.target.value.toLowerCase();
+    if (ev.target.value != "") {
+      this.mediaProvider
+        .getFilesByTitle({ title: "GIVA_Title_" })
+        .subscribe((response: Picture[]) => {
+          console.log("response", response);
+          this.picArray = response.filter((
+            item // ??? error if using {}
+          ) =>
+            item.title
+              .split("GIVA_Title_")[1]
+              .toLowerCase()
+              .includes(ev.target.value.toLowerCase())
+          );
+        });
+    } else {
+      this.loadItems_GivaTag();
+    }
   }
 
   searchByDistance() {

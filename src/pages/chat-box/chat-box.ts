@@ -1,22 +1,30 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Content,
+  App,
+  LoadingController
+} from "ionic-angular";
 import {
   CommentRequest,
   CommentsResponse,
   User,
   ServerResponse,
   Picture
-} from "../../intefaces/posting";
+} from "../../intefaces/interfaces";
 import { MediaProvider } from "../../providers/media/media";
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/observable/zip";
-
 @IonicPage()
 @Component({
   selector: "page-chat-box",
-  templateUrl: "chat-box.html"
+  templateUrl: "chat-box.html",
+  queries: {
+    content: new ViewChild("content")
+  }
 })
 export class ChatBoxPage {
+  app: App;
   message: string;
   commentRequest: CommentRequest = {};
   cmtArray: any = [{}];
@@ -25,11 +33,19 @@ export class ChatBoxPage {
   reserverID: string = "";
   description: string = "";
   blockedIDs: any[];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaProvider: MediaProvider
+    public mediaProvider: MediaProvider,
+    private loadingCtrl: LoadingController
   ) {}
+
+  @ViewChild(Content) content: Content;
+
+  ionViewDidEnter() {
+    this.content.scrollToBottom(300);
+  }
 
   ngOnInit() {
     this.myId = Number(localStorage.getItem("userID"));
@@ -47,6 +63,17 @@ export class ChatBoxPage {
         this.message = "";
       });
     this.getAllComments();
+    this.loading();
+  }
+
+  loading() {
+    let loading = this.loadingCtrl.create({});
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+      this.content.scrollToBottom(10);
+    }, 50);
   }
 
   getAllComments() {
@@ -78,14 +105,10 @@ export class ChatBoxPage {
             .subscribe((avatarResponse: Picture[]) => {
               if (avatarResponse.length != 0) {
                 this.cmtArray[a].filename = avatarResponse[0].filename;
-                console.log(
-                  "this.cmtArray[a].filename",
-                  this.cmtArray[a].filename
-                );
               }
             });
         }
-        this.cmtArray.reverse();
+
         console.log("this.cmtArray", this.cmtArray);
       });
   }

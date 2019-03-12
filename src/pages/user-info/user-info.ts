@@ -11,8 +11,9 @@ import {
   User,
   LoginResponse,
   TagsResponse,
-  Picture
-} from "../../intefaces/posting";
+  Picture,
+  ServerResponse
+} from "../../intefaces/interfaces";
 
 @Component({
   selector: "page-user-info",
@@ -86,15 +87,12 @@ export class UserInfoPage {
     if (this.userInfo.password2 == this.userInfo.password) {
       delete this.userInfo.password2;
       console.log("userInfo ", this.userInfo);
-      this.mediaProvider.updateUserInfo(this.userInfo).subscribe(
-        (response: LoginResponse) => {
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } else console.log("passwords dont match.");
+      this.mediaProvider
+        .updateUserInfo(this.userInfo)
+        .subscribe((response: ServerResponse) => {
+          alert(response.message);
+        });
+    } else alert("Passwords DO NOT match.");
   }
 
   logOut() {

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { MediaProvider } from "../../providers/media/media";
-import { Picture } from "../../intefaces/posting";
+import { Picture } from "../../intefaces/interfaces";
 
 @Pipe({
   name: "size"
