@@ -41,7 +41,7 @@ export class MyItemsPage implements OnInit {
   getMyItems() {
     this.mediaProvider.getMyItems().subscribe((response: Picture[]) => {
       this.myItemArray = response.filter(
-        obj => !obj.filename.includes("GIVA_Avatar_")
+        obj => !obj.title.includes("GIVA_Avartar_")
       );
     });
   }
