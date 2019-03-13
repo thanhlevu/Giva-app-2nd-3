@@ -50,94 +50,22 @@ export class HomePage implements OnInit {
 
   // search items by category
   searchByCategory() {
-    if (this.selectedCategory != "all") {
-      this.mediaProvider
-        .getFilesByTag("GIVA_Category." + this.selectedCategory)
-        .subscribe((response: Picture[]) => {
-          this.picArray = response
-            .sort((a, b) => Number(b.file_id) - Number(a.file_id))
-            .filter(
-              item =>
-                item.description.split("(@!GIVA?#)")[6].split(":")[1] ==
-                  "false" ||
-                item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
-                  localStorage.getItem("userID") ||
-                item.user_id == Number(localStorage.getItem("userID"))
-            );
-        });
-    } else {
-      this.loadItems_GivaTag();
-    }
+    this.searching();
   }
 
   // search items by title
   searchByTitle(ev: any) {
-    this.keyword = ev.target.value.toLowerCase();
-    if (ev.target.value != "") {
-      this.mediaProvider
-        .getFilesByTitle({ title: "GIVA_Title_" })
-        .subscribe((response: Picture[]) => {
-          console.log("response", response);
-          this.picArray = response
-            .filter((
-              item // ??? error if using {}
-            ) =>
-              item.title
-                .split("GIVA_Title_")[1]
-                .toLowerCase()
-                .includes(ev.target.value.toLowerCase())
-            )
-            .sort((a, b) => Number(b.file_id) - Number(a.file_id))
-            .filter(
-              item =>
-                item.description.split("(@!GIVA?#)")[6].split(":")[1] ==
-                  "false" ||
-                item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
-                  localStorage.getItem("userID") ||
-                item.user_id == Number(localStorage.getItem("userID"))
-            );
-        });
+    if (ev.target.value) {
+      this.keyword = ev.target.value.toLowerCase();
     } else {
-      this.loadItems_GivaTag();
+      this.keyword = "";
     }
+    this.searching();
   }
 
   // search items by distance
-
   searchByDistance() {
-    this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
-      //order by the newest post
-      let array = items
-        .sort((a, b) => Number(b.file_id) - Number(a.file_id))
-        .filter(
-          item =>
-            item.description.split("(@!GIVA?#)")[6].split(":")[1] == "false" ||
-            item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
-              localStorage.getItem("userID") ||
-            item.user_id == Number(localStorage.getItem("userID"))
-        );
-
-      for (var i = 0; i < array.length; i++) {
-        var myLocation = new google.maps.LatLng(this.currentLocation);
-        var itemLocation = new google.maps.LatLng(
-          array[i].description
-            .split("(@!GIVA?#)")[1]
-            .split(",")[0]
-            .split("geolocation:")[1],
-          array[i].description.split("(@!GIVA?#)")[1].split(",")[1]
-        );
-        if (
-          google.maps.geometry.spherical.computeDistanceBetween(
-            myLocation,
-            itemLocation
-          ) >
-          Number(this.selectedRadius) * 1000
-        ) {
-          array.splice(i, 1);
-        }
-      }
-      this.picArray = array;
-    });
+    this.searching();
   }
 
   // refresh new data
@@ -172,5 +100,56 @@ export class HomePage implements OnInit {
   // got to PostViewPage
   viewPost(Pic: Picture) {
     this.navCtrl.push(PostViewPage, Pic);
+  }
+
+  // get all searching values and using CTD filter
+  searching() {
+    var myLocation = new google.maps.LatLng(this.currentLocation);
+    if (this.selectedCategory != "all") {
+      this.mediaProvider
+        .getFilesByTag("GIVA_Category." + this.selectedCategory)
+        .subscribe((response: Picture[]) => {
+          this.picArray = this.CTD_Filter(response);
+        });
+    } else {
+      this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
+        //order by the newest post
+        this.picArray = this.CTD_Filter(items);
+      });
+    }
+  }
+
+  // CTD filter = Category - Title - Distance filter
+  CTD_Filter(data: Picture[]) {
+    var myLocation = new google.maps.LatLng(this.currentLocation);
+    return data
+      .sort((a, b) => Number(b.file_id) - Number(a.file_id))
+      .filter(
+        item =>
+          item.description.split("(@!GIVA?#)")[6].split(":")[1] == "false" ||
+          item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
+            localStorage.getItem("userID") ||
+          item.user_id == Number(localStorage.getItem("userID"))
+      )
+      .filter(item2 =>
+        item2.title
+          .split("GIVA_Title_")[1]
+          .toLowerCase()
+          .includes(this.keyword.toLowerCase())
+      )
+      .filter(
+        item3 =>
+          google.maps.geometry.spherical.computeDistanceBetween(
+            myLocation,
+            new google.maps.LatLng(
+              item3.description
+                .split("(@!GIVA?#)")[1]
+                .split(",")[0]
+                .split("geolocation:")[1],
+              item3.description.split("(@!GIVA?#)")[1].split(",")[1]
+            )
+          ) <
+          Number(this.selectedRadius) * 1000
+      );
   }
 }
