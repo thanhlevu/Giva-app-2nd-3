@@ -35,9 +35,10 @@ export class MediaProvider {
   getAllMyFavoriteItems() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
+    console.log(this.token);
     return this.http.get<FavoriteResponse[]>(
       this.configUrl + "/favourites",
       httpOptions
@@ -225,7 +226,7 @@ export class MediaProvider {
   getFileDataById(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get<Picture>(

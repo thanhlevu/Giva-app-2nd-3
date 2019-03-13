@@ -34,6 +34,7 @@ export class FavoritesPage {
 
   // get all my favorite items except from avatar
   getAllMyFavoriteItems() {
+    console.log("is this called");
     this.mediaProvider
       .getAllMyFavoriteItems()
       .subscribe((favoriteFileIdArr: FavoriteResponse[]) => {
