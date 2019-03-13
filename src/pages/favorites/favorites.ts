@@ -20,7 +20,6 @@ import { PostViewPage } from "../post-view/post-view";
 })
 export class FavoritesPage {
   favoriteItemArray: Picture[] = [];
-  favoriteFileIdArray: FavoriteResponse[];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,21 +30,18 @@ export class FavoritesPage {
   // load all my favorite items
   ionViewDidEnter() {
     this.getAllMyFavoriteItems();
-    console.log("ionViewDidLoad FavoritesPage");
   }
 
   // get all my favorite items except from avatar
   getAllMyFavoriteItems() {
     this.mediaProvider
       .getAllMyFavoriteItems()
-      .subscribe((favoriteFileIdArray: FavoriteResponse[]) => {
-        this.favoriteFileIdArray = favoriteFileIdArray;
-        console.log("this.favoriteFileIdArray", this.favoriteFileIdArray);
-        this.favoriteItemArray = [];
-        for (var i = 0; i < this.favoriteFileIdArray.length; i++) {
-          console.log(this.favoriteFileIdArray[i].file_id);
+      .subscribe((favoriteFileIdArr: FavoriteResponse[]) => {
+        console.log("this.favoriteFileIdArr", favoriteFileIdArr);
+        for (var i = 0; i < favoriteFileIdArr.length; i++) {
+          console.log(favoriteFileIdArr[i].file_id);
           this.mediaProvider
-            .getFileDataById(this.favoriteFileIdArray[i].file_id)
+            .getFileDataById(favoriteFileIdArr[i].file_id)
             .subscribe((picture: Picture) => {
               console.log("picture", picture);
               console.log("this.favoriteItemArray", this.favoriteItemArray);
