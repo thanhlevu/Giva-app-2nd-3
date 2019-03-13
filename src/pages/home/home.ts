@@ -21,12 +21,13 @@ declare var google;
 })
 export class HomePage implements OnInit {
   picArray: Picture[];
-  selectedCategory: string;
+  selectedCategory: string = "all";
   src = "http://media.mw.metropolia.fi/wbma/uploads/";
   options = {};
   title: string;
   currentLocation: any;
-  selectedRadius = 0;
+  selectedRadius = 50;
+  data: any;
   keyword: string = "";
   constructor(
     public navCtrl: NavController,
@@ -53,7 +54,16 @@ export class HomePage implements OnInit {
       this.mediaProvider
         .getFilesByTag("GIVA_Category." + this.selectedCategory)
         .subscribe((response: Picture[]) => {
-          this.picArray = response;
+          this.picArray = response
+            .sort((a, b) => Number(b.file_id) - Number(a.file_id))
+            .filter(
+              item =>
+                item.description.split("(@!GIVA?#)")[6].split(":")[1] ==
+                  "false" ||
+                item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
+                  localStorage.getItem("userID") ||
+                item.user_id == Number(localStorage.getItem("userID"))
+            );
         });
     } else {
       this.loadItems_GivaTag();
@@ -68,14 +78,24 @@ export class HomePage implements OnInit {
         .getFilesByTitle({ title: "GIVA_Title_" })
         .subscribe((response: Picture[]) => {
           console.log("response", response);
-          this.picArray = response.filter((
-            item // ??? error if using {}
-          ) =>
-            item.title
-              .split("GIVA_Title_")[1]
-              .toLowerCase()
-              .includes(ev.target.value.toLowerCase())
-          );
+          this.picArray = response
+            .filter((
+              item // ??? error if using {}
+            ) =>
+              item.title
+                .split("GIVA_Title_")[1]
+                .toLowerCase()
+                .includes(ev.target.value.toLowerCase())
+            )
+            .sort((a, b) => Number(b.file_id) - Number(a.file_id))
+            .filter(
+              item =>
+                item.description.split("(@!GIVA?#)")[6].split(":")[1] ==
+                  "false" ||
+                item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
+                  localStorage.getItem("userID") ||
+                item.user_id == Number(localStorage.getItem("userID"))
+            );
         });
     } else {
       this.loadItems_GivaTag();
@@ -87,7 +107,15 @@ export class HomePage implements OnInit {
   searchByDistance() {
     this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
       //order by the newest post
-      let array = items.sort((a, b) => Number(b.file_id) - Number(a.file_id));
+      let array = items
+        .sort((a, b) => Number(b.file_id) - Number(a.file_id))
+        .filter(
+          item =>
+            item.description.split("(@!GIVA?#)")[6].split(":")[1] == "false" ||
+            item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
+              localStorage.getItem("userID") ||
+            item.user_id == Number(localStorage.getItem("userID"))
+        );
 
       for (var i = 0; i < array.length; i++) {
         var myLocation = new google.maps.LatLng(this.currentLocation);
@@ -120,17 +148,6 @@ export class HomePage implements OnInit {
     }, 2000);
   }
 
-  //
-  /*   loading() {
-    let loading = this.loadingCtrl.create({});
-    loading.present();
-
-    setTimeout(() => {
-      loading.dismiss();
-      this.navCtrl.parent.select(0);
-    }, 1000);
-  } */
-
   // reload item when the page showed again
   ionViewDidEnter() {
     this.loadItems_GivaTag();
@@ -140,9 +157,15 @@ export class HomePage implements OnInit {
   loadItems_GivaTag() {
     this.mediaProvider.getAllItemsWithGivaTag().subscribe(items => {
       //order by the newest post
-      this.picArray = items.sort(
-        (a, b) => Number(b.file_id) - Number(a.file_id)
-      );
+      this.picArray = items
+        .sort((a, b) => Number(b.file_id) - Number(a.file_id))
+        .filter(
+          item =>
+            item.description.split("(@!GIVA?#)")[6].split(":")[1] == "false" ||
+            item.description.split("(@!GIVA?#)")[7].split(":")[1] ==
+              localStorage.getItem("userID") ||
+            item.user_id == Number(localStorage.getItem("userID"))
+        );
     });
   }
 

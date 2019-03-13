@@ -13,6 +13,8 @@ export class SizePipe implements PipeTransform {
     console.log("id", id);
     return new Promise((resolve, rejects) => {
       this.mediaProvider.getFileDataById(id).subscribe((response: Picture) => {
+        console.log("response", response);
+
         switch (args[0]) {
           case "Large":
             resolve(response.thumbnails.w640);

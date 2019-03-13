@@ -1,15 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons end>
-      <button
-        *ngIf="onChatBox && (!this.postInfo.reserved || isMyPost)"
-        ion-fab
-        (click)="goToChatBox()"
-      >
+      <button *ngIf="onChatBox || isMyPost" ion-fab (click)="goToChatBox()">
         <ion-icon name="chatboxes"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end *ngIf="!this.postInfo.reserved || isMyPost">
+    <ion-buttons end *ngIf="onChatBox || isMyPost">
       <button ion-fab class="fab-map" (click)="showGoogleMap()">
         <ion-icon name="globe"></ion-icon>
       </button>
@@ -52,7 +48,6 @@
       <ion-item>
         <ion-icon name="cart" item-start></ion-icon>
         {{ postInfo.title }}
-        <!--           <ion-icon name="checkmark-circle-outline" item-end></ion-icon> -->
       </ion-item>
       <ion-item>
         <ion-icon name="list-box" item-start></ion-icon>
@@ -82,37 +77,5 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <!--   <div style="position: relative">
-    <ion-fab left top *ngIf="!this.postInfo.reserved">
-      <button ion-fab class="fab-map" (click)="showGoogleMap()">
-        <ion-icon name="globe"></ion-icon>
-      </button>
-    </ion-fab>
-  </div> -->
-
-  <google-map *ngIf="!this.postInfo.reserved && onMap"> </google-map>
-  <!--   <ion-fab right bottom *ngIf="!isMyPost && !onFavorite">
-    <button ion-fab color="green" (click)="addFavorites()">
-      <ion-icon name="heart"></ion-icon>
-    </button>
-  </ion-fab>
-  <ion-fab left bottom *ngIf="!isMyPost && onFavorite">
-    <button ion-fab color="green" (click)="deleteFavourite()">
-      <ion-icon name="heart-half"></ion-icon>
-    </button>
-  </ion-fab>
-  <ion-fab right bottom *ngIf="isMyPost">
-    <button ion-fab color="green" (click)="deleteImage()">
-      <ion-icon name="trash"></ion-icon>
-    </button>
-  </ion-fab> -->
-
-  <!--   <ion-fab right bottom>
-    <button ion-fab color="black">
-      <ion-icon name="arrow-dropleft"></ion-icon>
-    </button>
-    <ion-fab-list side="left">
-      <google-map *ngIf="!this.postInfo.reserved"> </google-map>
-    </ion-fab-list>
-  </ion-fab> -->
+  <google-map *ngIf="onMap"> </google-map>
 </ion-content>

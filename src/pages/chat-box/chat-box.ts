@@ -103,6 +103,8 @@ export class ChatBoxPage {
         // take the avatar of people who did comment
         for (var i = 0; i < this.cmtArray.length; i++) {
           let a = i;
+
+          // request the user avatars
           this.mediaProvider
             .getFilesByTitle({
               title: "GIVA_Avartar_" + this.cmtArray[i].user_id
@@ -110,6 +112,18 @@ export class ChatBoxPage {
             .subscribe((avatarResponse: Picture[]) => {
               if (avatarResponse.length != 0) {
                 this.cmtArray[a].filename = avatarResponse[0].filename;
+              }
+            });
+
+          //request the user fullname
+          this.mediaProvider
+            .getOtherUsersInfo(this.cmtArray[i].user_id)
+            .subscribe((userDataResponse: User) => {
+              console.log("userDataResponse", userDataResponse.full_name);
+              if (userDataResponse.full_name) {
+                this.cmtArray[a].full_name = userDataResponse.full_name;
+              } else {
+                this.cmtArray[a].full_name = "Anonymous";
               }
             });
         }
@@ -203,4 +217,6 @@ export class ChatBoxPage {
     }
     this.getAllComments();
   }
+
+  ionViewDidLeave() {}
 }

@@ -37,6 +37,12 @@ export class PostViewPage {
   ) {}
   ngOnInit() {}
   ionViewDidEnter() {
+    console.log("user-id", localStorage.getItem("userID"));
+
+    console.log(
+      "this.navParams.data",
+      this.navParams.data.description.split("(@!GIVA?#)")
+    );
     // get the file data by file_id
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)
@@ -46,19 +52,19 @@ export class PostViewPage {
         // check favorite item?
         this.checkFavorite();
 
-        // set condition to show the chatbox button.
+        // set conditions to show the chatbox button.
         if (
-          (this.navParams.data.description
+          ((this.navParams.data.description
             .split("(@!GIVA?#)")[7]
             .split(":")[1] == "" ||
-            this.navParams.data.user_id == localStorage.getItem("userID") ||
             this.navParams.data.description
               .split("(@!GIVA?#)")[7]
               .split(":")[1] == localStorage.getItem("userID")) &&
-          !this.navParams.data.description
-            .split("(@!GIVA?#)blockedIDs:")[1]
-            .split(",")
-            .includes(localStorage.getItem("userID") + "")
+            !this.navParams.data.description
+              .split("(@!GIVA?#)blockedIDs:")[1]
+              .split(",")
+              .includes(localStorage.getItem("userID") + "")) ||
+          this.navParams.data.user_id == localStorage.getItem("userID")
         ) {
           this.onChatBox = true;
         }
