@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { resolve } from 'path';
-import { rejects } from 'assert';
 
 @Injectable()
 export class ValidatorProvider {
@@ -12,17 +10,18 @@ export class ValidatorProvider {
 
   validateData(data){
 
-    if(data.title == undefined){
-      return false;
-    }else if(data.description == undefined){
-      return false;
-    }else if(data.contact == undefined){
-      return false;
-    }else{
-      return true;
-    }
-
-    
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      if(data.title == undefined){
+        return reject("title");
+      }else if(data.description == undefined){
+        return reject("description");
+      }else if(data.contact == undefined){
+        return reject("contact info");
+      }else{
+        return resolve("ok");
+      }
+    })
 
   }
   /** 

@@ -36,6 +36,8 @@ export class PostingPage {
   fileData: string = "";
   itemLocation: Geolocation = {};
   checkdata:boolean = false;
+  message: boolean = false;
+  error:string ="";
 
   constructor(
     public navCtrl: NavController,
@@ -130,6 +132,10 @@ export class PostingPage {
 
   uploadImage() {
 
+
+    this.validator.validateData(this.postingForm).then((ok) =>{
+
+    
     if (this.itemLocation) {
       if (this.postingForm.contact == undefined) {
         this.postingForm.contact = localStorage.userEmail;
@@ -162,7 +168,7 @@ export class PostingPage {
       fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);
 
-      if(this.validator.validateData(this.postingForm)){
+     
 
       this.mediaProvider
         .uploadImage(fd)
@@ -185,12 +191,13 @@ export class PostingPage {
 
           this.loading();
         });
-      }else{
-        this.checkdata = true;
-      }
     } else {
       this.getCurrentLocation();
     }
+  }).catch((err) => {
+    this.error = "Check "+err;
+    this.message = true;
+  })
   }
 
   addCategoryTag(file_Id, category) {
