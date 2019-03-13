@@ -3,7 +3,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController
+  LoadingController,
+  Platform
 } from "ionic-angular";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import {
@@ -31,23 +32,22 @@ import { PostViewPage } from "../post-view/post-view";
 export class PostingPage {
   postingForm: PostingForm = { reserved: false };
   myPhoto: any;
-  file: File;
   fileData: string = "";
   itemLocation: Geolocation = {};
-  isApp = localStorage.getItem("isApp") == "true" ? true : false;
-
+  isApp = localStorage.getItem("isApp");
+  mobileFile: Blob;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private camera: Camera,
     public http: HttpClient,
     private mediaProvider: MediaProvider,
-    private loadingCtrl: LoadingController,
-    private app: App
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
     this.getCurrentLocation();
+    console.log("isApp", this.isApp);
   }
 
   // get the user current locaton
@@ -59,7 +59,6 @@ export class PostingPage {
         lat: currentPosition.coords.latitude,
         lng: currentPosition.coords.longitude
       };
-      console.log("current Location: ", that.itemLocation);
     });
   }
 
@@ -77,6 +76,7 @@ export class PostingPage {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
         this.fileData = "data:image/jpeg;base64," + imageData;
+        this.mobileFile = this.convertBase64toBlob(this.fileData);
       },
       err => {
         console.log(err);
@@ -100,11 +100,22 @@ export class PostingPage {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
         this.fileData = "data:image/jpeg;base64," + imageData;
+        this.mobileFile = this.convertBase64toBlob(this.fileData);
       },
       err => {
         console.log(err);
       }
     );
+  }
+
+  convertBase64toBlob(dataUrl: string) {
+    const byteString = atob(dataUrl.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: "image/jpeg" });
   }
 
   // update a image
@@ -137,10 +148,10 @@ export class PostingPage {
 
       // set up form data for the uploading file
       const fd = new FormData();
-      if (this.isApp) {
-        fd.append("file", this.fileData);
-      } else {
+      if (!this.isApp) {
         fd.append("file", this.postingForm.file);
+      } else {
+        fd.append("file", this.mobileFile);
       }
       fd.append("title", "GIVA_Title_" + this.postingForm.title);
       fd.append("description", this.postingForm.description);

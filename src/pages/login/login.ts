@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
 import { RegisterPage } from "../register/register";
 import { HomePage } from "../home/home";
 import { UserInfoPage } from "../user-info/user-info";
@@ -22,7 +22,8 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public mediaprovider: MediaProvider
+    public mediaprovider: MediaProvider,
+    private platform: Platform
   ) {}
 
   // check if the user logged in before, if true ==> go to HomePage directly
@@ -39,8 +40,12 @@ export class LoginPage {
         localStorage.setItem("token", response.token);
         localStorage.setItem("userID", response.user.user_id + "");
         localStorage.setItem("userEmail", response.user.email);
-        localStorage.setItem("isApp", !document.URL.startsWith("http") + "");
-        console.log("isApp", localStorage.getItem("isApp"));
+        localStorage.setItem(
+          "isApp",
+          !this.platform.is("core") ? "true" : "false"
+        );
+
+        //console.log("isApp", localStorage.getItem("isApp"));
         this.navCtrl.push(TabsPage);
       },
       error => {
