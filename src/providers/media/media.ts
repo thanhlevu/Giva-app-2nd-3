@@ -15,8 +15,6 @@ import {
 export class MediaProvider {
   configUrl = "http://media.mw.metropolia.fi/wbma";
   picArray: Picture[];
-  token = localStorage.getItem("token");
-  user_id = localStorage.getItem("userID");
   constructor(public http: HttpClient) {}
 
   // get all items with GIVA tag
@@ -38,7 +36,6 @@ export class MediaProvider {
         "x-access-token": localStorage.getItem("token")
       })
     };
-    console.log(this.token);
     return this.http.get<FavoriteResponse[]>(
       this.configUrl + "/favourites",
       httpOptions
@@ -83,7 +80,7 @@ export class MediaProvider {
   getUsersInfo() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     if (localStorage.getItem("userID")) {
@@ -98,7 +95,7 @@ export class MediaProvider {
   getOtherUsersInfo(user_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get(this.configUrl + "/users/" + user_id, httpOptions);
@@ -108,7 +105,7 @@ export class MediaProvider {
   getTagsByFileId(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get<TagsResponse[]>(
@@ -149,7 +146,7 @@ export class MediaProvider {
   updateUserInfo(userInfo: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.put(this.configUrl + "/users", userInfo, httpOptions);
@@ -159,7 +156,7 @@ export class MediaProvider {
   deleteFile(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.delete(this.configUrl + "/media/" + file_id, httpOptions);
@@ -169,7 +166,7 @@ export class MediaProvider {
   sendComment(commentObject) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.post<ServerResponse>(
@@ -183,7 +180,7 @@ export class MediaProvider {
   getAllComments(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get<CommentsResponse[]>(
@@ -196,7 +193,7 @@ export class MediaProvider {
   deleteComment(comment_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.delete<ServerResponse>(
@@ -209,7 +206,7 @@ export class MediaProvider {
   addTag_Giva(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.post(
@@ -239,7 +236,7 @@ export class MediaProvider {
   addTag_Category(data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.post(this.configUrl + "/tags", data, httpOptions);
@@ -249,7 +246,7 @@ export class MediaProvider {
   deleteTag_Category(tag_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.delete(this.configUrl + "/tags/" + tag_id, httpOptions);
@@ -259,7 +256,7 @@ export class MediaProvider {
   getFilesByTag(tag) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get<Picture[]>(
@@ -272,7 +269,7 @@ export class MediaProvider {
   getFilesByTitle(data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "x-access-token": this.token
+        "x-access-token": localStorage.getItem("token")
       })
     };
     return this.http.post(this.configUrl + "/media/search", data, httpOptions);
@@ -282,7 +279,7 @@ export class MediaProvider {
   addFavorite(data: any) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "X-access-token": this.token
+        "X-access-token": localStorage.getItem("token")
       })
     };
     return this.http.post<Response>(
@@ -296,7 +293,7 @@ export class MediaProvider {
   deleteFavourite(file_id) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "X-access-token": this.token
+        "X-access-token": localStorage.getItem("token")
       })
     };
     return this.http.delete(
@@ -309,7 +306,7 @@ export class MediaProvider {
   getAllFavourites() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "X-access-token": this.token
+        "X-access-token": localStorage.getItem("token")
       })
     };
     return this.http.get<FavoriteResponse[]>(

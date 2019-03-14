@@ -39,10 +39,7 @@ export class PostViewPage {
   ionViewDidEnter() {
     console.log("user-id", localStorage.getItem("userID"));
 
-    console.log(
-      "this.navParams.data",
-      this.navParams.data.description.split("(@!GIVA?#)")
-    );
+    console.log("this.navParams.data", this.navParams.data);
     // get the file data by file_id
     this.mediaProvider
       .getFileDataById(this.navParams.data.file_id)

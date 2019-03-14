@@ -34,7 +34,7 @@ export class PostingPage {
   myPhoto: any;
   fileData: string = "";
   itemLocation: Geolocation = {};
-  isApp = localStorage.getItem("isApp");
+  isApp = localStorage.getItem("isApp") == "true" ? true : false;
   mobileFile: Blob;
   constructor(
     public navCtrl: NavController,
@@ -47,7 +47,6 @@ export class PostingPage {
 
   ngOnInit() {
     this.getCurrentLocation();
-    console.log("isApp", this.isApp);
   }
 
   // get the user current locaton

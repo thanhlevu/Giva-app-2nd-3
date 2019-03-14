@@ -45,7 +45,7 @@ export class LoginPage {
           !this.platform.is("core") ? "true" : "false"
         );
 
-        //console.log("isApp", localStorage.getItem("isApp"));
+        console.log("isApp", localStorage.getItem("isApp"));
         this.navCtrl.push(TabsPage);
       },
       error => {
