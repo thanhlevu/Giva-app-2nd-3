@@ -17,3 +17,24 @@ Introduction:</h2>
   <li>Update the user info</li>
   <li>Be able to use on PC and Mobile</li>
 </ul>
+<h3>Run on Browser:</h3>
+<p>ionic serve</p>
+<h3>Run on Android emulater:</h3>
+<p>ionic cordova emulate android -lc</p>
+<h3>Run on Android devices:</h3>
+<p>ionic cordova run android --device</p>
+<h3>Run on iphone emulator:</h3>
+<p>1. open file package.json</p>
+<p>2. insert the following code:</p>
+<p>"scripts": {
+     "start": "ionic-app-scripts serve",
+     "clean": "ionic-app-scripts clean",
+     "build": "ionic-app-scripts build",
+     "lint": "ionic-app-scripts lint",
+     "emulate-live": "ionic cordova emulate ios -lc --debug --target=\"iPhone-X\" -- --buildFlag=\"-UseModernBuildSystem=0\"",
+     "emulate-live-iPhone-8-Plus": "ionic cordova emulate ios -lc --target=\"iPhone-8-Plus\" -- --buildFlag=\"-UseModernBuildSystem=0\"",
+     "emulate": "ionic cordova emulate ios --target=\"iPhone-X\" -- --buildFlag=\"-UseModernBuildSystem=0\"",
+     "build-prod": "ionic cordova build ios --prod --release -- --buildFlag=\"-UseModernBuildSystem=0\"",
+     "device": "ionic cordova run ios -- --buildFlag=\"-UseModernBuildSystem=0\""
+   }    </p>
+   <p>ionic cordova emulate ios -lc</p>
