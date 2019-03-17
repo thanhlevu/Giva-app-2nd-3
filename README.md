@@ -18,11 +18,11 @@ Introduction:</h2>
   <li>Be able to use on PC and Mobile</li>
 </ul>
 <h3>Run on Browser:</h3>
-<p>ionic serve</p>
+<p>$ ionic serve</p>
 <h3>Run on Android emulater:</h3>
-<p>ionic cordova emulate android -lc</p>
+<p>$ ionic cordova emulate android -lc</p>
 <h3>Run on Android devices:</h3>
-<p>ionic cordova run android --device</p>
+<p>$ ionic cordova run android --device</p>
 <h3>Run on iphone emulator:</h3>
 <p>1. open file package.json</p>
 <p>2. insert the following code:</p>
@@ -37,4 +37,4 @@ Introduction:</h2>
      "build-prod": "ionic cordova build ios --prod --release -- --buildFlag=\"-UseModernBuildSystem=0\"",
      "device": "ionic cordova run ios -- --buildFlag=\"-UseModernBuildSystem=0\""
    }    </p>
-   <p>ionic cordova emulate ios -lc</p>
+   <p>$ ionic cordova emulate ios -lc</p>
